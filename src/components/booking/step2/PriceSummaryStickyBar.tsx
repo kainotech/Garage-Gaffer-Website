@@ -2,28 +2,23 @@
 
 import { useState } from "react";
 import type { SelectedItem, BookingSession } from "../useBookingSession";
+import { formatItemPrice, hasCustomQuoteItems, sumFixedPrice } from "../pricing";
 
 interface PriceSummaryStickyBarProps {
   selectedWork: SelectedItem[];
   session: BookingSession;
   onRemove: (id: string) => void;
   onNextStep: () => void;
-  dealerTotal: number;
-}
-
-function calcTotal(items: SelectedItem[]) {
-  return items.reduce((acc, i) => acc + i.price, 0);
 }
 
 export default function PriceSummaryStickyBar({
   selectedWork,
   onRemove,
   onNextStep,
-  dealerTotal,
 }: PriceSummaryStickyBarProps) {
   const [expanded, setExpanded] = useState(false);
-  const total = calcTotal(selectedWork);
-  const savePercent = dealerTotal > 0 ? Math.round((1 - total / dealerTotal) * 100) : 0;
+  const customQuote = selectedWork.length === 0 || hasCustomQuoteItems(selectedWork);
+  const total = sumFixedPrice(selectedWork);
 
   return (
     <div className="pssb-outer">
@@ -56,7 +51,7 @@ export default function PriceSummaryStickyBar({
                     </svg>
                   </button>
                   <span className="pssb-item-name">{item.name}</span>
-                  <span className="pssb-item-price">£{item.price}</span>
+                  <span className="pssb-item-price">{formatItemPrice(item)}</span>
                 </div>
               ))
             )}
@@ -69,6 +64,8 @@ export default function PriceSummaryStickyBar({
             <div className="pssb-extra"><span>Collection &amp; Delivery</span><span className="pssb-free">FREE</span></div>
             <div className="pssb-extra"><span>12-Month Warranty</span><span className="pssb-free">FREE</span></div>
           </div>
+
+          <p className="pssb-note">Quote includes VAT where applicable. Labour only — parts, if needed, are quoted separately by your mechanic.</p>
         </div>
       )}
 
@@ -82,8 +79,9 @@ export default function PriceSummaryStickyBar({
           type="button"
         >
           <div className="pssb-bar-left">
-            <span className="pssb-bar-total">£{total.toFixed(2)}</span>
-            {savePercent > 0 && <span className="pssb-bar-save">Save {savePercent}%</span>}
+            <span className={`pssb-bar-total${customQuote ? " pssb-bar-total--quote" : ""}`}>
+              {customQuote ? "Priced after inspection" : `£${total.toFixed(2)}`}
+            </span>
             <svg
               className={`pssb-chevron${expanded ? " pssb-chevron--up" : ""}`}
               width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"
@@ -137,6 +135,7 @@ export default function PriceSummaryStickyBar({
         .pssb-extras { display: flex; flex-direction: column; gap: 6px; padding-bottom: 4px; }
         .pssb-extra { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--color-text-secondary); }
         .pssb-free { font-weight: 700; color: var(--color-success); }
+        .pssb-note { font-size: 11px; color: var(--color-text-disabled); margin: 4px 0 0; line-height: 1.5; }
         .pssb-bar {
           background: #fff; border-top: 1px solid var(--color-divider);
           padding: 12px 16px; display: flex; align-items: center; gap: 12px;
@@ -145,7 +144,7 @@ export default function PriceSummaryStickyBar({
         .pssb-summary-btn { background: none; border: none; cursor: pointer; flex: 1; text-align: left; padding: 0; }
         .pssb-bar-left { display: flex; align-items: center; gap: 8px; }
         .pssb-bar-total { font-size: 20px; font-weight: 900; font-family: var(--font-open-sans), sans-serif; }
-        .pssb-bar-save { background: var(--color-success); color: #fff; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: var(--radius-full); }
+        .pssb-bar-total--quote { font-size: 14px; }
         .pssb-chevron { color: var(--color-text-secondary); transition: transform var(--t-base); }
         .pssb-chevron--up { transform: rotate(180deg); }
         .pssb-next-btn { padding: 12px 20px; font-size: 14px; flex-shrink: 0; }

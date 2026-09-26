@@ -2,6 +2,7 @@
 
 import React, { useRef } from "react";
 import { useRouter } from "next/navigation";
+import { SERVICE_CATEGORIES } from "@/data/services";
 
 interface CompactQuoteWidgetProps {
   defaultService?: string;
@@ -20,9 +21,9 @@ export default function CompactQuoteWidget({
     e.preventDefault();
     const reg = regRef.current?.value?.trim() ?? "";
     const postcode = postcodeRef.current?.value?.trim() ?? "";
-    const service = serviceRef.current?.value?.trim() ?? "repairs";
-    if (reg && postcode) {
-      router.push(`/booking?reg=${encodeURIComponent(reg)}&postcode=${encodeURIComponent(postcode)}&service=${encodeURIComponent(service || "repairs")}`);
+    const service = serviceRef.current?.value?.trim() ?? "";
+    if (reg && postcode && service) {
+      router.push(`/booking?reg=${encodeURIComponent(reg)}&postcode=${encodeURIComponent(postcode)}&service=${encodeURIComponent(service)}`);
     }
   }
 
@@ -55,12 +56,13 @@ export default function CompactQuoteWidget({
 
         <label className="cqw-field cqw-field-select">
           <span className="cqw-field-label">What do you need?</span>
-          <select ref={serviceRef} className="cqw-field-input cqw-select" defaultValue={defaultService}>
-            <option value="repairs">Repair a specific issue</option>
-            <option value="servicing">Full service</option>
-            <option value="servicing">MOT + repair</option>
-            <option value="diagnostics">Diagnostic check</option>
-            <option value="repairs">Brakes / tyres</option>
+          <select ref={serviceRef} className="cqw-field-input cqw-select" defaultValue={defaultService ?? ""}>
+            <option value="" disabled hidden>Choose a category</option>
+            {SERVICE_CATEGORIES.map((category) => (
+              <option key={category.slug} value={category.slug}>
+                {category.name}
+              </option>
+            ))}
           </select>
         </label>
 

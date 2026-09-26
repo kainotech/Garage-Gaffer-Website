@@ -1,6 +1,7 @@
 "use client";
 
 import type { BookingSession } from "./useBookingSession";
+import { formatItemPrice, hasCustomQuoteItems, sumFixedPrice } from "./pricing";
 
 interface BookingOrderSummaryProps {
   session: BookingSession;
@@ -8,7 +9,8 @@ interface BookingOrderSummaryProps {
 }
 
 export default function BookingOrderSummary({ session, showTrustBadges }: BookingOrderSummaryProps) {
-  const total = session.selectedWork.reduce((acc, i) => acc + i.price, 0);
+  const customQuote = session.selectedWork.length === 0 || hasCustomQuoteItems(session.selectedWork);
+  const total = sumFixedPrice(session.selectedWork);
   const car = session.car;
   const vehicleLabel = [car.make, car.model, car.engineCapacity, car.year].filter(Boolean).join(" ") || car.reg || "Your vehicle";
   const postcode = car.postcode;
@@ -19,8 +21,18 @@ export default function BookingOrderSummary({ session, showTrustBadges }: Bookin
         <div className="bos-main">
           <div className="bos-price-col">
             <p className="bos-label">YOUR QUOTE</p>
-            <div className="bos-price">£{total.toFixed(2)}</div>
-            <p className="bos-vat">Quote includes VAT where applicable</p>
+            {customQuote ? (
+              <>
+                <div className="bos-price bos-price--quote">Priced after inspection</div>
+                <p className="bos-vat">Your mechanic will confirm the price</p>
+              </>
+            ) : (
+              <>
+                <div className="bos-price">£{total.toFixed(2)}</div>
+                <p className="bos-vat">Quote includes VAT where applicable</p>
+              </>
+            )}
+            <p className="bos-vat">Labour only — parts, if needed, are quoted separately by your mechanic.</p>
             <p className="bos-vehicle">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <rect x="1" y="3" width="15" height="13" rx="2" /><polygon points="16 8 20 8 23 11 23 16 16 16 16 8" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" />
@@ -42,7 +54,7 @@ export default function BookingOrderSummary({ session, showTrustBadges }: Bookin
                       </span>
                     )}
                   </div>
-                  <span className="bos-item-price">£{item.price}</span>
+                  <span className="bos-item-price">{formatItemPrice(item)}</span>
                 </div>
               ))}
               <div className="bos-extra">
@@ -102,6 +114,7 @@ export default function BookingOrderSummary({ session, showTrustBadges }: Bookin
           font-size: 36px; font-weight: 900; letter-spacing: -0.5px;
           color: #fff; line-height: 1;
         }
+        .bos-price--quote { font-size: 22px; letter-spacing: -0.2px; }
         .bos-vat { font-size: 11px; color: rgba(255,255,255,0.5); margin: 6px 0 0; }
         .bos-vehicle {
           display: flex; align-items: center; gap: 5px;

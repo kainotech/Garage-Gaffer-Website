@@ -34,7 +34,11 @@ export default function NumberPlateTab({
             aria-label="Vehicle registration number"
           />
         </div>
-        <p className="npt-hint">Enter your registration and we'll look up your car details.</p>
+        <p className="npt-hint">
+          Enter your registration and we&apos;ll look up your vehicle details. Booking for an
+          HGV, bus or coach? Use &quot;Use Car Details&quot; instead — registration lookup only
+          covers cars, motorcycles and vans.
+        </p>
       </div>
 
       <div className="form-group">

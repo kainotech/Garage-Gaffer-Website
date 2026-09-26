@@ -1,9 +1,12 @@
 "use client";
 
+import type { VehicleType } from "@/data/pricingConfig";
+
 export type SelectedItem = {
   id: string;
   name: string;
-  price: number;
+  /** undefined means the item is custom-quoted (no fixed price) */
+  price?: number;
   labourTime?: string;
   partsIncluded?: boolean;
 };
@@ -17,8 +20,11 @@ export type BookingSession = {
     fuelType?: string;
     engineCapacity?: string;
     year?: string;
+    /** silently derived from make+model (or MOT lookup) - never asked for directly */
+    vehicleType?: VehicleType;
   };
-  service: "repairs" | "diagnostics" | "servicing";
+  /** slug of the selected category from SERVICE_CATEGORIES, or "" if not yet chosen */
+  service: string;
   selectedWork: SelectedItem[];
   details: {
     firstName: string;
@@ -41,7 +47,7 @@ const SESSION_KEY = "booking_session";
 
 const DEFAULT_SESSION: BookingSession = {
   car: { reg: "", postcode: "" },
-  service: "repairs",
+  service: "",
   selectedWork: [],
   details: {
     firstName: "",

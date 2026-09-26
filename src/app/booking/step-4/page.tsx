@@ -45,8 +45,6 @@ export default function Step4Page() {
     setSession(getSession());
   }, []);
 
-  const total = session.selectedWork.reduce((acc, i) => acc + i.price, 0);
-
   function handlePay() {
     markStepComplete(4);
     router.push("/booking/confirmation");
@@ -76,7 +74,7 @@ export default function Step4Page() {
         {/* Payment form */}
         <div className="s4-form-card">
           <h2 className="s4-form-title">Payment details</h2>
-          <PaymentForm total={total} onSubmit={handlePay} />
+          <PaymentForm onSubmit={handlePay} />
         </div>
       </div>
 

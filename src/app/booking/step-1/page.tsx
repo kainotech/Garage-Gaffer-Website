@@ -5,7 +5,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useBookingSession } from "@/components/booking/useBookingSession";
 import NumberPlateTab from "@/components/booking/step1/NumberPlateTab";
 import CarDetailsTab, { CarDetailsValues } from "@/components/booking/step1/CarDetailsTab";
+import { VEHICLE_TYPE_BY_MAKE_MODEL } from "@/data/vehicleMakes";
 import { Suspense } from "react";
+
+function isPlausiblePlate(value: string): boolean {
+  const stripped = value.replace(/\s+/g, "").toUpperCase();
+  return /^[A-Z0-9]{2,7}$/.test(stripped);
+}
 
 function Step1Content() {
   const router = useRouter();
@@ -19,6 +25,7 @@ function Step1Content() {
     make: "", model: "", fuelType: "", engineCapacity: "", year: "", postcode: "",
   });
   const [error, setError] = useState("");
+  const [isLookingUp, setIsLookingUp] = useState(false);
 
   useEffect(() => {
     if (searchParams.get("clear") === "true") {
@@ -44,19 +51,65 @@ function Step1Content() {
     setCarDetails((prev) => ({ ...prev, [field]: value }));
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     setError("");
 
     if (activeTab === "plate") {
       if (!reg.trim()) { setError("Please enter your registration number."); return; }
       if (!postcode.trim()) { setError("Please enter your postcode."); return; }
+      if (!isPlausiblePlate(reg)) {
+        setError("Please enter a valid UK registration number.");
+        return;
+      }
 
-      updateSession({ car: { reg: reg.trim(), postcode: postcode.trim() } });
+      setIsLookingUp(true);
+      try {
+        const res = await fetch("/api/vehicle-lookup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ registration: reg.trim() }),
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          setError(data.message ?? "We couldn't look up that registration. Please enter your details manually.");
+          setActiveTab("details");
+          setIsLookingUp(false);
+          return;
+        }
+
+        const vehicle = data.vehicle as {
+          make?: string; model?: string; fuelType?: string; engineCapacity?: string; year?: string;
+        };
+        const vehicleType = vehicle.make && vehicle.model
+          ? VEHICLE_TYPE_BY_MAKE_MODEL[`${vehicle.make}::${vehicle.model}`] ?? "car"
+          : "car";
+
+        updateSession({
+          car: {
+            reg: reg.trim().toUpperCase(),
+            postcode: postcode.trim(),
+            make: vehicle.make,
+            model: vehicle.model,
+            fuelType: vehicle.fuelType,
+            engineCapacity: vehicle.engineCapacity,
+            year: vehicle.year,
+            vehicleType,
+          },
+        });
+      } catch {
+        setError("We're having trouble looking up your vehicle right now. Please enter your details manually.");
+        setActiveTab("details");
+        setIsLookingUp(false);
+        return;
+      }
+      setIsLookingUp(false);
     } else {
       if (!carDetails.make || !carDetails.model || !carDetails.year || !carDetails.postcode) {
         setError("Please fill in all required vehicle details.");
         return;
       }
+      const vehicleType = VEHICLE_TYPE_BY_MAKE_MODEL[`${carDetails.make}::${carDetails.model}`] ?? "car";
       updateSession({
         car: {
           reg: "",
@@ -66,6 +119,7 @@ function Step1Content() {
           fuelType: carDetails.fuelType,
           engineCapacity: carDetails.engineCapacity,
           year: carDetails.year,
+          vehicleType,
         },
       });
     }
@@ -73,7 +127,7 @@ function Step1Content() {
     markStepComplete(1);
 
     const session = getSession();
-    if (session.service && ["repairs", "diagnostics", "servicing"].includes(session.service)) {
+    if (session.service) {
       router.push("/booking/step-2");
     } else {
       router.push("/booking/service-select");
@@ -134,11 +188,18 @@ function Step1Content() {
           </div>
         )}
 
-        <button className="btn btn-primary btn-lg s1-next" onClick={handleSubmit} type="button">
-          Next Step
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
+        <button
+          className="btn btn-primary btn-lg s1-next"
+          onClick={handleSubmit}
+          disabled={isLookingUp}
+          type="button"
+        >
+          {isLookingUp ? "Looking up your vehicle…" : "Next Step"}
+          {!isLookingUp && (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          )}
         </button>
 
         <p className="s1-trust">

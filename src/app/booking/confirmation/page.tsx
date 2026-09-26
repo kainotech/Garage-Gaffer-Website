@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useBookingSession, BookingSession } from "@/components/booking/useBookingSession";
+import { formatItemPrice, hasCustomQuoteItems, sumFixedPrice } from "@/components/booking/pricing";
 
 function generateRef(): string {
   const n = Math.floor(10000 + Math.random() * 90000);
@@ -20,7 +21,8 @@ export default function ConfirmationPage() {
     clearSession();
   }, []);
 
-  const total = session?.selectedWork.reduce((acc, i) => acc + i.price, 0) ?? 0;
+  const customQuote = (session?.selectedWork.length ?? 0) === 0 || hasCustomQuoteItems(session?.selectedWork ?? []);
+  const total = sumFixedPrice(session?.selectedWork ?? []);
   const car = session?.car;
   const vehicleLabel = car
     ? [car.make, car.model, car.engineCapacity, car.year].filter(Boolean).join(" ") || car.reg || "Your vehicle"
@@ -65,7 +67,7 @@ export default function ConfirmationPage() {
                 {session.selectedWork.map((item) => (
                   <div key={item.id} className="conf-work-item">
                     <span>{item.name}</span>
-                    <span className="conf-work-price">£{item.price}</span>
+                    <span className="conf-work-price">{formatItemPrice(item)}</span>
                   </div>
                 ))}
               </div>
@@ -90,7 +92,9 @@ export default function ConfirmationPage() {
 
           <div className="conf-total-row">
             <span className="conf-total-label">Total</span>
-            <span className="conf-total-amount">£{total.toFixed(2)}</span>
+            <span className="conf-total-amount">
+              {customQuote ? "Priced after inspection" : `£${total.toFixed(2)}`}
+            </span>
           </div>
 
           <p className="conf-payment-note">
@@ -99,6 +103,7 @@ export default function ConfirmationPage() {
             </svg>
             You will only be charged after the work is complete.
           </p>
+          <p className="conf-payment-note">Labour only — parts, if needed, are quoted separately by your mechanic.</p>
         </div>
       )}
 

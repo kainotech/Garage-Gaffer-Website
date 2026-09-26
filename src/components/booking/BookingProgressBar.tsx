@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useBookingSession } from "./useBookingSession";
 
 const STEPS = [
-  { label: "Car", path: "/booking/step-1", step: 1 },
+  { label: "Your Vehicle", path: "/booking/step-1", step: 1 },
   { label: "Select Work", path: "/booking/step-2", step: 2 },
   { label: "Details", path: "/booking/step-3", step: 3 },
   { label: "Book", path: "/booking/step-4", step: 4 },
@@ -33,24 +33,22 @@ export default function BookingProgressBar() {
   }, [pathname]); // re-read on every navigation
 
   const activeStep = getActiveStep(pathname);
+  const progressPct = ((activeStep - 1) / (STEPS.length - 1)) * 100;
 
   return (
     <div className="progress-bar-wrapper">
       <div className="progress-bar-inner">
-        {STEPS.map((s, idx) => {
+        <div className="progress-track" aria-hidden="true">
+          <div className="progress-track-fill" style={{ width: `${progressPct}%` }} />
+        </div>
+
+        {STEPS.map((s) => {
           const isCompleted = completedSteps.includes(s.step);
           const isActive = activeStep === s.step;
           const isClickable = isCompleted && !isActive;
 
           return (
             <div key={s.step} className="progress-step">
-              {/* connector line */}
-              {idx > 0 && (
-                <div
-                  className={`progress-connector${isCompleted || isActive ? " progress-connector--done" : ""}`}
-                />
-              )}
-
               <button
                 className={`progress-circle${isCompleted ? " progress-circle--done" : ""}${isActive ? " progress-circle--active" : ""}${isClickable ? " progress-circle--clickable" : ""}`}
                 onClick={() => isClickable && router.push(s.path)}
@@ -98,26 +96,28 @@ export default function BookingProgressBar() {
           align-items: center;
           gap: 6px;
           position: relative;
+          z-index: 1;
           flex: 1;
         }
-        .progress-step:first-child {
-          align-items: flex-start;
-        }
-        .progress-step:last-child {
-          align-items: flex-end;
-        }
-        .progress-connector {
+        .progress-track {
           position: absolute;
           top: 16px;
-          right: 50%;
-          left: calc(-50% + 16px);
+          left: 12.5%;
+          right: 12.5%;
           height: 2px;
-          background: #DADCDB;
+          background: #C2C5C4;
+          border-radius: 1px;
           z-index: 0;
           transform: translateY(-50%);
         }
-        .progress-connector--done {
+        .progress-track-fill {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
           background: var(--color-success);
+          border-radius: 1px;
+          transition: width var(--t-base);
         }
         .progress-circle {
           width: 32px;
@@ -170,6 +170,9 @@ export default function BookingProgressBar() {
           color: #8A8D8C;
           white-space: nowrap;
           text-align: center;
+          max-width: 92px;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         .progress-label--done {
           color: var(--color-success);
@@ -195,7 +198,7 @@ export default function BookingProgressBar() {
 
         @media (prefers-reduced-motion: reduce) {
           .progress-circle,
-          .progress-connector {
+          .progress-track-fill {
             transition: none;
           }
         }

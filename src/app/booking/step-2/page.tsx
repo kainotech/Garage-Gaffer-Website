@@ -3,27 +3,12 @@
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useBookingSession, SelectedItem, BookingSession } from "@/components/booking/useBookingSession";
-import RepairsTab from "@/components/booking/step2/RepairsTab";
-import DiagnosticsTab from "@/components/booking/step2/DiagnosticsTab";
-import ServicingTab from "@/components/booking/step2/ServicingTab";
+import CategoryTab from "@/components/booking/step2/CategoryTab";
 import PriceSummaryPanel from "@/components/booking/step2/PriceSummaryPanel";
 import PriceSummaryStickyBar from "@/components/booking/step2/PriceSummaryStickyBar";
-import { SERVICING_OPTIONS } from "@/components/booking/mockData";
-
-type ServiceTab = "repairs" | "diagnostics" | "servicing";
-
-const TAB_LABELS: Record<ServiceTab, string> = {
-  repairs: "Repairs",
-  diagnostics: "Diagnostics",
-  servicing: "Servicing & MOT",
-};
-
-function calcDealerTotal(items: SelectedItem[]): number {
-  return items.reduce((acc, item) => {
-    const sv = SERVICING_OPTIONS.find((s) => s.id === item.id);
-    return acc + (sv ? sv.dealerPrice : item.price * 1.6);
-  }, 0);
-}
+import { SERVICE_CATEGORIES } from "@/data/services";
+import { SERVICE_BASE_HOURS } from "@/data/servicePricing";
+import { calculateServicePrice, VEHICLE_TYPE_MULTIPLIERS } from "@/data/pricingConfig";
 
 function Step2Content() {
   const router = useRouter();
@@ -31,16 +16,18 @@ function Step2Content() {
   const { getSession, updateSession, markStepComplete } = useBookingSession();
 
   const [session, setSession] = useState<BookingSession>(() => getSession());
-  const [activeTab, setActiveTab] = useState<ServiceTab>("repairs");
+  const [activeSlug, setActiveSlug] = useState(SERVICE_CATEGORIES[0].slug);
   const [selectedWork, setSelectedWork] = useState<SelectedItem[]>([]);
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
     const reg = searchParams.get("reg");
     const postcode = searchParams.get("postcode");
-    const service = searchParams.get("service") as ServiceTab | null;
+    const service = searchParams.get("service");
+    const isValidSlug = (slug: string | null): slug is string =>
+      !!slug && SERVICE_CATEGORIES.some((c) => c.slug === slug);
 
-    if (reg && postcode && service && ["repairs", "diagnostics", "servicing"].includes(service)) {
+    if (reg && postcode && isValidSlug(service)) {
       updateSession({
         car: { reg, postcode },
         service,
@@ -52,9 +39,23 @@ function Step2Content() {
 
     const s = getSession();
     setSession(s);
-    setSelectedWork(s.selectedWork ?? []);
-    if (s.service && ["repairs", "diagnostics", "servicing"].includes(s.service)) {
-      setActiveTab(s.service as ServiceTab);
+    const vehicleType = s.car.vehicleType ?? "car";
+    setSelectedWork(
+      (s.selectedWork ?? []).map((item) => {
+        const baseHours = SERVICE_BASE_HOURS[item.id];
+        if (baseHours == null) return item;
+        return {
+          ...item,
+          price: calculateServicePrice(baseHours, vehicleType),
+          labourTime: `${(baseHours * VEHICLE_TYPE_MULTIPLIERS[vehicleType]).toFixed(1)}h`,
+        };
+      }),
+    );
+    if (isValidSlug(s.service)) {
+      setActiveSlug(s.service);
+    } else {
+      router.push("/booking/service-select");
+      return;
     }
     setInitialized(true);
   }, []);
@@ -71,7 +72,7 @@ function Step2Content() {
   }
 
   function handleNextStep() {
-    updateSession({ selectedWork, service: activeTab });
+    updateSession({ selectedWork, service: activeSlug });
     markStepComplete(2);
     router.push("/booking/step-3");
   }
@@ -80,8 +81,7 @@ function Step2Content() {
     return <div style={{ padding: 40, textAlign: "center", color: "var(--color-text-secondary)" }}>Loading...</div>;
   }
 
-  const dealerTotal = calcDealerTotal(selectedWork);
-  const currentSession = { ...session, service: activeTab };
+  const currentSession = { ...session, service: activeSlug };
 
   return (
     <div className="s2-outer">
@@ -93,33 +93,31 @@ function Step2Content() {
             <h1 className="s2-title">Select your work</h1>
           </div>
 
-          {/* Service tabs */}
+          {/* Category tabs */}
           <div className="s2-tabs" role="tablist">
-            {(["repairs", "diagnostics", "servicing"] as ServiceTab[]).map((tab) => (
+            {SERVICE_CATEGORIES.map((category) => (
               <button
-                key={tab}
+                key={category.slug}
                 role="tab"
-                aria-selected={activeTab === tab}
-                className={`s2-tab${activeTab === tab ? " s2-tab--active" : ""}`}
-                onClick={() => setActiveTab(tab)}
+                aria-selected={activeSlug === category.slug}
+                className={`s2-tab${activeSlug === category.slug ? " s2-tab--active" : ""}`}
+                onClick={() => setActiveSlug(category.slug)}
                 type="button"
               >
-                {TAB_LABELS[tab]}
+                {category.name}
               </button>
             ))}
           </div>
 
           {/* Tab content */}
           <div className="s2-tab-content">
-            {activeTab === "repairs" && (
-              <RepairsTab selectedWork={selectedWork} onAdd={handleAdd} onRemove={handleRemove} />
-            )}
-            {activeTab === "diagnostics" && (
-              <DiagnosticsTab selectedWork={selectedWork} onAdd={handleAdd} onRemove={handleRemove} />
-            )}
-            {activeTab === "servicing" && (
-              <ServicingTab selectedWork={selectedWork} onAdd={handleAdd} onRemove={handleRemove} />
-            )}
+            <CategoryTab
+              categorySlug={activeSlug}
+              vehicleType={session.car.vehicleType ?? "car"}
+              selectedWork={selectedWork}
+              onAdd={handleAdd}
+              onRemove={handleRemove}
+            />
           </div>
         </div>
 
@@ -130,7 +128,6 @@ function Step2Content() {
             session={currentSession}
             onRemove={handleRemove}
             onNextStep={handleNextStep}
-            dealerTotal={dealerTotal}
           />
         </div>
       </div>
@@ -142,7 +139,6 @@ function Step2Content() {
           session={currentSession}
           onRemove={handleRemove}
           onNextStep={handleNextStep}
-          dealerTotal={dealerTotal}
         />
       </div>
 
@@ -164,13 +160,13 @@ function Step2Content() {
         .s2-header { margin-bottom: 4px; }
         .s2-title { font-size: 26px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 0; }
         .s2-tabs {
-          display: flex; gap: 4px;
+          display: flex; gap: 4px; flex-wrap: wrap;
           background: var(--color-bg);
           border-radius: var(--radius-md);
           padding: 4px;
         }
         .s2-tab {
-          flex: 1; padding: 9px 12px; border-radius: 6px; border: none;
+          padding: 9px 14px; border-radius: 6px; border: none;
           background: transparent;
           font-family: var(--font-rubik), sans-serif; font-size: 13px; font-weight: 600;
           color: var(--color-text-secondary); cursor: pointer;
@@ -202,7 +198,6 @@ function Step2Content() {
         }
 
         @media (max-width: 560px) {
-          .s2-tabs { flex-direction: column; }
           .s2-outer { padding: 20px 0 90px; }
           .s2-tab-content { padding: 16px; }
         }

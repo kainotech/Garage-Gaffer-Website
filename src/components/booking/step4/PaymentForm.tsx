@@ -5,7 +5,6 @@ import { useState } from "react";
 type CardType = "visa" | "mastercard" | "amex";
 
 interface PaymentFormProps {
-  total: number;
   onSubmit: () => void;
 }
 
@@ -52,7 +51,7 @@ function formatExpiry(val: string): string {
   return digits;
 }
 
-export default function PaymentForm({ total, onSubmit }: PaymentFormProps) {
+export default function PaymentForm({ onSubmit }: PaymentFormProps) {
   const [cardType, setCardType] = useState<CardType>("visa");
   const [cardNumber, setCardNumber] = useState("");
   const [expiry, setExpiry] = useState("");
@@ -183,7 +182,7 @@ export default function PaymentForm({ total, onSubmit }: PaymentFormProps) {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
             </svg>
-            Pay £{total.toFixed(2)}
+            Confirm booking
           </>
         )}
       </button>

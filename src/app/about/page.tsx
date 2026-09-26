@@ -4,6 +4,8 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 import AboutHero from "@/components/about/AboutHero";
+import { SERVICE_CATEGORIES, TOTAL_SERVICE_COUNT } from "@/data/services";
+import { CategoryIcon, accentForIndex } from "@/data/serviceCategoryVisuals";
 
 export const metadata: Metadata = {
   title: "About Us — Garage Gaffer | Bristol's Vetted Mechanic Marketplace",
@@ -11,107 +13,12 @@ export const metadata: Metadata = {
     "We're a small Bristol team that got tired of the way finding a mechanic works. Garage Gaffer connects drivers with vetted local mobile mechanics — honest quotes, transparent vetting, no jargon.",
 };
 
-/* ─── Inline SVG icons — Services section ────────────────────── */
-
-const WrenchIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="w-[22px] h-[22px]"
-    strokeWidth={1.8}
-  >
-    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-  </svg>
-);
-
-const ClockIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="w-[22px] h-[22px]"
-    strokeWidth={1.8}
-  >
-    <circle cx="12" cy="12" r="9" />
-    <path d="M12 7v5l3 2" />
-    <path d="M12 3v2M12 19v2M3 12h2M19 12h2" />
-  </svg>
-);
-
-const SunIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="w-[22px] h-[22px]"
-    strokeWidth={1.8}
-  >
-    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-  </svg>
-);
-
 /* ─── Section data ───────────────────────────────────────────── */
 
 const postcodes = [
   "BS1", "BS2", "BS3", "BS4", "BS5", "BS6", "BS7", "BS8", "BS9", "BS10",
   "BS11", "BS13", "BS14", "BS15", "BS16", "BS30", "BS31", "BS32", "BS34",
   "BS36", "BS37",
-];
-
-/* Exact same <article> structure as Services.tsx */
-const services = [
-  {
-    accent: "#0D7A5F",
-    well: "#ECF7EF",
-    icon: <WrenchIcon />,
-    title: "Repairs",
-    desc: "Something's wrong and you know it needs fixing. Post the job, get quotes from mechanics near you, pick one. They come to you.",
-    bullets: [
-      "Any make or model",
-      "Itemised quote before you commit",
-      "12-month workmanship warranty",
-    ],
-    cta: "Get repair quotes",
-    ctaHref: "/repair",
-    num: "01",
-  },
-  {
-    accent: "#066599",
-    well: "#E6F3FA",
-    icon: <ClockIcon />,
-    title: "Diagnostics",
-    desc: "Not sure what's wrong? A diagnostic gives you a clear answer before you spend money on anything.",
-    bullets: [
-      "Full vehicle health check",
-      "Fault codes explained in plain English",
-      "Recommended next steps with no pressure",
-    ],
-    cta: "Book a diagnostic",
-    ctaHref: "/diagnostics",
-    num: "02",
-  },
-  {
-    accent: "#31A7A8",
-    well: "#E4F6F6",
-    icon: <SunIcon />,
-    title: "Servicing",
-    desc: "Interim or full service, at your door. Keep the car healthy and the warranty intact.",
-    bullets: [
-      "Interim and full service options",
-      "Oil, filters, fluids, and full inspection",
-      "Same-day slots available",
-    ],
-    cta: "Book a service",
-    ctaHref: "/servicing",
-    num: "03",
-  },
 ];
 
 /* ─── Page ───────────────────────────────────────────────────── */
@@ -259,7 +166,6 @@ export default function AboutPage() {
         </section>
 
         {/* ── Section 5 — Our Services ──────────────────────────── */}
-        {/* Exact <article> structure from Services.tsx — 3-col desktop, 2-col tablet, 1-col mobile */}
         <section className="bg-[#FBFDFC] border-t border-b border-[#DADCDB] py-24 md:py-16">
           <div className="max-w-[1200px] mx-auto px-6">
 
@@ -272,83 +178,51 @@ export default function AboutPage() {
                 Ready to get sorted?
               </h2>
               <p className="font-[family-name:var(--font-rubik)] text-[16px] leading-[1.7] text-[#595C5B]">
-                Three services. All at your door. All carried out by vetted Bristol mechanics.
+                {TOTAL_SERVICE_COUNT} services, all at your door, all carried out by vetted Bristol mechanics.
               </p>
             </div>
 
-            {/* 3-column grid — same <article> structure as Services.tsx */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {services.map((s) => (
-                <article
-                  key={s.num}
-                  className="relative overflow-hidden bg-white border border-[#DADCDB] rounded-2xl p-7 min-h-[260px] flex flex-col shadow-[0_1px_3px_rgba(0,0,0,0.08)] group hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(13,122,95,0.12),0_4px_8px_rgba(0,0,0,0.06)] transition-all duration-200 reveal"
-                  style={{ ["--accent" as string]: s.accent }}
-                >
-                  {/* Top accent bar — opacity-0 → opacity-100 on hover */}
-                  <div
-                    className="absolute top-0 left-0 right-0 h-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-t-2xl"
-                    style={{ background: s.accent }}
-                  />
+            <Link
+              href="/services"
+              className="group block relative overflow-hidden bg-white border border-[#DADCDB] rounded-2xl p-8 md:p-10 shadow-[0_1px_3px_rgba(0,0,0,0.08)] hover:-translate-y-[3px] hover:shadow-[0_8px_24px_rgba(13,122,95,0.12),0_4px_8px_rgba(0,0,0,0.06)] transition-all duration-200 reveal"
+            >
+              <div className="absolute top-0 left-0 right-0 h-[3px] opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-t-2xl bg-[#0D7A5F]" />
 
-                  {/* Icon well — 44×44, radius-xl */}
-                  <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center mb-[18px] border"
-                    style={{
-                      background: s.well,
-                      borderColor: `color-mix(in srgb, ${s.accent} 15%, transparent)`,
-                      color: s.accent,
-                    }}
-                  >
-                    {s.icon}
-                  </div>
-
-                  {/* Title — Open Sans 700 21px */}
-                  <h3 className="font-[family-name:var(--font-open-sans)] text-[21px] font-bold mb-2.5 text-[#1A1E1D]">
-                    {s.title}
-                  </h3>
-
-                  {/* Description — Rubik 400 14.5px #595C5B */}
-                  <p className="text-[#595C5B] text-[14.5px] leading-[1.6] flex-grow mb-[18px]">
-                    {s.desc}
-                  </p>
-
-                  {/* Bullet list — coloured dot + Rubik 13.5px #595C5B */}
-                  <ul className="list-none p-0 mb-5 flex flex-col gap-0">
-                    {s.bullets.map((b) => (
-                      <li
-                        key={b}
-                        className="text-[13.5px] text-[#595C5B] py-1 flex gap-2 items-start"
-                      >
-                        <span
-                          className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0"
-                          style={{ background: s.accent }}
-                        />
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* CTA — same Link pattern as Services.tsx */}
-                  <Link
-                    href={s.ctaHref}
-                    className="inline-flex items-center gap-1.5 font-[family-name:var(--font-rubik)] font-semibold text-[12.5px] uppercase tracking-[0.06em] text-[#8A8D8C] group-hover:text-[var(--accent)] transition-colors"
-                  >
-                    {s.cta}
-                    <span className="transition-transform duration-200 group-hover:translate-x-[3px]">
-                      →
+              <div className="flex flex-wrap gap-2.5 mb-7">
+                {SERVICE_CATEGORIES.map((category, i) => {
+                  const colors = accentForIndex(i);
+                  return (
+                    <span
+                      key={category.slug}
+                      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border font-[family-name:var(--font-rubik)] text-[12.5px] font-semibold"
+                      style={{
+                        background: colors.well,
+                        borderColor: `color-mix(in srgb, ${colors.accent} 15%, transparent)`,
+                        color: colors.accent,
+                      }}
+                    >
+                      <CategoryIcon slug={category.slug} className="w-3.5 h-3.5" />
+                      {category.name}
                     </span>
-                  </Link>
+                  );
+                })}
+              </div>
 
-                  {/* Decorative large numeral */}
-                  <span
-                    className="absolute right-[18px] bottom-[-14px] font-[family-name:var(--font-open-sans)] font-extrabold text-[108px] opacity-[0.04] leading-none select-none"
-                    style={{ color: s.accent }}
-                  >
-                    {s.num}
-                  </span>
-                </article>
-              ))}
-            </div>
+              <div className="flex items-end justify-between gap-6 flex-wrap">
+                <div>
+                  <h3 className="font-[family-name:var(--font-open-sans)] text-[22px] font-bold mb-1.5">
+                    Browse the full catalogue
+                  </h3>
+                  <p className="text-[#595C5B] text-[14.5px] leading-[1.6]">
+                    Every service we offer, with what&apos;s included — quoted for your exact vehicle.
+                  </p>
+                </div>
+                <span className="inline-flex items-center gap-1.5 flex-shrink-0 font-[family-name:var(--font-rubik)] font-semibold text-[13px] uppercase tracking-[0.06em] text-[#0D7A5F] group-hover:text-[#055240] transition-colors">
+                  See all services
+                  <span className="transition-transform duration-200 group-hover:translate-x-[3px]">→</span>
+                </span>
+              </div>
+            </Link>
 
           </div>
         </section>

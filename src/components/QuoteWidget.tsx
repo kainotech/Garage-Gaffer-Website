@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
+import { SERVICE_CATEGORIES } from "@/data/services";
 
 interface QuoteWidgetProps {
   idSuffix?: string;
@@ -18,9 +19,9 @@ export default function QuoteWidget({ idSuffix = "", defaultService }: QuoteWidg
     e.preventDefault();
     const reg = regRef.current?.value?.trim() ?? "";
     const postcode = postcodeRef.current?.value?.trim() ?? "";
-    const service = serviceRef.current?.value?.trim() ?? "repairs";
-    if (reg && postcode) {
-      router.push(`/booking?reg=${encodeURIComponent(reg)}&postcode=${encodeURIComponent(postcode)}&service=${encodeURIComponent(service || "repairs")}`);
+    const service = serviceRef.current?.value?.trim() ?? "";
+    if (reg && postcode && service) {
+      router.push(`/booking?reg=${encodeURIComponent(reg)}&postcode=${encodeURIComponent(postcode)}&service=${encodeURIComponent(service)}`);
     }
   }
 
@@ -101,12 +102,12 @@ export default function QuoteWidget({ idSuffix = "", defaultService }: QuoteWidg
             className="w-full bg-white border-[1.5px] border-[#DADCDB] rounded-lg pl-10 pr-9 py-3 text-[14px] text-[#1A1E1D] appearance-none hover:border-[#b0bab5] focus:outline-none focus:border-[#0D7A5F] focus:shadow-[0_0_0_3px_rgba(13,122,95,0.12)] transition-all"
             style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23595C5B' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 14px center" }}
           >
-            <option value="">Choose a service</option>
-            <option value="repairs">Repair a specific issue</option>
-            <option value="diagnostics">Run full diagnostics</option>
-            <option value="servicing">Interim service</option>
-            <option value="servicing">Full service</option>
-            <option value="repairs">I&apos;m not sure yet</option>
+            <option value="">Choose a category</option>
+            {SERVICE_CATEGORIES.map((category) => (
+              <option key={category.slug} value={category.slug}>
+                {category.name}
+              </option>
+            ))}
           </select>
         </div>
       </div>

@@ -1,17 +1,13 @@
 "use client";
 
 import type { SelectedItem, BookingSession } from "../useBookingSession";
+import { formatItemPrice, hasCustomQuoteItems, sumFixedPrice } from "../pricing";
 
 interface PriceSummaryPanelProps {
   selectedWork: SelectedItem[];
   session: BookingSession;
   onRemove: (id: string) => void;
   onNextStep: () => void;
-  dealerTotal: number;
-}
-
-function calcTotal(items: SelectedItem[]) {
-  return items.reduce((acc, i) => acc + i.price, 0);
 }
 
 export default function PriceSummaryPanel({
@@ -19,10 +15,9 @@ export default function PriceSummaryPanel({
   session,
   onRemove,
   onNextStep,
-  dealerTotal,
 }: PriceSummaryPanelProps) {
-  const total = calcTotal(selectedWork);
-  const savePercent = dealerTotal > 0 ? Math.round((1 - total / dealerTotal) * 100) : 0;
+  const customQuote = selectedWork.length === 0 || hasCustomQuoteItems(selectedWork);
+  const total = sumFixedPrice(selectedWork);
 
   const car = session.car;
   const vehicleLabel = [car.make, car.model, car.engineCapacity, car.year].filter(Boolean).join(" ");
@@ -33,23 +28,22 @@ export default function PriceSummaryPanel({
       {/* Price header */}
       <div className="psp-price-block">
         <div className="psp-price-row">
-          <span className="psp-price-label">TOTAL PRICE</span>
-          {savePercent > 0 && (
-            <span className="psp-save-badge">You save {savePercent}%</span>
-          )}
+          <span className="psp-price-label">{customQuote ? "YOUR REQUEST" : "TOTAL PRICE"}</span>
         </div>
-        <div className="psp-price-amount">£{total.toFixed(2)}</div>
-        <div className="psp-vat-row">
-          <span className="psp-vat-text">Quote includes VAT where applicable</span>
-          <button className="psp-vat-tooltip" type="button" aria-label="VAT information">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" />
-            </svg>
-          </button>
-        </div>
-        {dealerTotal > 0 && (
-          <span className="psp-dealer-price">£{dealerTotal} at a dealer</span>
+        {customQuote ? (
+          <>
+            <div className="psp-price-amount psp-price-amount--quote">Priced after inspection</div>
+            <p className="psp-vat-text">Your mechanic will confirm the price once they&apos;ve reviewed your booking.</p>
+          </>
+        ) : (
+          <>
+            <div className="psp-price-amount">£{total.toFixed(2)}</div>
+            <div className="psp-vat-row">
+              <span className="psp-vat-text">Quote includes VAT where applicable</span>
+            </div>
+          </>
         )}
+        <p className="psp-vat-text">Labour only — parts, if needed, are quoted separately by your mechanic.</p>
       </div>
 
       {/* Vehicle info */}
@@ -91,7 +85,7 @@ export default function PriceSummaryPanel({
                     </span>
                   )}
                 </div>
-                <span className="psp-item-price">£{item.price}</span>
+                <span className="psp-item-price">{formatItemPrice(item)}</span>
               </div>
             ))}
           </div>
@@ -119,16 +113,6 @@ export default function PriceSummaryPanel({
         </div>
       </div>
 
-      <div className="psp-divider" />
-
-      {/* Klarna */}
-      <p className="psp-klarna">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <rect x="1" y="4" width="22" height="16" rx="2" /><line x1="1" y1="10" x2="23" y2="10" />
-        </svg>
-        Pay in 3 with Klarna. 0% interest.
-      </p>
-
       {/* CTA */}
       <button
         className="btn btn-primary psp-cta"
@@ -155,12 +139,10 @@ export default function PriceSummaryPanel({
         .psp-price-block { display: flex; flex-direction: column; gap: 4px; }
         .psp-price-row { display: flex; align-items: center; justify-content: space-between; }
         .psp-price-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-secondary); }
-        .psp-save-badge { background: var(--color-success); color: #fff; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-full); }
         .psp-price-amount { font-size: 32px; font-weight: 900; font-family: var(--font-open-sans), sans-serif; color: var(--color-text-primary); letter-spacing: -0.5px; }
+        .psp-price-amount--quote { font-size: 20px; letter-spacing: -0.2px; }
         .psp-vat-row { display: flex; align-items: center; gap: 4px; }
         .psp-vat-text { font-size: 11.5px; color: var(--color-text-secondary); }
-        .psp-vat-tooltip { background: none; border: none; cursor: pointer; color: var(--color-text-disabled); padding: 0; display: flex; }
-        .psp-dealer-price { font-size: 12px; color: var(--color-text-disabled); text-decoration: line-through; }
         .psp-vehicle {
           display: flex; align-items: center; gap: 6px;
           background: var(--color-bg); border-radius: var(--radius-md);
@@ -193,8 +175,6 @@ export default function PriceSummaryPanel({
         .psp-extra-row { display: flex; justify-content: space-between; align-items: flex-start; font-size: 13px; color: var(--color-text-secondary); }
         .psp-extra-free { font-weight: 700; color: var(--color-success); }
         .psp-warranty-note { display: block; font-size: 11px; color: var(--color-text-disabled); margin-top: 2px; }
-        .psp-klarna { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--color-text-secondary); margin: 0; }
-        .psp-klarna svg { color: var(--color-accent-purple); }
         .psp-cta { width: 100%; padding: 14px; font-size: 15px; }
         .psp-cta:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         .psp-cta-hint { font-size: 11.5px; color: var(--color-text-disabled); text-align: center; margin: 0; }

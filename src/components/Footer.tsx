@@ -27,10 +27,11 @@ const footerLinks = [
   {
     heading: "Services",
     links: [
-      { label: "Repairs", href: "#services" },
-      { label: "Diagnostics", href: "#services" },
-      { label: "Servicing", href: "#services" },
-      { label: "MOT prep", href: "#services" },
+      { label: "Servicing", href: "/services?category=servicing" },
+      { label: "Brakes", href: "/services?category=brakes" },
+      { label: "Engine & Mechanical", href: "/services?category=engine-mechanical" },
+      { label: "Electrical & Diagnostics", href: "/services?category=electrical-diagnostics" },
+      { label: "All Services", href: "/services" },
     ],
   },
   {

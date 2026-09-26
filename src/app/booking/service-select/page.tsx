@@ -1,56 +1,16 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useBookingSession, BookingSession } from "@/components/booking/useBookingSession";
-
-const SERVICE_CARDS = [
-  {
-    id: "repairs" as BookingSession["service"],
-    title: "Repairs",
-    description: "Fix a specific issue — from brakes and batteries to clutches and starter motors.",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-      </svg>
-    ),
-    iconBg: "#ECF7EF",
-    iconColor: "var(--color-brand-primary)",
-    examples: ["Brake pads", "Battery", "Timing belt", "Clutch"],
-  },
-  {
-    id: "diagnostics" as BookingSession["service"],
-    title: "Diagnostics",
-    description: "Warning light on or something doesn't feel right? We'll identify the problem.",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" />
-      </svg>
-    ),
-    iconBg: "#E6F3FA",
-    iconColor: "var(--color-accent-blue)",
-    examples: ["Engine warning light", "Car won't start", "Plug-in OBD scan"],
-  },
-  {
-    id: "servicing" as BookingSession["service"],
-    title: "Servicing & MOT",
-    description: "Keep your car healthy with an interim service, full service, or MOT with collection.",
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
-      </svg>
-    ),
-    iconBg: "#E4F6F6",
-    iconColor: "var(--color-accent-teal)",
-    examples: ["Interim service", "Full service", "MOT + collection"],
-  },
-];
+import { useBookingSession } from "@/components/booking/useBookingSession";
+import { SERVICE_CATEGORIES } from "@/data/services";
+import { CategoryIcon, accentForIndex } from "@/data/serviceCategoryVisuals";
 
 export default function ServiceSelectPage() {
   const router = useRouter();
   const { updateSession } = useBookingSession();
 
-  function handleSelect(service: BookingSession["service"]) {
-    updateSession({ service });
+  function handleSelect(slug: string) {
+    updateSession({ service: slug });
     router.push("/booking/step-2");
   }
 
@@ -60,61 +20,69 @@ export default function ServiceSelectPage() {
         <div className="ss-header">
           <span className="eyebrow">Almost there</span>
           <h1 className="ss-title">What do you need help with?</h1>
-          <p className="ss-subtitle">Select a category to see your options and pricing.</p>
+          <p className="ss-subtitle">Select a category to see what&apos;s included.</p>
         </div>
 
         <div className="ss-cards">
-          {SERVICE_CARDS.map((card) => (
-            <button
-              key={card.id}
-              className="ss-card"
-              onClick={() => handleSelect(card.id)}
-              type="button"
-              aria-label={`Select ${card.title}`}
-            >
-              <div
-                className="ss-card-icon"
-                style={{ background: card.iconBg, color: card.iconColor }}
+          {SERVICE_CATEGORIES.map((category, i) => {
+            const colors = accentForIndex(i);
+            return (
+              <button
+                key={category.slug}
+                className="ss-card"
+                onClick={() => handleSelect(category.slug)}
+                type="button"
+                aria-label={`Select ${category.name}`}
               >
-                {card.icon}
-              </div>
-              <h2 className="ss-card-title">{card.title}</h2>
-              <p className="ss-card-desc">{card.description}</p>
-              <ul className="ss-card-examples">
-                {card.examples.map((ex) => (
-                  <li key={ex} className="ss-card-example">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                    {ex}
-                  </li>
-                ))}
-              </ul>
-              <div className="ss-card-cta">
-                See prices
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M5 12h14M13 6l6 6-6 6" />
-                </svg>
-              </div>
-            </button>
-          ))}
+                <div className="ss-card-header">
+                  <div
+                    className="ss-card-icon"
+                    style={{ background: colors.well, color: colors.accent }}
+                  >
+                    <CategoryIcon slug={category.slug} className="w-5 h-5" />
+                  </div>
+                  <div className="ss-card-text">
+                    <h2 className="ss-card-title">{category.name}</h2>
+                    <p className="ss-card-count">{category.services.length} services</p>
+                  </div>
+                  <svg className="ss-card-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </div>
+                <ul className="ss-card-list">
+                  {category.services.slice(0, 3).map((service) => (
+                    <li key={service.name} className="ss-card-list-item">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      {service.name}
+                    </li>
+                  ))}
+                </ul>
+              </button>
+            );
+          })}
         </div>
       </div>
 
       <style jsx>{`
         .ss-outer {
-          padding: 48px 24px 80px;
+          min-height: calc(100vh - 144px);
+          display: flex;
+          align-items: center;
+          padding: 48px 24px;
         }
         .ss-inner {
-          max-width: 960px;
+          max-width: 1280px;
           margin: 0 auto;
+          width: 100%;
         }
         .ss-header {
           text-align: center;
-          margin-bottom: 40px;
+          margin-bottom: 36px;
         }
         .ss-title {
-          font-size: 32px;
+          font-size: 34px;
           font-weight: 800;
           letter-spacing: -0.5px;
           margin-bottom: 10px;
@@ -126,107 +94,108 @@ export default function ServiceSelectPage() {
         }
         .ss-cards {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 20px;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 22px;
         }
         .ss-card {
           background: #fff;
-          border: 2px solid var(--color-divider);
+          border: 1.5px solid var(--color-divider);
           border-radius: var(--radius-xl);
-          padding: 32px 28px;
+          padding: 26px;
           text-align: left;
           cursor: pointer;
           transition:
-            border-color var(--t-base),
-            box-shadow var(--t-base),
-            transform var(--t-base);
+            border-color var(--t-fast),
+            box-shadow var(--t-fast),
+            transform var(--t-fast);
           display: flex;
           flex-direction: column;
-          gap: 12px;
+          gap: 18px;
         }
         .ss-card:hover {
           border-color: var(--color-brand-primary);
           box-shadow: var(--shadow-lg);
-          transform: translateY(-3px);
+          transform: translateY(-2px);
+        }
+        .ss-card-header {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          min-height: 62px;
         }
         .ss-card-icon {
-          width: 52px;
-          height: 52px;
-          border-radius: var(--radius-lg);
+          width: 46px;
+          height: 46px;
+          border-radius: var(--radius-md);
           display: flex;
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
         }
-        .ss-card-icon :global(svg) {
-          width: 24px;
-          height: 24px;
-        }
-        .ss-card-title {
-          font-size: 20px;
-          font-weight: 800;
-          color: var(--color-text-primary);
-          margin: 0;
-        }
-        .ss-card-desc {
-          font-size: 14px;
-          color: var(--color-text-secondary);
-          line-height: 1.6;
-          margin: 0;
+        .ss-card-text {
+          min-width: 0;
           flex: 1;
         }
-        .ss-card-examples {
-          list-style: none;
-          padding: 0;
+        .ss-card-title {
+          font-size: 16px;
+          font-weight: 700;
+          color: var(--color-text-primary);
           margin: 0;
+          line-height: 1.3;
+        }
+        .ss-card-count {
+          font-size: 12.5px;
+          color: var(--color-text-secondary);
+          margin: 2px 0 0;
+        }
+        .ss-card-arrow {
+          color: var(--color-text-disabled);
+          flex-shrink: 0;
+          transition: transform var(--t-fast), color var(--t-fast);
+        }
+        .ss-card:hover .ss-card-arrow {
+          color: var(--color-brand-primary);
+          transform: translateX(2px);
+        }
+        .ss-card-list {
+          list-style: none;
+          padding: 14px 0 0;
+          margin: 0;
+          border-top: 1px solid var(--color-divider);
           display: flex;
           flex-direction: column;
-          gap: 6px;
+          gap: 9px;
         }
-        .ss-card-example {
+        .ss-card-list-item {
           display: flex;
           align-items: center;
-          gap: 7px;
-          font-size: 13px;
+          gap: 8px;
+          font-size: 13.5px;
           color: var(--color-text-secondary);
         }
-        .ss-card-example :global(svg) {
+        .ss-card-list-item svg {
           color: var(--color-brand-primary);
           flex-shrink: 0;
         }
-        .ss-card-cta {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          font-family: var(--font-rubik), sans-serif;
-          font-size: 13px;
-          font-weight: 700;
-          color: var(--color-brand-primary);
-          margin-top: 4px;
+
+        @media (max-width: 1100px) {
+          .ss-cards {
+            grid-template-columns: repeat(2, 1fr);
+          }
         }
 
-        @media (max-width: 860px) {
+        @media (max-width: 560px) {
+          .ss-outer {
+            min-height: 0;
+            padding: 32px 20px;
+          }
           .ss-cards {
             grid-template-columns: 1fr;
-            max-width: 480px;
-            margin: 0 auto;
-          }
-          .ss-card {
-            flex-direction: row;
-            flex-wrap: wrap;
-            align-items: flex-start;
-          }
-          .ss-card-icon {
-            width: 44px;
-            height: 44px;
-          }
-          .ss-card-title {
-            font-size: 18px;
           }
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .ss-card {
+          .ss-card, .ss-card-arrow {
             transition: none;
           }
         }

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useBookingSession, SelectedItem } from "@/components/booking/useBookingSession";
 import BookingOrderSummary from "@/components/booking/BookingOrderSummary";
-import UpsellSection from "@/components/booking/step3/UpsellSection";
 import YourDetailsForm from "@/components/booking/step3/YourDetailsForm";
 import BookingAddressForm from "@/components/booking/step3/BookingAddressForm";
 import AvailabilityGrid from "@/components/booking/step3/AvailabilityGrid";
@@ -68,15 +67,6 @@ export default function Step3Page() {
     setDetails((prev) => ({ ...prev, [field]: value }));
   }
 
-  function handleUpsellAdd(item: SelectedItem) {
-    setSelectedWork((prev) => {
-      if (prev.find((i) => i.id === item.id)) return prev;
-      const updated = [...prev, item];
-      updateSession({ selectedWork: updated });
-      return updated;
-    });
-  }
-
   function toggleAvailability(key: string) {
     setDetails((prev) => {
       const avail = prev.availability.includes(key)
@@ -117,11 +107,6 @@ export default function Step3Page() {
       <BookingOrderSummary session={sessionForSummary} />
 
       <div className="s3-outer container">
-        {/* Upsell */}
-        <div className="s3-section">
-          <UpsellSection existingWork={selectedWork} onAdd={handleUpsellAdd} />
-        </div>
-
         {/* Your details */}
         <div className="s3-section s3-form-card">
           <h2 className="s3-section-title">Your details</h2>

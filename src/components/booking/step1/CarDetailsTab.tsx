@@ -1,33 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
-const MAKES = ["Audi", "BMW", "Citroën", "Ford", "Honda", "Hyundai", "Kia", "Mazda", "Mercedes-Benz", "Nissan", "Peugeot", "Renault", "Seat", "Skoda", "Toyota", "Vauxhall", "Volkswagen", "Volvo"];
-
-const MODELS_BY_MAKE: Record<string, string[]> = {
-  "Audi": ["A1", "A3", "A4", "A5", "A6", "Q3", "Q5", "Q7", "TT"],
-  "BMW": ["1 Series", "2 Series", "3 Series", "4 Series", "5 Series", "X1", "X3", "X5"],
-  "Ford": ["Fiesta", "Focus", "Kuga", "Mondeo", "Puma", "Ranger", "Transit"],
-  "Toyota": ["Aygo", "Corolla", "GR Yaris", "RAV4", "Yaris"],
-  "Volkswagen": ["Golf", "Passat", "Polo", "T-Cross", "T-Roc", "Tiguan", "Up"],
-  "Vauxhall": ["Astra", "Corsa", "Crossland", "Grandland", "Insignia", "Mokka"],
-  "Honda": ["Civic", "CR-V", "HR-V", "Jazz"],
-  "Hyundai": ["i10", "i20", "i30", "Ioniq", "Kona", "Tucson"],
-  "Kia": ["Ceed", "Niro", "Picanto", "Rio", "Sportage", "Stonic"],
-  "Mercedes-Benz": ["A-Class", "B-Class", "C-Class", "CLA", "E-Class", "GLA", "GLC"],
-  "Nissan": ["Juke", "Leaf", "Micra", "Qashqai", "X-Trail"],
-  "Peugeot": ["108", "208", "2008", "308", "3008", "508"],
-  "Renault": ["Captur", "Clio", "Megane", "Zoe"],
-  "Seat": ["Arona", "Ateca", "Ibiza", "Leon", "Tarraco"],
-  "Skoda": ["Fabia", "Kamiq", "Karoq", "Kodiaq", "Octavia", "Superb"],
-  "Citroën": ["C1", "C3", "C3 Aircross", "C4", "C5 Aircross"],
-  "Mazda": ["CX-3", "CX-5", "CX-30", "Mazda2", "Mazda3"],
-  "Volvo": ["S60", "S90", "V40", "V60", "V90", "XC40", "XC60", "XC90"],
-};
-
-const FUEL_TYPES = ["Petrol", "Diesel", "Hybrid", "Plug-in Hybrid", "Electric", "LPG"];
-const ENGINE_SIZES = ["1.0L", "1.2L", "1.4L", "1.5L", "1.6L", "1.8L", "2.0L", "2.5L", "3.0L", "Other"];
-const YEARS = Array.from({ length: 26 }, (_, i) => String(2025 - i));
+import {
+  MAKES,
+  MODELS_BY_MAKE,
+  VEHICLE_TYPE_BY_MAKE_MODEL,
+  FUEL_TYPES,
+  YEARS,
+  ENGINE_SIZES_BY_VEHICLE_TYPE,
+} from "@/data/vehicleMakes";
 
 export interface CarDetailsValues {
   make: string;
@@ -235,6 +216,10 @@ function CustomSelect({ id, label, value, onChange, options, placeholder, disabl
 /* ── Main component ── */
 export default function CarDetailsTab({ values, onChange }: CarDetailsTabProps) {
   const models = values.make ? (MODELS_BY_MAKE[values.make] ?? []) : [];
+  const vehicleType = values.make && values.model
+    ? VEHICLE_TYPE_BY_MAKE_MODEL[`${values.make}::${values.model}`] ?? "car"
+    : "car";
+  const engineSizes = ENGINE_SIZES_BY_VEHICLE_TYPE[vehicleType];
 
   return (
     <div className="cdt-stack">
@@ -244,7 +229,12 @@ export default function CarDetailsTab({ values, onChange }: CarDetailsTabProps) 
         value={values.make}
         placeholder="Select make"
         options={MAKES}
-        onChange={(v) => { onChange("make", v); onChange("model", ""); }}
+        onChange={(v) => {
+          onChange("make", v);
+          onChange("model", "");
+          onChange("fuelType", "");
+          onChange("engineCapacity", "");
+        }}
       />
 
       <CustomSelect
@@ -254,7 +244,7 @@ export default function CarDetailsTab({ values, onChange }: CarDetailsTabProps) 
         placeholder="Select model"
         options={models}
         disabled={!values.make}
-        onChange={(v) => onChange("model", v)}
+        onChange={(v) => { onChange("model", v); onChange("engineCapacity", ""); }}
       />
 
       <CustomSelect
@@ -272,7 +262,7 @@ export default function CarDetailsTab({ values, onChange }: CarDetailsTabProps) 
         label="Engine size"
         value={values.engineCapacity}
         placeholder="Select engine size"
-        options={ENGINE_SIZES}
+        options={engineSizes}
         disabled={!values.fuelType}
         onChange={(v) => onChange("engineCapacity", v)}
       />
