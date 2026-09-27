@@ -30,9 +30,8 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files - never pushed, no exceptions
 .env*
-!.env.example
 
 # vercel
 .vercel
@@ -44,6 +43,10 @@ next-env.d.ts
 # editor
 .vscode/
 .idea/
+
+# markdown docs - not pushed by default; commit one explicitly (git add -f)
+# only when asked to. Does not affect .md files already tracked in git.
+*.md
 
 # raw design source files - already copied into public/ or src/app/
 # under the filenames the app actually uses; these are just the originals
