@@ -1,3 +1,5 @@
+import type { VehicleType } from "@/data/pricingConfig";
+
 /**
  * Clean shape the rest of the app consumes. Every field is optional: any
  * field the upstream response can't be confidently mapped to (see parse.ts)
@@ -12,6 +14,13 @@ export interface VehicleLookupResult {
   engineCapacity?: string;
   year?: string;
   colour?: string;
+  /**
+   * Set only when DVLA's Vehicle Enquiry Service (a separate, best-effort
+   * lookup - see src/lib/ves/client.ts) confirms the category from its
+   * official type-approval data. Undefined means the caller should fall
+   * back to the make/model guess table instead.
+   */
+  vehicleType?: VehicleType;
 }
 
 export class InvalidRegistrationError extends Error {

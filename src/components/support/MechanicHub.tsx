@@ -48,7 +48,7 @@ export default function MechanicHub() {
               {quickLinks.map((link, i) => (
                 <a
                   key={i}
-                  href="#"
+                  href="/become-a-mechanic"
                   className="group flex items-center justify-between py-4 border-b border-[#EAECEA] hover:text-[#0D7A5F] transition-all"
                 >
                   <span className="font-[family-name:var(--font-rubik)] text-[14px] text-[#0D7A5F]">
@@ -86,7 +86,7 @@ export default function MechanicHub() {
               </div>
 
               <a
-                href="#"
+                href="/become-a-mechanic"
                 className="btn btn-primary w-full py-4 rounded-xl flex items-center justify-center gap-2 bg-[#0D7A5F] text-white font-[family-name:var(--font-rubik)] font-semibold text-[15px] shadow-[0_2px_8px_rgba(13,122,95,0.25)] hover:bg-[#055240] transition-all"
               >
                 Apply to join

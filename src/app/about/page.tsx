@@ -84,7 +84,7 @@ export default function AboutPage() {
             </p>
 
             <p className="font-[family-name:var(--font-rubik)] text-[16px] leading-[1.75] text-[#595C5B] reveal">
-              That&apos;s the gap Garage Gaffer is for. A place where drivers can post a job and hear from mechanics who&apos;ve actually been checked — not just listed. Where the quote is itemised before you commit. Where the person doing the work is accountable, not anonymous.
+              That&apos;s the gap Garage Gaffer is for. Tell us your reg and what you need, and we&apos;ll show you a clear, upfront price straight away — no ringing round, no waiting on a callback. Book the slot that suits you, and a mechanic who&apos;s actually been checked — not just listed — comes to you.
             </p>
           </div>
         </section>
@@ -130,7 +130,7 @@ export default function AboutPage() {
 
             {/* Coverage note */}
             <p className="font-[family-name:var(--font-rubik)] text-[13.5px] leading-[1.6] text-[#595C5B] text-center reveal">
-              Not sure if we cover your area? Enter your postcode when you post a job and we&apos;ll show you who&apos;s nearby.
+              Not sure if we cover your area? Enter your postcode when you get your price and we&apos;ll confirm we can reach you.
             </p>
           </div>
         </section>

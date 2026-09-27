@@ -58,7 +58,10 @@ export default function CategoryTab({ categorySlug, vehicleType, selectedWork, o
                   <span className="ct-item-desc">{service.description}</span>
                 </div>
                 <div className="ct-item-right">
-                  <span className="ct-item-price">{formatItemPrice({ id, name: service.name, price })}</span>
+                  <span className="ct-item-price-col">
+                    <span className="ct-item-price">{formatItemPrice({ id, name: service.name, price })}</span>
+                    <span className="ct-item-time">Est. {labourTime} labour</span>
+                  </span>
                   <button
                     className={`ct-item-btn${added ? " ct-item-btn--remove" : ""}`}
                     onClick={() => (added ? onRemove(id) : onAdd({ id, name: service.name, price, labourTime }))}
@@ -101,10 +104,12 @@ export default function CategoryTab({ categorySlug, vehicleType, selectedWork, o
         .ct-item-name { font-size: 14px; font-weight: 600; color: var(--color-text-primary); }
         .ct-item-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
         .ct-item-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+        .ct-item-price-col { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
         .ct-item-price {
           font-size: 12px; font-weight: 700; color: var(--color-brand-primary);
           text-transform: uppercase; letter-spacing: 0.04em;
         }
+        .ct-item-time { font-size: 10.5px; color: var(--color-text-disabled); white-space: nowrap; }
         .ct-item-btn {
           padding: 6px 14px; border-radius: var(--radius-md);
           background: var(--color-brand-primary); color: #fff;

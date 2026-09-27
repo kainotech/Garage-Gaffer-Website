@@ -3,12 +3,12 @@ import type { VehicleLookupResult } from "./types";
 /**
  * The only place that knows the upstream MOT History API's field names.
  *
- * TODO: confirm exact field names once a real sample response is available
- * from the DVSA developer portal - the public docs did not expose the full
- * schema for the real-time single-registration lookup. This is written
- * against the commonly-documented shape of the DVSA "MOT tests by
- * registration" response; verify make/model/fuelType/engineCapacity/colour
- * field names against a real response before relying on this in production.
+ * Confirmed against the published OpenAPI spec (VehicleWithMotResponse /
+ * NewRegVehicleResponse schemas) at
+ * https://documentation.history.mot.api.gov.uk/mot-history-api/api-specification/mot_history_open_api_specification.yml
+ * The response is one of those two shapes depending on whether the vehicle
+ * has any MOT tests yet; only NewRegVehicleResponse has manufactureYear
+ * directly, so VehicleWithMotResponse falls back to deriving it from a date.
  */
 export function mapMotHistoryResponseToVehicleDetails(
   raw: unknown,
@@ -22,7 +22,9 @@ export function mapMotHistoryResponseToVehicleDetails(
     model: asString(data.model),
     fuelType: asString(data.fuelType),
     engineCapacity: asString(data.engineSize),
-    year: yearFromDate(asString(data.manufactureDate) ?? asString(data.registrationDate)),
+    year:
+      asString(data.manufactureYear) ??
+      yearFromDate(asString(data.manufactureDate) ?? asString(data.registrationDate)),
     colour: asString(data.primaryColour),
   };
 }

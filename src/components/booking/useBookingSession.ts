@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import type { VehicleType } from "@/data/pricingConfig";
 
 export type SelectedItem = {
@@ -36,11 +38,14 @@ export type BookingSession = {
     city: string;
     postcode: string;
     phone: string;
-    availability: string[];
+    /** dateSlotKey ("YYYY-MM-DD_HH:MM") of the single chosen repair slot, or null if not yet picked */
+    availability: string | null;
     drivable: boolean;
     instructions?: string;
   };
   completedSteps: number[];
+  /** true once the customer has confirmed the booking on Step 4 — locks the flow against further edits */
+  confirmed: boolean;
 };
 
 const SESSION_KEY = "booking_session";
@@ -59,11 +64,12 @@ const DEFAULT_SESSION: BookingSession = {
     city: "",
     postcode: "",
     phone: "",
-    availability: [],
+    availability: null,
     drivable: true,
     instructions: "",
   },
   completedSteps: [],
+  confirmed: false,
 };
 
 export function useBookingSession() {
@@ -107,4 +113,23 @@ export function useBookingSession() {
   }
 
   return { getSession, updateSession, markStepComplete, clearSession };
+}
+
+/**
+ * Redirects away from an editable booking step once the booking has been confirmed,
+ * so a customer can't use the back button (or a direct link) to reopen and change
+ * a booking that's already gone through. Pass `enabled: false` on a page's
+ * "start a brand new booking" entry path, so that fresh entry can reset the lock
+ * itself instead of being redirected away before it gets the chance to.
+ */
+export function useBookingLockGuard(enabled: boolean = true): void {
+  const router = useRouter();
+  const { getSession } = useBookingSession();
+
+  useEffect(() => {
+    if (enabled && getSession().confirmed) {
+      router.replace("/booking/confirmation");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enabled]);
 }

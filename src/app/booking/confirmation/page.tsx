@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useBookingSession, BookingSession } from "@/components/booking/useBookingSession";
 import { formatItemPrice, hasCustomQuoteItems, sumFixedPrice } from "@/components/booking/pricing";
+import { formatSlotLabel } from "@/components/booking/step3/AvailabilityGrid";
 
 function generateRef(): string {
   const n = Math.floor(10000 + Math.random() * 90000);
@@ -16,9 +17,12 @@ export default function ConfirmationPage() {
   const [ref] = useState(generateRef);
 
   useEffect(() => {
+    // Deliberately deferred to after mount (not read during render): getSession()
+    // reads sessionStorage, which would produce a server/client mismatch since
+    // the server has no storage to read from.
     const s = getSession();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSession(s);
-    clearSession();
   }, []);
 
   const customQuote = (session?.selectedWork.length ?? 0) === 0 || hasCustomQuoteItems(session?.selectedWork ?? []);
@@ -90,8 +94,15 @@ export default function ConfirmationPage() {
             </div>
           )}
 
+          {session.details?.availability && (
+            <div className="conf-row">
+              <span className="conf-row-label">Date &amp; time</span>
+              <span className="conf-row-val">{formatSlotLabel(session.details.availability)}</span>
+            </div>
+          )}
+
           <div className="conf-total-row">
-            <span className="conf-total-label">Total</span>
+            <span className="conf-total-label">Labour fee</span>
             <span className="conf-total-amount">
               {customQuote ? "Priced after inspection" : `£${total.toFixed(2)}`}
             </span>
@@ -103,13 +114,13 @@ export default function ConfirmationPage() {
             </svg>
             You will only be charged after the work is complete.
           </p>
-          <p className="conf-payment-note">Labour only — parts, if needed, are quoted separately by your mechanic.</p>
+          <p className="conf-payment-note">This is the labour fee. If parts are needed, we&apos;ll send a full quotation — with your date confirmed — within 1 working day.</p>
         </div>
       )}
 
       {/* Trust points */}
       <div className="conf-trust">
-        {["12-month parts & labour warranty", "Fully vetted & insured mechanics", "Free cancellation up to 24hrs"].map((t) => (
+        {["Fully vetted & insured mechanics", "Parts quoted within 1 working day"].map((t) => (
           <div key={t} className="conf-trust-item">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <polyline points="20 6 9 17 4 12" />
@@ -121,7 +132,7 @@ export default function ConfirmationPage() {
 
       {/* CTAs */}
       <div className="conf-ctas">
-        <Link href="/" className="btn btn-primary conf-home-btn">
+        <Link href="/" className="btn btn-primary conf-home-btn" onClick={() => clearSession()}>
           Back to Home
         </Link>
         <Link href="/support" className="btn btn-outline conf-support-btn">

@@ -2,14 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useBookingSession } from "@/components/booking/useBookingSession";
+import { useBookingSession, useBookingLockGuard } from "@/components/booking/useBookingSession";
 import BookingOrderSummary from "@/components/booking/BookingOrderSummary";
-import PaymentForm from "@/components/booking/step4/PaymentForm";
 
-const WHY_CARD_POINTS = [
+const REASSURANCE_POINTS = [
   {
-    title: "We Won't Charge You",
-    desc: "You won't pay a penny until the work is complete.",
+    title: "You Won't Be Charged Today",
+    desc: "No card details needed — we only take payment once the work is complete.",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <rect x="1" y="4" width="22" height="16" rx="2" /><line x1="1" y1="10" x2="23" y2="10" />
@@ -17,20 +16,11 @@ const WHY_CARD_POINTS = [
     ),
   },
   {
-    title: "Extra Protection",
-    desc: "If any issues arise after the booking it's easier to refund you.",
+    title: "Parts Quoted Within a Day",
+    desc: "The price above is the labour fee. If your job needs spare parts, we'll review it and send a full quotation — with your date confirmed — within 1 working day.",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      </svg>
-    ),
-  },
-  {
-    title: "Free Cancellation",
-    desc: "Up to 24 hours before the booking.",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
       </svg>
     ),
   },
@@ -38,15 +28,23 @@ const WHY_CARD_POINTS = [
 
 export default function Step4Page() {
   const router = useRouter();
-  const { getSession, markStepComplete } = useBookingSession();
+  const { getSession, updateSession, markStepComplete } = useBookingSession();
+  useBookingLockGuard();
   const [session, setSession] = useState(getSession);
+  const [confirming, setConfirming] = useState(false);
 
   useEffect(() => {
+    // Deliberately deferred to after mount (not read during render): getSession()
+    // reads sessionStorage, which would produce a server/client mismatch since
+    // the server has no storage to read from.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSession(getSession());
   }, []);
 
-  function handlePay() {
+  function handleConfirm() {
+    setConfirming(true);
     markStepComplete(4);
+    updateSession({ confirmed: true });
     router.push("/booking/confirmation");
   }
 
@@ -55,11 +53,11 @@ export default function Step4Page() {
       <BookingOrderSummary session={session} showTrustBadges />
 
       <div className="s4-outer container">
-        {/* Why card details */}
+        {/* Reassurance points */}
         <div className="s4-why-card">
-          <h2 className="s4-why-title">Why provide your card details now?</h2>
+          <h2 className="s4-why-title">Before you confirm</h2>
           <div className="s4-why-points">
-            {WHY_CARD_POINTS.map((pt) => (
+            {REASSURANCE_POINTS.map((pt) => (
               <div key={pt.title} className="s4-why-point">
                 <div className="s4-why-icon">{pt.icon}</div>
                 <div>
@@ -71,10 +69,22 @@ export default function Step4Page() {
           </div>
         </div>
 
-        {/* Payment form */}
+        {/* Confirm booking */}
         <div className="s4-form-card">
-          <h2 className="s4-form-title">Payment details</h2>
-          <PaymentForm onSubmit={handlePay} />
+          <h2 className="s4-form-title">Confirm your booking</h2>
+          <p className="s4-confirm-copy">
+            A mechanic will be assigned and will be in touch ahead of your
+            chosen time. You&apos;ll only be charged once the work is done.
+          </p>
+          <button
+            type="button"
+            className="btn btn-primary s4-confirm-btn"
+            onClick={handleConfirm}
+            disabled={confirming}
+            aria-busy={confirming}
+          >
+            {confirming ? "Confirming…" : "Confirm booking"}
+          </button>
         </div>
       </div>
 
@@ -102,6 +112,9 @@ export default function Step4Page() {
           padding: 28px; box-shadow: var(--shadow-sm);
         }
         .s4-form-title { font-size: 17px; font-weight: 800; margin-bottom: 20px; }
+        .s4-confirm-copy { font-size: 14px; color: var(--color-text-secondary); line-height: 1.6; margin: 0 0 20px; }
+        .s4-confirm-btn { width: 100%; padding: 16px; font-size: 15px; }
+        .s4-confirm-btn:disabled { opacity: 0.7; cursor: not-allowed; }
 
         @media (max-width: 560px) {
           .s4-why-card, .s4-form-card { padding: 20px 16px; }

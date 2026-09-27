@@ -59,13 +59,7 @@ export default function PriceSummaryStickyBar({
 
           <div className="pssb-divider" />
 
-          <div className="pssb-extras">
-            <div className="pssb-extra"><span>Booking fee</span><span className="pssb-free">FREE</span></div>
-            <div className="pssb-extra"><span>Collection &amp; Delivery</span><span className="pssb-free">FREE</span></div>
-            <div className="pssb-extra"><span>12-Month Warranty</span><span className="pssb-free">FREE</span></div>
-          </div>
-
-          <p className="pssb-note">Quote includes VAT where applicable. Labour only — parts, if needed, are quoted separately by your mechanic.</p>
+          <p className="pssb-note">This is the labour fee, including VAT where applicable. If parts are needed, we&apos;ll send a full quotation — with your date confirmed — within 1 working day.</p>
         </div>
       )}
 
@@ -106,7 +100,10 @@ export default function PriceSummaryStickyBar({
       <style jsx>{`
         .pssb-outer {
           position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-          display: none; /* shown only on mobile via responsive control in parent */
+          display: none;
+        }
+        @media (max-width: 960px) {
+          .pssb-outer { display: flex; flex-direction: column; }
         }
         .pssb-expanded {
           background: #fff; border-top: 1px solid var(--color-divider);
@@ -132,9 +129,6 @@ export default function PriceSummaryStickyBar({
         .pssb-item-name { flex: 1; font-size: 13px; color: var(--color-text-primary); }
         .pssb-item-price { font-size: 13px; font-weight: 700; }
         .pssb-divider { height: 1px; background: var(--color-divider); }
-        .pssb-extras { display: flex; flex-direction: column; gap: 6px; padding-bottom: 4px; }
-        .pssb-extra { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--color-text-secondary); }
-        .pssb-free { font-weight: 700; color: var(--color-success); }
         .pssb-note { font-size: 11px; color: var(--color-text-disabled); margin: 4px 0 0; line-height: 1.5; }
         .pssb-bar {
           background: #fff; border-top: 1px solid var(--color-divider);

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useBookingSession } from "@/components/booking/useBookingSession";
+import { useBookingSession, useBookingLockGuard } from "@/components/booking/useBookingSession";
 import NumberPlateTab from "@/components/booking/step1/NumberPlateTab";
 import CarDetailsTab, { CarDetailsValues } from "@/components/booking/step1/CarDetailsTab";
 import { VEHICLE_TYPE_BY_MAKE_MODEL } from "@/data/vehicleMakes";
@@ -17,21 +17,30 @@ function Step1Content() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { getSession, updateSession, markStepComplete, clearSession } = useBookingSession();
+  useBookingLockGuard(searchParams.get("clear") !== "true");
 
-  const [activeTab, setActiveTab] = useState<"plate" | "details">("plate");
-  const [reg, setReg] = useState("");
-  const [postcode, setPostcode] = useState("");
+  const [activeTab, setActiveTab] = useState<"plate" | "details">(
+    () => (searchParams.get("tab") === "details" ? "details" : "plate")
+  );
+  const [reg, setReg] = useState(() => searchParams.get("reg") ?? "");
+  const [postcode, setPostcode] = useState(() => searchParams.get("postcode") ?? "");
   const [carDetails, setCarDetails] = useState<CarDetailsValues>({
     make: "", model: "", fuelType: "", engineCapacity: "", year: "", postcode: "",
   });
   const [error, setError] = useState("");
   const [isLookingUp, setIsLookingUp] = useState(false);
 
+  const hasQueryCarDetails = Boolean(searchParams.get("reg") || searchParams.get("postcode"));
+
   useEffect(() => {
-    if (searchParams.get("clear") === "true") {
+    if (searchParams.get("clear") === "true" || hasQueryCarDetails) {
       clearSession();
     } else {
+      // Deliberately deferred to after mount (not read during render): getSession()
+      // reads sessionStorage, which would produce a server/client mismatch since
+      // the server has no storage to read from.
       const s = getSession();
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (s.car.reg) setReg(s.car.reg);
       if (s.car.postcode) setPostcode(s.car.postcode);
       if (s.car.make) {
@@ -80,10 +89,15 @@ function Step1Content() {
 
         const vehicle = data.vehicle as {
           make?: string; model?: string; fuelType?: string; engineCapacity?: string; year?: string;
+          vehicleType?: "car" | "motorcycle" | "lgv" | "hgv" | "bus";
         };
-        const vehicleType = vehicle.make && vehicle.model
-          ? VEHICLE_TYPE_BY_MAKE_MODEL[`${vehicle.make}::${vehicle.model}`] ?? "car"
-          : "car";
+        // vehicle.vehicleType, when present, comes from DVLA's official
+        // type-approval category (via VES) - preferred over the make/model
+        // guess table, which is only a fallback for when that lookup fails.
+        const vehicleType = vehicle.vehicleType
+          ?? (vehicle.make && vehicle.model
+            ? VEHICLE_TYPE_BY_MAKE_MODEL[`${vehicle.make}::${vehicle.model}`] ?? "car"
+            : "car");
 
         updateSession({
           car: {

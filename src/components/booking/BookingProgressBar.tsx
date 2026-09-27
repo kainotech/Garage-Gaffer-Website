@@ -28,7 +28,11 @@ export default function BookingProgressBar() {
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
 
   useEffect(() => {
+    // Deliberately deferred to after mount (not read during render): getSession()
+    // reads sessionStorage, which would produce a server/client mismatch since
+    // the server has no storage to read from.
     const session = getSession();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCompletedSteps(session.completedSteps ?? []);
   }, [pathname]); // re-read on every navigation
 
@@ -150,10 +154,10 @@ export default function BookingProgressBar() {
         .progress-circle--active {
           border-color: var(--color-brand-primary);
           box-shadow: 0 0 0 4px rgba(13, 122, 95, 0.15);
-          background: #fff;
+          background: var(--color-brand-primary);
         }
         .progress-circle--active .progress-circle-num {
-          color: var(--color-brand-primary);
+          color: #fff;
           font-weight: 800;
         }
         .progress-circle--clickable {

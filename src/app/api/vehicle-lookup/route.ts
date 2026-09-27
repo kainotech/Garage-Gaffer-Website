@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { lookupVehicleByRegistration } from "@/lib/mot-history/client";
 import { InvalidRegistrationError, NotFoundError } from "@/lib/mot-history/types";
+import { getVehicleTypeFromVes } from "@/lib/ves/client";
 
 // Matches current UK plate format (AB12CDE) with an optional space; loose
 // enough to also allow older/NI formats through to the API, which is the
@@ -31,7 +32,8 @@ export async function POST(request: Request) {
 
   try {
     const vehicle = await lookupVehicleByRegistration(registration);
-    return NextResponse.json({ vehicle });
+    const vehicleType = await getVehicleTypeFromVes(registration);
+    return NextResponse.json({ vehicle: { ...vehicle, vehicleType } });
   } catch (err) {
     if (err instanceof NotFoundError) {
       return NextResponse.json(

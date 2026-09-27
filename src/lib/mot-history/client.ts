@@ -5,20 +5,25 @@ import { InvalidRegistrationError, NotFoundError, UpstreamError, type VehicleLoo
 const REQUEST_TIMEOUT_MS = 8_000;
 
 /**
- * Real-time single-registration lookup path. Only the bulk-download path
- * (/v1/trade/vehicles/bulk-download) was confirmed from public docs - this
- * path is a placeholder pending confirmation against the DVSA developer
- * portal spec. Update this one constant once confirmed.
+ * Real-time single-registration lookup path. Confirmed against the published
+ * OpenAPI spec (GET /v1/trade/vehicles/registration/{registration}):
+ * https://documentation.history.mot.api.gov.uk/mot-history-api/api-specification/mot_history_open_api_specification.yml
  */
 const LOOKUP_PATH = (registration: string) => `/v1/trade/vehicles/registration/${registration}`;
 
 /**
- * Unlike the token URL/scope/client credentials (which are issued per
- * registration), the data API's host is the same fixed public endpoint for
- * every DVSA trade API user - it isn't something you're individually given.
- * This default is a best guess (not confirmed against the real spec); set
- * MOT_HISTORY_API_BASE_URL in .env.local to override it if the real one
- * turns out to differ.
+ * Confirmed against the OpenAPI spec's `servers` entry (see LOOKUP_PATH
+ * comment) - the same fixed public host for every DVSA trade API user, not
+ * something issued per registration. Overridable via MOT_HISTORY_API_BASE_URL
+ * in case DVSA ever moves it.
+ *
+ * Confirmed root cause of local "lookup failed" errors: this host sits
+ * behind Incapsula bot-protection that 403s any request from a non-UK IP,
+ * independent of our code (reproduced with a bare fetch, bypassing this
+ * file entirely - the OAuth token exchange against a different host
+ * succeeds fine). vercel.json pins deploys to lhr1 (London) so production
+ * calls this API from a UK IP; to test the real lookup locally, route
+ * outbound traffic through a UK IP (e.g. a UK VPN/proxy).
  */
 const DEFAULT_BASE_URL = "https://history.mot.api.gov.uk";
 

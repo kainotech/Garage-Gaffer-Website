@@ -28,7 +28,7 @@ export default function PriceSummaryPanel({
       {/* Price header */}
       <div className="psp-price-block">
         <div className="psp-price-row">
-          <span className="psp-price-label">{customQuote ? "YOUR REQUEST" : "TOTAL PRICE"}</span>
+          <span className="psp-price-label">{customQuote ? "YOUR REQUEST" : "LABOUR FEE"}</span>
         </div>
         {customQuote ? (
           <>
@@ -39,11 +39,11 @@ export default function PriceSummaryPanel({
           <>
             <div className="psp-price-amount">£{total.toFixed(2)}</div>
             <div className="psp-vat-row">
-              <span className="psp-vat-text">Quote includes VAT where applicable</span>
+              <span className="psp-vat-text">Includes VAT where applicable</span>
             </div>
           </>
         )}
-        <p className="psp-vat-text">Labour only — parts, if needed, are quoted separately by your mechanic.</p>
+        <p className="psp-vat-text">This covers labour only. If your job needs spare parts, we&apos;ll review your booking and send a full quotation — with your date confirmed — within 1 working day.</p>
       </div>
 
       {/* Vehicle info */}
@@ -93,25 +93,6 @@ export default function PriceSummaryPanel({
       </div>
 
       <div className="psp-divider" />
-
-      {/* Extras */}
-      <div className="psp-extras">
-        <div className="psp-extra-row">
-          <span>Booking fee</span>
-          <span className="psp-extra-free">FREE</span>
-        </div>
-        <div className="psp-extra-row">
-          <span>Collection &amp; Delivery</span>
-          <span className="psp-extra-free">FREE</span>
-        </div>
-        <div className="psp-extra-row">
-          <div>
-            <span>12-Month Warranty</span>
-            <span className="psp-warranty-note">Valid on labour &amp; parts</span>
-          </div>
-          <span className="psp-extra-free">FREE</span>
-        </div>
-      </div>
 
       {/* CTA */}
       <button
@@ -171,10 +152,6 @@ export default function PriceSummaryPanel({
         .psp-item-sub { font-size: 11px; color: var(--color-text-secondary); display: block; margin-top: 2px; }
         .psp-item-price { font-size: 13px; font-weight: 700; color: var(--color-text-primary); flex-shrink: 0; }
         .psp-divider { height: 1px; background: var(--color-divider); margin: 0 -4px; }
-        .psp-extras { display: flex; flex-direction: column; gap: 8px; }
-        .psp-extra-row { display: flex; justify-content: space-between; align-items: flex-start; font-size: 13px; color: var(--color-text-secondary); }
-        .psp-extra-free { font-weight: 700; color: var(--color-success); }
-        .psp-warranty-note { display: block; font-size: 11px; color: var(--color-text-disabled); margin-top: 2px; }
         .psp-cta { width: 100%; padding: 14px; font-size: 15px; }
         .psp-cta:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         .psp-cta-hint { font-size: 11.5px; color: var(--color-text-disabled); text-align: center; margin: 0; }

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useBookingSession, SelectedItem } from "@/components/booking/useBookingSession";
+import { useBookingSession, useBookingLockGuard, SelectedItem } from "@/components/booking/useBookingSession";
 import BookingOrderSummary from "@/components/booking/BookingOrderSummary";
 import YourDetailsForm from "@/components/booking/step3/YourDetailsForm";
 import BookingAddressForm from "@/components/booking/step3/BookingAddressForm";
@@ -19,7 +19,7 @@ interface DetailsState {
   city: string;
   postcode: string;
   phone: string;
-  availability: string[];
+  availability: string | null;
   drivable: boolean;
   instructions: string;
 }
@@ -27,12 +27,13 @@ interface DetailsState {
 const DEFAULT_DETAILS: DetailsState = {
   firstName: "", lastName: "", email: "", optIn: true,
   address1: "", address2: "", city: "", postcode: "", phone: "",
-  availability: [], drivable: true, instructions: "",
+  availability: null, drivable: true, instructions: "",
 };
 
 export default function Step3Page() {
   const router = useRouter();
   const { getSession, updateSession, markStepComplete } = useBookingSession();
+  useBookingLockGuard();
 
   const [session, setSession] = useState(getSession);
   const [details, setDetails] = useState<DetailsState>(DEFAULT_DETAILS);
@@ -40,7 +41,11 @@ export default function Step3Page() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    // Deliberately deferred to after mount (not read during render): getSession()
+    // reads sessionStorage, which would produce a server/client mismatch since
+    // the server has no storage to read from.
     const s = getSession();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSession(s);
     setSelectedWork(s.selectedWork ?? []);
     if (s.details) {
@@ -54,7 +59,7 @@ export default function Step3Page() {
         city: s.details.city || "",
         postcode: s.details.postcode || s.car?.postcode || "",
         phone: s.details.phone || "",
-        availability: s.details.availability || [],
+        availability: s.details.availability ?? null,
         drivable: s.details.drivable ?? true,
         instructions: s.details.instructions || "",
       });
@@ -67,13 +72,8 @@ export default function Step3Page() {
     setDetails((prev) => ({ ...prev, [field]: value }));
   }
 
-  function toggleAvailability(key: string) {
-    setDetails((prev) => {
-      const avail = prev.availability.includes(key)
-        ? prev.availability.filter((k) => k !== key)
-        : [...prev.availability, key];
-      return { ...prev, availability: avail };
-    });
+  function selectAvailability(key: string | null) {
+    setDetails((prev) => ({ ...prev, availability: key }));
   }
 
   function handleSubmit() {
@@ -86,7 +86,7 @@ export default function Step3Page() {
     if (!details.city.trim()) { setError("Please enter your city."); return; }
     if (!details.postcode.trim()) { setError("Please enter your postcode."); return; }
     if (!details.phone.trim()) { setError("Please enter your phone number."); return; }
-    if (details.availability.length === 0) { setError("Please select at least one availability slot."); return; }
+    if (!details.availability) { setError("Please select a date and time slot."); return; }
 
     updateSession({
       selectedWork,
@@ -130,7 +130,7 @@ export default function Step3Page() {
           <h2 className="s3-section-title">When is your vehicle available?</h2>
           <AvailabilityGrid
             selected={details.availability}
-            onToggle={toggleAvailability}
+            onSelect={selectAvailability}
           />
         </div>
 
@@ -155,7 +155,7 @@ export default function Step3Page() {
 
         {/* Submit */}
         <button className="btn btn-primary s3-submit" onClick={handleSubmit} type="button">
-          Final Step — Review &amp; Pay
+          Continue to Review
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M5 12h14M13 6l6 6-6 6" />
           </svg>

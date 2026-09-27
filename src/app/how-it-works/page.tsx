@@ -8,7 +8,7 @@ import HowItWorksHero from "@/components/how-it-works/HowItWorksHero";
 export const metadata: Metadata = {
   title: "How It Works — Garage Gaffer | Vetted Bristol Mechanics at Your Door",
   description:
-    "Post your car problem, get quotes from vetted Bristol mechanics, and book the one that suits you. They come to you. Free to post, no card needed.",
+    "Tell us what's wrong, get an instant price, and book a vetted Bristol mechanic to come to you. Takes minutes, no card needed to book.",
 };
 
 /* ─── Inline SVG icons ──────────────────────────────────────── */
@@ -71,20 +71,20 @@ const CheckIcon = () => (
 const steps = [
   {
     num: "01",
-    label: "Tell us what's up",
-    body: "Describe what's happening with your car — in your own words. Make, model, reg, and what you're seeing or hearing. You don't need to know the part name or the diagnosis. Just tell us what's happening and we'll take it from there.",
-    detail: "Takes under 2 minutes · No card needed",
+    label: "Tell us about your car",
+    body: "Enter your registration (or your car's make and model) and choose the job you need from our list — servicing, brakes, engine work, diagnostics, and more.",
+    detail: "Takes under 2 minutes",
   },
   {
     num: "02",
-    label: "Get quotes from local mechanics",
-    body: "Vetted Bristol mechanics see your job and send you their price. You can see who they are, what they charge, how other drivers rate them, and what their qualifications are — before you commit to anything.",
-    detail: "Most jobs get their first quote within the hour",
+    label: "See your price instantly",
+    body: "We calculate your price there and then, built from your exact vehicle and the job you picked. No waiting for a callback, no quote landing in your inbox hours later.",
+    detail: "No card needed to see your price",
   },
   {
     num: "03",
     label: "Book. They come to you.",
-    body: "Pick the mechanic that suits you — on price, reviews, or availability. Book directly on the platform. Your mechanic turns up at your home, office, or wherever the car is. You're done.",
+    body: "Pick a day and time that suits you and confirm your booking. Your mechanic turns up at your home, office, or wherever the car is. You're done.",
     detail: "Same-day slots available",
   },
 ];
@@ -92,15 +92,11 @@ const steps = [
 const timelineBeats = [
   {
     label: "Right away",
-    body: "Your job is live. Vetted mechanics in Bristol can see it.",
-  },
-  {
-    label: "Within the hour (usually)",
-    body: "Mechanics who can help send you their quote — itemised, with parts and labour broken out. You get notified as they arrive.",
+    body: "Tell us about your car and the job you need. Your price is calculated instantly — no waiting on a callback or a quote landing later.",
   },
   {
     label: "Your call",
-    body: "Review your quotes, check each mechanic's profile and reviews, and book the one you want. No pressure, no time limit.",
+    body: "Pick a day and time that suits you and confirm your booking. No card details needed — you're only charged once the work is complete.",
   },
   {
     label: "At the agreed time",
@@ -136,19 +132,19 @@ const reviews = [
     name: "Marcus B.",
     location: "Cotham",
     quote:
-      "I had no idea what I was doing. Described the noise, got three quotes the same day, and had someone at the door the next morning. Exactly as easy as it sounded.",
+      "I had no idea what was actually wrong, just that it needed sorting. Picked the job from the list, saw the price straight away, and had someone at the door the next morning. Exactly as easy as it sounded.",
   },
   {
     name: "Claire H.",
     location: "Bedminster",
     quote:
-      "The price in the quote was the price I paid. That's never happened at a garage. I was genuinely shocked.",
+      "The price I was quoted online was the price I paid. That's never happened at a garage. I was genuinely shocked.",
   },
   {
     name: "Tom R.",
     location: "Bishopston",
     quote:
-      "Posted the job on a Wednesday. Mechanic was there Thursday morning. My car hadn't moved. Couldn't have been simpler.",
+      "Booked on a Wednesday evening. Mechanic was there Thursday morning. My car hadn't moved. Couldn't have been simpler.",
   },
 ];
 
@@ -211,14 +207,14 @@ export default function HowItWorksPage() {
             {/* CTA beneath steps */}
             <div className="flex flex-col items-center gap-2 reveal">
               <a
-                href="#"
+                href="/booking"
                 className="inline-flex items-center gap-2 px-7 py-[14px] bg-[#0D7A5F] text-white font-[family-name:var(--font-rubik)] font-semibold text-[15px] rounded-xl shadow-[0_2px_8px_rgba(13,122,95,0.25)] hover:bg-[#055240] hover:shadow-[0_6px_18px_rgba(13,122,95,0.3)] hover:-translate-y-px active:translate-y-px transition-all"
               >
-                Get quotes
+                Get your price
                 <ArrowIcon />
               </a>
               <span className="text-[13px] text-[#8A8D8C]">
-                Free to post — no commitment until you choose
+                Takes 2 minutes — no card needed to see your price
               </span>
             </div>
           </div>
@@ -229,10 +225,10 @@ export default function HowItWorksPage() {
           <div className="max-w-[1200px] mx-auto px-6">
             <div className="max-w-[560px] mx-auto text-center mb-14 reveal">
               <span className="inline-block font-[family-name:var(--font-rubik)] text-[11px] font-bold tracking-[0.1em] uppercase text-[#0D7A5F] mb-3">
-                After you post
+                What happens next
               </span>
               <h2 className="font-[family-name:var(--font-open-sans)] text-[34px] font-extrabold leading-[1.15] tracking-[-0.5px]">
-                Here&apos;s what happens next.
+                Here&apos;s what happens after you book.
               </h2>
             </div>
 
@@ -386,10 +382,10 @@ export default function HowItWorksPage() {
             {/* CTA beneath reviews */}
             <div className="text-center reveal">
               <a
-                href="#"
+                href="/booking"
                 className="inline-flex items-center gap-2 px-7 py-[14px] bg-[#0D7A5F] text-white font-[family-name:var(--font-rubik)] font-semibold text-[15px] rounded-xl shadow-[0_2px_8px_rgba(13,122,95,0.25)] hover:bg-[#055240] hover:shadow-[0_6px_18px_rgba(13,122,95,0.3)] hover:-translate-y-px active:translate-y-px transition-all"
               >
-                Get quotes
+                Get your price
                 <ArrowIcon />
               </a>
             </div>
@@ -411,23 +407,23 @@ export default function HowItWorksPage() {
               Ready when you are.
             </h2>
             <p className="text-white/65 text-[17px] md:text-[15px] leading-[1.65] max-w-[520px] mx-auto mb-8">
-              Post your job in under two minutes. Get quotes from vetted Bristol
-              mechanics. See the price before anything happens.
+              Tell us about your car in under two minutes. See your price
+              instantly. Book a vetted Bristol mechanic to come to you.
             </p>
 
             <div className="flex flex-col items-center gap-3">
               <a
-                href="#"
+                href="/booking"
                 className="inline-flex items-center gap-2 px-8 py-[16px] bg-[#0D7A5F] text-white font-[family-name:var(--font-rubik)] font-semibold text-[16px] rounded-xl shadow-[0_2px_8px_rgba(13,122,95,0.35)] hover:bg-[#055240] hover:shadow-[0_8px_24px_rgba(13,122,95,0.45)] hover:-translate-y-px active:translate-y-px transition-all"
               >
-                Get quotes
+                Get your price
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M5 12h14M13 6l6 6-6 6" />
                 </svg>
               </a>
               <span className="text-[13px] text-white/40">
-                Free to post &middot; No card needed &middot; Same-day slots
-                available
+                Takes 2 minutes &middot; No card needed to book &middot;
+                Same-day slots available
               </span>
             </div>
           </div>

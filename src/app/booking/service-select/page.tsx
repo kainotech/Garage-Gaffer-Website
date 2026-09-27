@@ -1,13 +1,25 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useBookingSession } from "@/components/booking/useBookingSession";
+import { useBookingSession, useBookingLockGuard } from "@/components/booking/useBookingSession";
 import { SERVICE_CATEGORIES } from "@/data/services";
 import { CategoryIcon, accentForIndex } from "@/data/serviceCategoryVisuals";
 
 export default function ServiceSelectPage() {
   const router = useRouter();
-  const { updateSession } = useBookingSession();
+  const { getSession, updateSession } = useBookingSession();
+  useBookingLockGuard();
+  const [vehicleLabel, setVehicleLabel] = useState("");
+
+  useEffect(() => {
+    // Deliberately deferred to after mount (not read during render): getSession()
+    // reads sessionStorage, which would produce a server/client mismatch since
+    // the server has no storage to read from.
+    const { car } = getSession();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setVehicleLabel([car.make, car.model].filter(Boolean).join(" "));
+  }, []);
 
   function handleSelect(slug: string) {
     updateSession({ service: slug });
@@ -19,8 +31,14 @@ export default function ServiceSelectPage() {
       <div className="ss-inner">
         <div className="ss-header">
           <span className="eyebrow">Almost there</span>
-          <h1 className="ss-title">What do you need help with?</h1>
-          <p className="ss-subtitle">Select a category to see what&apos;s included.</p>
+          <h1 className="ss-title">
+            {vehicleLabel ? `What does your ${vehicleLabel} need?` : "What do you need help with?"}
+          </h1>
+          <p className="ss-subtitle">
+            {vehicleLabel
+              ? "You're just seconds away from a fixed price quote for your car. Select a category to see what's included."
+              : "Select a category to see what's included."}
+          </p>
         </div>
 
         <div className="ss-cards">

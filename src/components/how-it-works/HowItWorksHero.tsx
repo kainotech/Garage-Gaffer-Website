@@ -22,28 +22,28 @@ export default function HowItWorksHero() {
           </h1>
 
           <p className="hiw-sub">
-            Post your car problem, get quotes from vetted Bristol mechanics,
-            and pick the one that suits you. The whole thing takes minutes —
-            and you don&apos;t move an inch.
+            Tell us what&apos;s wrong with your car and get an instant, upfront
+            price. Book a vetted Bristol mechanic to come to you — no ringing
+            round, no waiting on a callback.
           </p>
 
           <div className="hiw-cta-wrap">
             <a
-              href="#"
+              href="/booking"
               className="hiw-btn"
             >
-              Get quotes
+              Get your price
               <ArrowIcon />
             </a>
             <span className="hiw-micro">
-              Free to post &middot; No card needed to see quotes
+              Takes under 2 minutes &middot; No card needed to book
             </span>
           </div>
 
           <div className="hiw-meta">
             <span>Vetted Bristol mechanics</span>
             <span className="hiw-meta-dot" />
-            <span>Quotes within 1 hour</span>
+            <span>Instant pricing</span>
             <span className="hiw-meta-dot" />
             <span>Same-day slots available</span>
           </div>

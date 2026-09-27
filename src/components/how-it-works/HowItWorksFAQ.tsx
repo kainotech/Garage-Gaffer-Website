@@ -4,20 +4,20 @@ import { useState } from "react";
 
 const faqs = [
   {
-    q: "Do I need to know what's wrong with my car to post a job?",
-    a: "No — and most drivers don't. Just describe what's happening: a noise, a warning light, something that doesn't feel right. Our mechanics are used to working from plain descriptions. You can add photos too, which helps them quote accurately.",
+    q: "Do I need to know what's wrong with my car?",
+    a: "No — most drivers don't. Just give us your registration (or make and model) and choose the job from our list: servicing, brakes, engine work, diagnostics, and more. Not sure which one you need? Get in touch and our team will help you work it out before you book.",
   },
   {
-    q: "How quickly will I get quotes?",
-    a: "Most jobs get their first quote within the hour. For common repairs, you'll usually have multiple quotes the same day. Posting early in the morning tends to get the fastest response.",
+    q: "How quickly do I get my price?",
+    a: "Straight away. Enter your car and the job you need, and your price is calculated on the spot — no waiting for a callback, no quote landing in your inbox hours later.",
   },
   {
-    q: "Is it really free to post?",
-    a: "Yes. Posting a job and getting quotes costs you nothing. You only pay when you choose a mechanic and book them.",
+    q: "Is it free to get a price?",
+    a: "Yes. Seeing your price and booking costs you nothing upfront, and no card details are needed to book. You're only charged once the work is complete.",
   },
   {
-    q: "What if I want to ask the mechanic something before I book?",
-    a: "You can message any mechanic through the platform before committing. Most are quick to respond — they want the job, so they're motivated to answer your questions.",
+    q: "Can I ask something before I book?",
+    a: "Of course — get in touch if you want to check anything about the price or the job first. Once you've booked, your assigned mechanic will also be in touch ahead of the appointment.",
   },
   {
     q: "What if the mechanic finds something else wrong mid-job?",
@@ -112,7 +112,7 @@ export default function HowItWorksFAQ() {
 
         <p className="text-center text-[13.5px] text-[#8A8D8C] mt-8">
           More questions?{" "}
-          <a href="#" className="text-[#0D7A5F] hover:underline font-medium">
+          <a href="/support" className="text-[#0D7A5F] hover:underline font-medium">
             Visit the help centre
           </a>
         </p>

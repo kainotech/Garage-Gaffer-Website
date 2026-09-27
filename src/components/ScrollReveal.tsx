@@ -8,7 +8,7 @@ export default function ScrollReveal() {
       (entries) => {
         entries.forEach((e, i) => {
           if (e.isIntersecting) {
-            setTimeout(() => e.target.classList.add("in"), (i % 4) * 60);
+            setTimeout(() => e.target.setAttribute("data-revealed", "true"), (i % 4) * 60);
             io.unobserve(e.target);
           }
         });

@@ -1,13 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-
-const WrenchIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
-    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-  </svg>
-);
 
 const FAQ_SECTIONS = [
   {
@@ -22,12 +17,8 @@ const FAQ_SECTIONS = [
         a: "All Garage Gaffer mechanics are fully qualified, DBS-checked, and reviewed by real customers. Many are ex-main dealer technicians with years of experience.",
       },
       {
-        q: "Is there a warranty for your services?",
-        a: "Yes — all labour and parts are covered by a 12-month warranty. If anything goes wrong after the job, we'll sort it at no extra cost.",
-      },
-      {
-        q: "Do I pay more for the mechanic to come to me?",
-        a: "No. Our prices are all-in. Collection & delivery is included free, and there are no call-out fees or hidden extras.",
+        q: "What does the price I'm shown cover?",
+        a: "It's the labour fee for the job, worked out from your vehicle type — the mechanic coming to you is included, with no separate call-out charge. If your job turns out to need spare parts, we'll review your booking and send you a full quotation, with your date confirmed, within 1 working day.",
       },
       {
         q: "Is there a cancellation fee?",
@@ -35,7 +26,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: "Can I supply my own parts?",
-        a: "We recommend using our vetted parts suppliers as they're covered by the warranty. If you'd like to supply your own parts, please let us know in the booking notes and a mechanic will advise.",
+        a: "We recommend using our vetted parts suppliers, sourced as part of your full quotation. If you'd like to supply your own parts, please let us know in the booking notes and a mechanic will advise.",
       },
     ],
   },
@@ -48,7 +39,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: "When can I book in for?",
-        a: "You choose your own availability windows across multiple days. Once a mechanic is confirmed, you'll receive a 2-hour arrival window by text and email.",
+        a: "You choose one date and a 30-minute time slot that suits you. Your mechanic will confirm that exact appointment by text and email.",
       },
       {
         q: "I can't find my repair, help!",
@@ -75,11 +66,8 @@ export default function BookingTopBar() {
       <header className="btb-header">
         <div className="btb-inner">
         {/* Logo — identical markup to Nav */}
-        <Link href="/" className="flex items-center gap-2.5 font-[family-name:var(--font-open-sans)] font-extrabold text-[17px] tracking-[-0.3px] text-[#1A1E1D]">
-          <span className="w-7 h-7 rounded-full bg-gradient-to-br from-[#0D7A5F] to-[#055240] flex items-center justify-center shadow-[0_4px_10px_rgba(13,122,95,0.3)] text-white">
-            <WrenchIcon />
-          </span>
-          Garage Gaffer
+        <Link href="/" className="flex items-center">
+          <Image src="/gg-logo.png" alt="Garage Gaffer" width={172} height={64} className="h-14 w-auto" priority />
         </Link>
 
         {/* Help button */}

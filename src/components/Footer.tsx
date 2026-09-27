@@ -37,27 +37,22 @@ const footerLinks = [
   {
     heading: "Company",
     links: [
-      { label: "About us", href: "#about" },
-      { label: "How it works", href: "#how" },
-      { label: "Coverage area", href: "#" },
-      { label: "Careers", href: "#" },
+      { label: "About us", href: "/about" },
+      { label: "How it works", href: "/how-it-works" },
     ],
   },
   {
     heading: "For mechanics",
     links: [
-      { label: "Become a Gaffer", href: "#" },
-      { label: "How we pay", href: "#" },
-      { label: "Mechanic FAQs", href: "#" },
-      { label: "Sign in", href: "#" },
+      { label: "Become a Gaffer", href: "/become-a-mechanic" },
     ],
   },
   {
     heading: "Support",
     links: [
-      { label: "Help centre", href: "#support" },
-      { label: "Contact us", href: "#" },
-      { label: "Warranty claim", href: "#" },
+      { label: "Help centre", href: "/support" },
+      { label: "Contact us", href: "/support" },
+      { label: "Warranty claim", href: "/support" },
       { label: "0117 000 0000", href: "#" },
     ],
   },

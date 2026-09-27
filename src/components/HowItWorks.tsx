@@ -1,23 +1,20 @@
+import Image from "next/image";
+
 const steps = [
   {
-    num: "1",
-    title: "Tell us about your car",
-    desc: "Pop in your postcode, reg, and what you think is wrong. Takes about 30 seconds, no sign-up needed.",
+    img: "/how-it-works-select-vehicle.png",
+    title: "Select your vehicle",
+    desc: "Enter your reg or car details, plus your postcode. We'll give you an instant price for the job.",
   },
   {
-    num: "2",
-    title: "See your fixed price",
-    desc: "We'll match you with a vetted local mechanic and show you the all-in price — parts, labour, VAT.",
+    img: "/how-it-works-pick-date.png",
+    title: "Pick a date and time",
+    desc: "Choose a slot that suits you. No card details needed to book.",
   },
   {
-    num: "3",
-    title: "Pick a time that suits",
-    desc: "Same day, weekends, early mornings — whatever fits. Your mechanic confirms within the hour.",
-  },
-  {
-    num: "4",
-    title: "Sit back, we'll sort it",
-    desc: "Your mechanic arrives kitted out, gets the job done on your drive, and sends you a receipt. Sorted.",
+    img: "/how-it-works-drop-car.png",
+    title: "Drop your car",
+    desc: "Bring your car to our partner garage at your chosen time. We'll take it from there and keep you posted.",
   },
 ];
 
@@ -30,24 +27,26 @@ export default function HowItWorks() {
             How it works
           </span>
           <h2 className="font-[family-name:var(--font-open-sans)] text-[34px] font-extrabold leading-[1.15] tracking-[-0.5px] mb-3">
-            From problem to fixed, in four simple steps.
+            From reg plate to sorted, in three simple steps.
           </h2>
           <p className="text-[#595C5B] text-[16px] leading-[1.7]">
-            Booking a mobile mechanic should feel as easy as ordering a takeaway. Here&apos;s exactly what happens after you tap &quot;Get my price&quot;.
+            No ringing round, no waiting on quotes. Just enter your details, pick a time, and drop your car off.
           </p>
         </div>
 
-        <div className="relative grid grid-cols-2 md:grid-cols-4 gap-7">
-          {/* Dashed connector line (desktop only) */}
-          <div className="hidden md:block absolute left-[5%] right-[5%] top-8 h-0.5 bg-[repeating-linear-gradient(to_right,#0D7A5F_0,#0D7A5F_7px,transparent_7px,transparent_14px)] opacity-30 z-0" />
-
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
           {steps.map((step) => (
-            <div key={step.num} className="relative z-10 text-left group reveal">
-              <div className="w-16 h-16 rounded-full bg-white text-[#0D7A5F] border-2 border-[#0D7A5F] flex items-center justify-center font-[family-name:var(--font-open-sans)] font-extrabold text-[22px] mb-5 shadow-[0_0_0_6px_#F5F7F6] group-hover:bg-[#0D7A5F] group-hover:text-white group-hover:scale-105 transition-all duration-200">
-                {step.num}
+            <div key={step.title} className="reveal text-center">
+              <div className="relative w-full aspect-[3/2] mb-5">
+                <Image
+                  src={step.img}
+                  alt=""
+                  fill
+                  className="object-contain"
+                />
               </div>
-              <h3 className="font-[family-name:var(--font-open-sans)] text-[18px] font-bold mb-2">{step.title}</h3>
-              <p className="text-[14px] leading-[1.6] text-[#595C5B]">{step.desc}</p>
+              <h3 className="font-[family-name:var(--font-open-sans)] text-[19px] font-bold mb-2">{step.title}</h3>
+              <p className="text-[14.5px] leading-[1.6] text-[#595C5B]">{step.desc}</p>
             </div>
           ))}
         </div>

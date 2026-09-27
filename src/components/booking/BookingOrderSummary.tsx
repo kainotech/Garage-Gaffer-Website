@@ -2,6 +2,7 @@
 
 import type { BookingSession } from "./useBookingSession";
 import { formatItemPrice, hasCustomQuoteItems, sumFixedPrice } from "./pricing";
+import { formatSlotLabel } from "./step3/AvailabilityGrid";
 
 interface BookingOrderSummaryProps {
   session: BookingSession;
@@ -20,7 +21,7 @@ export default function BookingOrderSummary({ session, showTrustBadges }: Bookin
       <div className="bos-container container">
         <div className="bos-main">
           <div className="bos-price-col">
-            <p className="bos-label">YOUR QUOTE</p>
+            <p className="bos-label">LABOUR FEE</p>
             {customQuote ? (
               <>
                 <div className="bos-price bos-price--quote">Priced after inspection</div>
@@ -29,16 +30,24 @@ export default function BookingOrderSummary({ session, showTrustBadges }: Bookin
             ) : (
               <>
                 <div className="bos-price">£{total.toFixed(2)}</div>
-                <p className="bos-vat">Quote includes VAT where applicable</p>
+                <p className="bos-vat">Includes VAT where applicable</p>
               </>
             )}
-            <p className="bos-vat">Labour only — parts, if needed, are quoted separately by your mechanic.</p>
+            <p className="bos-vat">This covers labour only. If parts are needed, we&apos;ll send a full quotation — with your date confirmed — within 1 working day.</p>
             <p className="bos-vehicle">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <rect x="1" y="3" width="15" height="13" rx="2" /><polygon points="16 8 20 8 23 11 23 16 16 16 16 8" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" />
               </svg>
               {vehicleLabel}{postcode && ` · ${postcode}`}
             </p>
+            {session.details?.availability && (
+              <p className="bos-slot">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="18" rx="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                {formatSlotLabel(session.details.availability)}
+              </p>
+            )}
           </div>
 
           <div className="bos-items-col">
@@ -57,16 +66,7 @@ export default function BookingOrderSummary({ session, showTrustBadges }: Bookin
                   <span className="bos-item-price">{formatItemPrice(item)}</span>
                 </div>
               ))}
-              <div className="bos-extra">
-                <span>Booking fee</span><span className="bos-free">FREE</span>
-              </div>
             </div>
-            <a href="/support" className="bos-help-link">
-              If you have any questions please check our help centre
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M5 12h14M13 6l6 6-6 6" />
-              </svg>
-            </a>
           </div>
 
           {showTrustBadges && (
@@ -74,9 +74,9 @@ export default function BookingOrderSummary({ session, showTrustBadges }: Bookin
               <p className="bos-label">YOU&apos;RE COVERED</p>
               <div className="bos-trust-badges">
                 {[
-                  "Qualified mechanics",
+                  "Qualified, DBS-checked mechanics",
                   "No hidden extras",
-                  "1 year parts & repairs warranty",
+                  "Parts quoted within 1 working day",
                 ].map((badge) => (
                   <div key={badge} className="bos-trust-badge">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -120,6 +120,11 @@ export default function BookingOrderSummary({ session, showTrustBadges }: Bookin
           display: flex; align-items: center; gap: 5px;
           font-size: 12px; color: rgba(255,255,255,0.55); margin: 8px 0 0;
         }
+        .bos-slot {
+          display: flex; align-items: center; gap: 5px;
+          font-size: 12px; color: rgba(255,255,255,0.55); margin: 6px 0 0;
+        }
+        .bos-slot svg { flex-shrink: 0; color: rgba(255,255,255,0.4); }
         .bos-items-col { min-width: 0; }
         .bos-items { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
         .bos-item { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
@@ -127,14 +132,6 @@ export default function BookingOrderSummary({ session, showTrustBadges }: Bookin
         .bos-item-name { font-size: 13.5px; font-weight: 600; color: rgba(255,255,255,0.9); display: block; }
         .bos-item-sub { font-size: 11px; color: rgba(255,255,255,0.45); display: block; margin-top: 2px; }
         .bos-item-price { font-size: 13.5px; font-weight: 700; color: #fff; flex-shrink: 0; }
-        .bos-extra { display: flex; justify-content: space-between; font-size: 12.5px; color: rgba(255,255,255,0.5); padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.1); }
-        .bos-free { font-weight: 700; color: #6EE7B7; }
-        .bos-help-link {
-          display: inline-flex; align-items: center; gap: 4px;
-          font-size: 12px; color: rgba(255,255,255,0.4);
-          text-decoration: none; transition: color var(--t-fast);
-        }
-        .bos-help-link:hover { color: rgba(255,255,255,0.7); }
         .bos-trust-col { min-width: 220px; }
         .bos-trust-badges { display: flex; flex-direction: column; gap: 8px; }
         .bos-trust-badge {
@@ -150,9 +147,6 @@ export default function BookingOrderSummary({ session, showTrustBadges }: Bookin
         @media (max-width: 560px) {
           .bos-main { grid-template-columns: 1fr; gap: 20px; }
           .bos-price { font-size: 28px; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .bos-help-link { transition: none; }
         }
       `}</style>
     </div>

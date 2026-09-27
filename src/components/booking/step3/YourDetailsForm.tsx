@@ -70,13 +70,6 @@ export default function YourDetailsForm({ values, onChange }: YourDetailsFormPro
         </span>
       </label>
 
-      <div className="ydf-signin">
-        Already have an account?
-        <a href="#" className="ydf-signin-link" onClick={(e) => e.preventDefault()}>
-          Sign in
-        </a>
-      </div>
-
       <style jsx>{`
         .ydf-wrap { display: flex; flex-direction: column; gap: 4px; }
         .ydf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
@@ -90,11 +83,6 @@ export default function YourDetailsForm({ values, onChange }: YourDetailsFormPro
           accent-color: var(--color-brand-primary); cursor: pointer;
         }
         .ydf-checkbox-text { }
-        .ydf-signin { font-size: 13px; color: var(--color-text-secondary); }
-        .ydf-signin-link {
-          color: var(--color-accent-blue); text-decoration: underline;
-          font-weight: 600; margin-left: 4px;
-        }
         @media (max-width: 500px) {
           .ydf-grid { grid-template-columns: 1fr; }
         }

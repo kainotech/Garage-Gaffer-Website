@@ -7,9 +7,10 @@ import { SERVICE_CATEGORIES } from "@/data/services";
 interface QuoteWidgetProps {
   idSuffix?: string;
   defaultService?: string;
+  layout?: "card" | "inline";
 }
 
-export default function QuoteWidget({ idSuffix = "", defaultService }: QuoteWidgetProps) {
+export default function QuoteWidget({ idSuffix = "", defaultService, layout = "card" }: QuoteWidgetProps) {
   const router = useRouter();
   const postcodeRef = useRef<HTMLInputElement>(null);
   const regRef = useRef<HTMLInputElement>(null);
@@ -19,10 +20,73 @@ export default function QuoteWidget({ idSuffix = "", defaultService }: QuoteWidg
     e.preventDefault();
     const reg = regRef.current?.value?.trim() ?? "";
     const postcode = postcodeRef.current?.value?.trim() ?? "";
+
+    if (layout === "inline") {
+      if (reg && postcode) {
+        router.push(`/booking/step-1?reg=${encodeURIComponent(reg)}&postcode=${encodeURIComponent(postcode)}`);
+      }
+      return;
+    }
+
     const service = serviceRef.current?.value?.trim() ?? "";
     if (reg && postcode && service) {
       router.push(`/booking?reg=${encodeURIComponent(reg)}&postcode=${encodeURIComponent(postcode)}&service=${encodeURIComponent(service)}`);
     }
+  }
+
+  if (layout === "inline") {
+    return (
+      <form id={idSuffix ? undefined : "quote"} className="w-full max-w-[720px] mx-auto" onSubmit={handleSubmit}>
+        <div className="flex flex-col sm:flex-row items-stretch bg-white rounded-2xl sm:rounded-full border border-[#DADCDB] shadow-[0_16px_48px_rgba(13,122,95,0.12),0_8px_16px_rgba(0,0,0,0.06)] overflow-hidden">
+          {/* Registration */}
+          <div className="flex-1 flex items-center gap-2.5 px-5 py-3.5 border-b sm:border-b-0 sm:border-r border-[#DADCDB]">
+            <span className="flex-shrink-0 w-7 h-5 bg-[#06417A] text-white rounded-[4px] flex flex-col items-center justify-center pointer-events-none">
+              <span className="text-[#FFD02A] text-[6px] leading-none">★ ★ ★</span>
+              <span className="text-[7px] font-bold">GB</span>
+            </span>
+            <input
+              id={`reg${idSuffix}`}
+              ref={regRef}
+              type="text"
+              placeholder="REGISTRATION NUMBER"
+              maxLength={8}
+              aria-label="Car registration"
+              className="w-full min-w-0 bg-transparent font-[family-name:var(--font-open-sans)] font-extrabold tracking-[1.5px] uppercase text-[14px] text-[#1A1E1D] placeholder:text-[#8A8D8C] placeholder:normal-case placeholder:tracking-normal placeholder:font-semibold focus:outline-none"
+              onChange={(e) => (e.target.value = e.target.value.toUpperCase())}
+            />
+          </div>
+
+          {/* Postcode */}
+          <div className="flex-1 flex items-center gap-2.5 px-5 py-3.5">
+            <svg className="flex-shrink-0 w-4 h-4 text-[#8A8D8C]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
+            </svg>
+            <input
+              id={`postcode${idSuffix}`}
+              ref={postcodeRef}
+              type="text"
+              placeholder="POSTAL CODE"
+              autoComplete="postal-code"
+              aria-label="Postcode"
+              className="w-full min-w-0 bg-transparent text-[14px] text-[#1A1E1D] placeholder:text-[#8A8D8C] focus:outline-none"
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center justify-start gap-3 mt-4 flex-wrap">
+          <button
+            type="submit"
+            className="inline-flex items-center gap-2 px-8 py-[14px] bg-[#0D7A5F] text-white font-[family-name:var(--font-rubik)] font-semibold text-[15px] rounded-full shadow-[0_2px_8px_rgba(13,122,95,0.25)] hover:bg-[#055240] hover:shadow-[0_6px_18px_rgba(13,122,95,0.3)] hover:-translate-y-px active:translate-y-px transition-all"
+          >
+            See my price
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </button>
+          <span className="text-[12.5px] text-[#595C5B]">No card needed. No commitment.</span>
+        </div>
+      </form>
+    );
   }
 
   return (
@@ -44,26 +108,6 @@ export default function QuoteWidget({ idSuffix = "", defaultService }: QuoteWidg
         </span>
       </div>
 
-      {/* Postcode */}
-      <div className="mb-3.5">
-        <label htmlFor={`postcode${idSuffix}`} className="block text-[13px] font-semibold text-[#1A1E1D] mb-1.5">
-          {idSuffix ? "Postcode" : "Your postcode"}
-        </label>
-        <div className="relative">
-          <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8A8D8C] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
-          </svg>
-          <input
-            id={`postcode${idSuffix}`}
-            ref={postcodeRef}
-            type="text"
-            placeholder={idSuffix ? "e.g. BS8 1TH" : "e.g. BS1 4DJ"}
-            autoComplete="postal-code"
-            className="w-full bg-white border-[1.5px] border-[#DADCDB] rounded-lg pl-10 pr-3.5 py-3 text-[14px] text-[#1A1E1D] placeholder:text-[#8A8D8C] hover:border-[#b0bab5] focus:outline-none focus:border-[#0D7A5F] focus:shadow-[0_0_0_3px_rgba(13,122,95,0.12)] transition-all"
-          />
-        </div>
-      </div>
-
       {/* Registration */}
       <div className="mb-3.5">
         <label htmlFor={`reg${idSuffix}`} className="block text-[13px] font-semibold text-[#1A1E1D] mb-1.5">
@@ -82,6 +126,26 @@ export default function QuoteWidget({ idSuffix = "", defaultService }: QuoteWidg
             maxLength={8}
             className="w-full bg-[#FFD02A] border-[1.5px] border-[#CFA100] rounded-lg pl-10 pr-3.5 py-3 text-[14px] font-[family-name:var(--font-open-sans)] font-extrabold tracking-[2px] uppercase text-[#1A1E1D] placeholder:text-[#8A8D8C] placeholder:normal-case placeholder:tracking-normal focus:outline-none transition-all"
             onChange={(e) => (e.target.value = e.target.value.toUpperCase())}
+          />
+        </div>
+      </div>
+
+      {/* Postcode */}
+      <div className="mb-3.5">
+        <label htmlFor={`postcode${idSuffix}`} className="block text-[13px] font-semibold text-[#1A1E1D] mb-1.5">
+          {idSuffix ? "Postcode" : "Your postcode"}
+        </label>
+        <div className="relative">
+          <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8A8D8C] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
+          </svg>
+          <input
+            id={`postcode${idSuffix}`}
+            ref={postcodeRef}
+            type="text"
+            placeholder={idSuffix ? "e.g. BS8 1TH" : "e.g. BS1 4DJ"}
+            autoComplete="postal-code"
+            className="w-full bg-white border-[1.5px] border-[#DADCDB] rounded-lg pl-10 pr-3.5 py-3 text-[14px] text-[#1A1E1D] placeholder:text-[#8A8D8C] hover:border-[#b0bab5] focus:outline-none focus:border-[#0D7A5F] focus:shadow-[0_0_0_3px_rgba(13,122,95,0.12)] transition-all"
           />
         </div>
       </div>

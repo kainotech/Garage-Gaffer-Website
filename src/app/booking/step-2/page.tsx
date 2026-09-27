@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useBookingSession, SelectedItem, BookingSession } from "@/components/booking/useBookingSession";
+import { useBookingSession, useBookingLockGuard, SelectedItem, BookingSession } from "@/components/booking/useBookingSession";
 import CategoryTab from "@/components/booking/step2/CategoryTab";
 import PriceSummaryPanel from "@/components/booking/step2/PriceSummaryPanel";
 import PriceSummaryStickyBar from "@/components/booking/step2/PriceSummaryStickyBar";
@@ -14,6 +14,8 @@ function Step2Content() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { getSession, updateSession, markStepComplete } = useBookingSession();
+  const isFreshEntry = !!(searchParams.get("reg") && searchParams.get("postcode") && searchParams.get("service"));
+  useBookingLockGuard(!isFreshEntry);
 
   const [session, setSession] = useState<BookingSession>(() => getSession());
   const [activeSlug, setActiveSlug] = useState(SERVICE_CATEGORIES[0].slug);
@@ -32,12 +34,17 @@ function Step2Content() {
         car: { reg, postcode },
         service,
         completedSteps: [1],
+        confirmed: false,
       });
       // clean URL
       router.replace("/booking/step-2");
     }
 
+    // Deliberately deferred to after mount (not read during render): getSession()
+    // reads sessionStorage, which would produce a server/client mismatch since
+    // the server has no storage to read from.
     const s = getSession();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSession(s);
     const vehicleType = s.car.vehicleType ?? "car";
     setSelectedWork(
@@ -82,6 +89,7 @@ function Step2Content() {
   }
 
   const currentSession = { ...session, service: activeSlug };
+  const vehicleLabel = [session.car.make, session.car.model].filter(Boolean).join(" ");
 
   return (
     <div className="s2-outer">
@@ -90,7 +98,10 @@ function Step2Content() {
         <div className="s2-left">
           <div className="s2-header">
             <span className="eyebrow">Step 2 of 4</span>
-            <h1 className="s2-title">Select your work</h1>
+            <h1 className="s2-title">
+              {vehicleLabel ? `What does your ${vehicleLabel} need?` : "Select your work"}
+            </h1>
+            <p className="s2-subtitle">You&apos;re just seconds away from a fixed price quote for your car.</p>
           </div>
 
           {/* Category tabs */}
@@ -158,7 +169,8 @@ function Step2Content() {
           gap: 20px;
         }
         .s2-header { margin-bottom: 4px; }
-        .s2-title { font-size: 26px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 0; }
+        .s2-title { font-size: 26px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 4px; }
+        .s2-subtitle { color: var(--color-text-secondary); font-size: 14px; margin: 0; }
         .s2-tabs {
           display: flex; gap: 4px; flex-wrap: wrap;
           background: var(--color-bg);

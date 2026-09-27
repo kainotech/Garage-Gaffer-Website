@@ -77,11 +77,13 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-h1, h2, h3, h4 {
-  font-family: var(--font-open-sans), sans-serif;
-  color: var(--color-text-primary);
-  margin: 0;
-  font-weight: 800;
+@layer base {
+  h1, h2, h3, h4 {
+    font-family: var(--font-open-sans), sans-serif;
+    color: var(--color-text-primary);
+    margin: 0;
+    font-weight: 800;
+  }
 }
 
 /* ─── Layout ────────────────────────────────────────────────── */
@@ -260,7 +262,7 @@ h1, h2, h3, h4 {
   transition: opacity 700ms ease-out, transform 700ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.reveal.in {
+.reveal[data-revealed="true"] {
   opacity: 1;
   transform: none;
 }

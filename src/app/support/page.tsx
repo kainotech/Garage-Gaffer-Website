@@ -1,7 +1,6 @@
 import Nav from "@/components/Nav";
 import SupportHero from "@/components/support/SupportHero";
 import SupportCategories from "@/components/support/SupportCategories";
-import PopularArticles from "@/components/support/PopularArticles";
 import SupportFAQ from "@/components/support/SupportFAQ";
 import MechanicHub from "@/components/support/MechanicHub";
 import ContactSection from "@/components/support/ContactSection";
@@ -21,7 +20,6 @@ export default function SupportPage() {
       <main>
         <SupportHero />
         <SupportCategories />
-        <PopularArticles />
         <SupportFAQ />
         <MechanicHub />
         <ContactSection />
