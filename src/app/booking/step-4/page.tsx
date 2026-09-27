@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useBookingSession, useBookingLockGuard } from "@/components/booking/useBookingSession";
+import { generateBookingRef } from "@/components/booking/bookingRef";
 import BookingOrderSummary from "@/components/booking/BookingOrderSummary";
 
 const REASSURANCE_POINTS = [
@@ -41,10 +42,25 @@ export default function Step4Page() {
     setSession(getSession());
   }, []);
 
-  function handleConfirm() {
+  async function handleConfirm() {
     setConfirming(true);
+    let bookingRef: string;
+    try {
+      const res = await fetch("/api/booking-confirm", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(session),
+      });
+      const data = res.ok ? await res.json() : null;
+      bookingRef = data?.bookingRef || generateBookingRef();
+    } catch {
+      // Our own server is unreachable - don't let that stop the customer
+      // from completing their booking, just fall back to a locally
+      // generated reference.
+      bookingRef = generateBookingRef();
+    }
     markStepComplete(4);
-    updateSession({ confirmed: true });
+    updateSession({ confirmed: true, bookingRef });
     router.push("/booking/confirmation");
   }
 

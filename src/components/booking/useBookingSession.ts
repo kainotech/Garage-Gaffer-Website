@@ -46,6 +46,8 @@ export type BookingSession = {
   completedSteps: number[];
   /** true once the customer has confirmed the booking on Step 4 — locks the flow against further edits */
   confirmed: boolean;
+  /** issued by POST /api/booking-confirm when the booking is confirmed; shown on the confirmation page and in the confirmation email */
+  bookingRef?: string;
 };
 
 const SESSION_KEY = "booking_session";

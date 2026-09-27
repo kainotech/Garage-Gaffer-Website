@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import CustomSelect from "@/components/booking/CustomSelect";
+import { formatSlotLabel } from "./slotLabel";
+
+export { formatSlotLabel };
 
 // 30-minute slots, 8:00 AM – 6:00 PM
 const TIME_SLOTS: string[] = (() => {
@@ -25,18 +28,6 @@ function dateSlotKey(date: Date, slot: string): string {
 function parseSlotKeyDate(key: string): Date | null {
   const [datePart] = key.split("_");
   return datePart ? new Date(`${datePart}T00:00:00`) : null;
-}
-
-/** Turns a dateSlotKey back into a readable label, e.g. "Tue, 14 Oct, 09:00–09:30". */
-export function formatSlotLabel(key: string): string {
-  const [datePart, timePart] = key.split("_");
-  if (!datePart || !timePart) return key;
-  const date = new Date(`${datePart}T00:00:00`);
-  const [h, m] = timePart.split(":").map(Number);
-  const endMins = h * 60 + m + 30;
-  const endLabel = `${String(Math.floor(endMins / 60)).padStart(2, "0")}:${String(endMins % 60).padStart(2, "0")}`;
-  const dateLabel = date.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
-  return `${dateLabel}, ${timePart}–${endLabel}`;
 }
 
 function getWeekDays(startOffset: number): Date[] {

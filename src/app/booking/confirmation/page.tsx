@@ -3,18 +3,16 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useBookingSession, BookingSession } from "@/components/booking/useBookingSession";
-import { formatItemPrice, hasCustomQuoteItems, sumFixedPrice } from "@/components/booking/pricing";
-import { formatSlotLabel } from "@/components/booking/step3/AvailabilityGrid";
-
-function generateRef(): string {
-  const n = Math.floor(10000 + Math.random() * 90000);
-  return `GG-2026-${n}`;
-}
+import { formatItemPrice, formatPriceLabel, formatVehicleLabel } from "@/components/booking/pricing";
+import { formatSlotLabel } from "@/components/booking/step3/slotLabel";
+import { generateBookingRef } from "@/components/booking/bookingRef";
 
 export default function ConfirmationPage() {
   const { getSession, clearSession } = useBookingSession();
   const [session, setSession] = useState<BookingSession | null>(null);
-  const [ref] = useState(generateRef);
+  // Normally set by POST /api/booking-confirm on Step 4; this fallback only
+  // covers an old session saved before that existed.
+  const [fallbackRef] = useState(generateBookingRef);
 
   useEffect(() => {
     // Deliberately deferred to after mount (not read during render): getSession()
@@ -25,11 +23,11 @@ export default function ConfirmationPage() {
     setSession(s);
   }, []);
 
-  const customQuote = (session?.selectedWork.length ?? 0) === 0 || hasCustomQuoteItems(session?.selectedWork ?? []);
-  const total = sumFixedPrice(session?.selectedWork ?? []);
+  const ref = session?.bookingRef || fallbackRef;
+  const priceLabel = formatPriceLabel(session?.selectedWork ?? []);
   const car = session?.car;
   const vehicleLabel = car
-    ? [car.make, car.model, car.engineCapacity, car.year].filter(Boolean).join(" ") || car.reg || "Your vehicle"
+    ? formatVehicleLabel(car)
     : "";
 
   return (
@@ -104,7 +102,7 @@ export default function ConfirmationPage() {
           <div className="conf-total-row">
             <span className="conf-total-label">Labour fee</span>
             <span className="conf-total-amount">
-              {customQuote ? "Priced after inspection" : `£${total.toFixed(2)}`}
+              {priceLabel}
             </span>
           </div>
 
