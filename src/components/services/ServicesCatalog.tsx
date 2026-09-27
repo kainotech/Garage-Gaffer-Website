@@ -18,7 +18,6 @@ export default function ServicesCatalog({ initialCategorySlug }: ServicesCatalog
   const [activeSlug, setActiveSlug] = useState(initialSlug);
   const activeIndex = SERVICE_CATEGORIES.findIndex((c) => c.slug === activeSlug);
   const active = SERVICE_CATEGORIES[activeIndex];
-  const activeColors = accentForIndex(activeIndex);
 
   return (
     <section className="bg-[#FBFDFC] border-t border-b border-[#DADCDB] py-24 md:py-16">
@@ -119,15 +118,9 @@ export default function ServicesCatalog({ initialCategorySlug }: ServicesCatalog
                   <h4 className="font-[family-name:var(--font-open-sans)] text-[15.5px] font-bold mb-1.5">
                     {service.name}
                   </h4>
-                  <p className="text-[#595C5B] text-[13.5px] leading-[1.55] flex-grow mb-3">
+                  <p className="text-[#595C5B] text-[13.5px] leading-[1.55]">
                     {service.description}
                   </p>
-                  <span
-                    className="inline-flex items-center gap-1.5 self-start font-[family-name:var(--font-rubik)] font-semibold text-[11.5px] uppercase tracking-[0.06em] px-2 py-1 rounded-md"
-                    style={{ color: activeColors.accent, background: activeColors.well }}
-                  >
-                    Custom quote
-                  </span>
                 </article>
               ))}
             </div>
