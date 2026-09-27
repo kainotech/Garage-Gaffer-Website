@@ -18,13 +18,13 @@ export default function HowItWorksHero() {
           </div>
 
           <h1 className="hiw-h1">
-            Simple. Fast. <em>They come to you.</em>
+            Simple. Fast. <em>No fuss.</em>
           </h1>
 
           <p className="hiw-sub">
             Tell us what&apos;s wrong with your car and get an instant, upfront
-            price. Book a vetted Bristol mechanic to come to you — no ringing
-            round, no waiting on a callback.
+            price. Book online and drop your car at a trusted partner garage.
+            No ringing round, no waiting on a callback.
           </p>
 
           <div className="hiw-cta-wrap">
@@ -45,7 +45,7 @@ export default function HowItWorksHero() {
             <span className="hiw-meta-dot" />
             <span>Instant pricing</span>
             <span className="hiw-meta-dot" />
-            <span>Same-day slots available</span>
+            <span>Trusted partner garages</span>
           </div>
         </div>
       </div>

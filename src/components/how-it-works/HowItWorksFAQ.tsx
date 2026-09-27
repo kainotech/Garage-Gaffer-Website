@@ -5,11 +5,11 @@ import { useState } from "react";
 const faqs = [
   {
     q: "Do I need to know what's wrong with my car?",
-    a: "No — most drivers don't. Just give us your registration (or make and model) and choose the job from our list: servicing, brakes, engine work, diagnostics, and more. Not sure which one you need? Get in touch and our team will help you work it out before you book.",
+    a: "No, most drivers don't. Just give us your registration (or make and model) and choose the job from our list: servicing, brakes, engine work, diagnostics, and more. Not sure which one you need? Get in touch and our team will help you work it out before you book.",
   },
   {
     q: "How quickly do I get my price?",
-    a: "Straight away. Enter your car and the job you need, and your price is calculated on the spot — no waiting for a callback, no quote landing in your inbox hours later.",
+    a: "Straight away. Enter your car and the job you need, and your price is calculated on the spot, no waiting for a callback, no quote landing in your inbox hours later.",
   },
   {
     q: "Is it free to get a price?",
@@ -17,7 +17,7 @@ const faqs = [
   },
   {
     q: "Can I ask something before I book?",
-    a: "Of course — get in touch if you want to check anything about the price or the job first. Once you've booked, your assigned mechanic will also be in touch ahead of the appointment.",
+    a: "Of course, get in touch if you want to check anything about the price or the job first. Once you've booked, we'll also be in touch ahead of your appointment.",
   },
   {
     q: "What if the mechanic finds something else wrong mid-job?",
@@ -25,80 +25,61 @@ const faqs = [
   },
   {
     q: "What if I'm not happy with the work?",
-    a: "All work comes with a 12-month workmanship warranty. If there's a problem with what was done, get in touch and we'll sort it out. That's what the warranty is for.",
+    a: "Get in touch and we'll sort it out with the garage. Every mechanic on the platform is vetted before they ever take a job, so problems like this should be rare, but we won't leave you to deal with it alone.",
   },
 ];
 
-const ChevronIcon = ({ open }: { open: boolean }) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={`w-4 h-4 flex-shrink-0 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
-    aria-hidden="true"
-  >
-    <polyline points="6 9 12 15 18 9" />
-  </svg>
-);
-
 export default function HowItWorksFAQ() {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <section className="bg-[#F5F7F6] border-t border-[#DADCDB] py-24 md:py-16">
+    <section className="bg-[#FBFDFC] border-t border-[#DADCDB] py-24 md:py-16">
       <div className="max-w-[1200px] mx-auto px-6">
-        <div className="max-w-[560px] mx-auto text-center mb-12 reveal">
-          <span className="inline-block font-[family-name:var(--font-rubik)] text-[11px] font-bold tracking-[0.1em] uppercase text-[#0D7A5F] mb-3">
-            Common questions
-          </span>
-          <h2 className="font-[family-name:var(--font-open-sans)] text-[34px] font-extrabold leading-[1.15] tracking-[-0.5px]">
-            Still got questions?
-          </h2>
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.3fr] gap-14 items-start">
+          {/* Left */}
+          <div className="reveal">
+            <span className="inline-block font-[family-name:var(--font-rubik)] text-[11px] font-bold tracking-[0.1em] uppercase text-[#0D7A5F] mb-3">
+              Common questions
+            </span>
+            <h2 className="font-[family-name:var(--font-open-sans)] text-[34px] font-extrabold tracking-[-0.5px] leading-[1.15]">
+              Still got questions?
+            </h2>
+            <p className="text-[#595C5B] text-[16px] leading-[1.7] mt-3.5">
+              Can&apos;t find what you&apos;re looking for? Drop us a line — we&apos;re usually back within a few hours.
+            </p>
+            <a href="/support" className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 bg-transparent text-[#0D7A5F] font-[family-name:var(--font-rubik)] font-semibold text-[14px] rounded-lg border-[1.5px] border-[#0D7A5F] hover:bg-[#ECF7EF] transition-all">
+              Visit our help centre
+            </a>
+          </div>
 
-        <div className="max-w-[760px] mx-auto flex flex-col gap-3">
-          {faqs.map((faq, i) => {
-            const isOpen = openIndex === i;
-            return (
+          {/* Accordion */}
+          <div className="flex flex-col gap-3">
+            {faqs.map((faq, i) => (
               <div
                 key={i}
-                className={`bg-white border rounded-2xl px-6 overflow-hidden transition-all duration-300 reveal ${
-                  isOpen 
-                    ? "border-[#0D7A5F] shadow-[0_4px_12px_rgba(13,122,95,0.08)]" 
-                    : "border-[#DADCDB] hover:border-[#b0bab5]"
-                }`}
+                className={`bg-white border rounded-2xl px-5 overflow-hidden transition-all duration-300 reveal ${open === i ? "border-[#0D7A5F] shadow-[0_4px_12px_rgba(13,122,95,0.08)]" : "border-[#DADCDB] hover:border-[#b0bab5]"}`}
               >
                 <button
-                  onClick={() => setOpenIndex(isOpen ? null : i)}
-                  className="w-full flex items-center justify-between gap-4 py-5 text-left transition-colors"
-                  aria-expanded={isOpen}
-                  id={`faq-btn-${i}`}
-                  aria-controls={`faq-panel-${i}`}
+                  className="w-full flex justify-between items-center gap-4 py-4 text-left font-[family-name:var(--font-open-sans)] font-bold text-[16px] text-[#1A1E1D]"
+                  onClick={() => setOpen(open === i ? null : i)}
+                  aria-expanded={open === i}
                 >
-                  <span className="font-[family-name:var(--font-open-sans)] text-[15.5px] font-bold text-[#1A1E1D] leading-[1.35]">
-                    {faq.q}
-                  </span>
-                  <span className={`text-[#0D7A5F] transition-colors ${isOpen ? "text-[#0D7A5F]" : "text-[#8A8D8C]"}`}>
-                    <ChevronIcon open={isOpen} />
+                  {faq.q}
+                  <span className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${open === i ? "bg-[#0D7A5F] text-white rotate-45" : "bg-[#ECF7EF] text-[#0D7A5F]"}`}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="w-3.5 h-3.5">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
                   </span>
                 </button>
-
-                <div 
-                  id={`faq-panel-${i}`}
-                  role="region"
-                  aria-labelledby={`faq-btn-${i}`}
+                <div
                   className="grid transition-[grid-template-rows,opacity] duration-300 ease-in-out"
-                  style={{ 
-                    gridTemplateRows: isOpen ? "1fr" : "0fr",
-                    opacity: isOpen ? 1 : 0
+                  style={{
+                    gridTemplateRows: open === i ? "1fr" : "0fr",
+                    opacity: open === i ? 1 : 0
                   }}
                 >
                   <div className="overflow-hidden">
                     <div className="pb-5">
-                      <div className="w-full h-px bg-[#DADCDB] mb-4" />
                       <p className="text-[14.5px] leading-[1.7] text-[#595C5B]">
                         {faq.a}
                       </p>
@@ -106,16 +87,9 @@ export default function HowItWorksFAQ() {
                   </div>
                 </div>
               </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
-
-        <p className="text-center text-[13.5px] text-[#8A8D8C] mt-8">
-          More questions?{" "}
-          <a href="/support" className="text-[#0D7A5F] hover:underline font-medium">
-            Visit the help centre
-          </a>
-        </p>
       </div>
     </section>
   );
