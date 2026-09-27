@@ -31,10 +31,16 @@ function Step1Content() {
   const [isLookingUp, setIsLookingUp] = useState(false);
 
   const hasQueryCarDetails = Boolean(searchParams.get("reg") || searchParams.get("postcode"));
+  const [autoLookup, setAutoLookup] = useState(hasQueryCarDetails);
 
   useEffect(() => {
     if (searchParams.get("clear") === "true" || hasQueryCarDetails) {
       clearSession();
+      if (hasQueryCarDetails) {
+        // Reg + postcode already came in from the homepage widget - run the
+        // lookup immediately instead of making them click "Next Step" again.
+        handleSubmit();
+      }
     } else {
       // Deliberately deferred to after mount (not read during render): getSession()
       // reads sessionStorage, which would produce a server/client mismatch since
@@ -64,9 +70,10 @@ function Step1Content() {
     setError("");
 
     if (activeTab === "plate") {
-      if (!reg.trim()) { setError("Please enter your registration number."); return; }
-      if (!postcode.trim()) { setError("Please enter your postcode."); return; }
+      if (!reg.trim()) { setAutoLookup(false); setError("Please enter your registration number."); return; }
+      if (!postcode.trim()) { setAutoLookup(false); setError("Please enter your postcode."); return; }
       if (!isPlausiblePlate(reg)) {
+        setAutoLookup(false);
         setError("Please enter a valid UK registration number.");
         return;
       }
@@ -81,6 +88,7 @@ function Step1Content() {
         const data = await res.json();
 
         if (!res.ok) {
+          setAutoLookup(false);
           setError(data.message ?? "We couldn't look up that registration. Please enter your details manually.");
           setActiveTab("details");
           setIsLookingUp(false);
@@ -112,6 +120,7 @@ function Step1Content() {
           },
         });
       } catch {
+        setAutoLookup(false);
         setError("We're having trouble looking up your vehicle right now. Please enter your details manually.");
         setActiveTab("details");
         setIsLookingUp(false);
@@ -146,6 +155,54 @@ function Step1Content() {
     } else {
       router.push("/booking/service-select");
     }
+  }
+
+  if (autoLookup) {
+    return (
+      <div className="s1-outer">
+        <div className="s1-loading">
+          <span className="s1-spinner" aria-hidden="true" />
+          <p>Finding your vehicle…</p>
+        </div>
+
+        <style jsx>{`
+          .s1-outer {
+            padding: 40px 24px 80px;
+            max-width: 560px;
+            margin: 0 auto;
+          }
+          .s1-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 80px 24px;
+            text-align: center;
+            color: var(--color-text-secondary);
+            font-size: 15px;
+          }
+          .s1-spinner {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 3px solid var(--color-divider);
+            border-top-color: var(--color-brand-primary);
+            animation: s1-spin 0.8s linear infinite;
+          }
+          @keyframes s1-spin {
+            to {
+              transform: rotate(360deg);
+            }
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .s1-spinner {
+              animation-duration: 2.4s;
+            }
+          }
+        `}</style>
+      </div>
+    );
   }
 
   return (
