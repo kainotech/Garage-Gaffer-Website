@@ -6,7 +6,6 @@ import ScrollReveal from "@/components/ScrollReveal";
 import LegalHero from "@/components/legal/LegalHero";
 import LegalSidebarNav from "@/components/legal/LegalSidebarNav";
 import LegalSection from "@/components/legal/LegalSection";
-import Placeholder from "@/components/legal/Placeholder";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -105,8 +104,7 @@ export default function CookiePolicyPage() {
 
           <LegalSection id="contact" number={6} title="Contact us">
             <p>
-              Questions about this policy? Email us at{" "}
-              <Placeholder>support@garagegaffer.co.uk</Placeholder>.
+              Questions about this policy? Email us at support@garagegaffer.co.uk.
             </p>
           </LegalSection>
 

@@ -55,13 +55,6 @@ export default function TermsPage() {
               , which explains how we handle data in your browser.
             </>
           }
-          notice={
-            <>
-              The email address highlighted like this below is a placeholder until you confirm the one
-              you want to use publicly. Everything else reflects how Garage Gaffer actually works
-              today.
-            </>
-          }
         />
 
         <div className="max-w-[1080px] mx-auto px-6 py-16 md:py-12">
@@ -72,8 +65,7 @@ export default function TermsPage() {
           <LegalSection id="who-we-are" number={1} title="Who we are">
             <p>
               Garage Gaffer is operated by <strong>Garage Gaffer Ltd</strong>, a company registered in
-              England and Wales. You can reach us by email at{" "}
-              <Placeholder>support@garagegaffer.co.uk</Placeholder>.
+              England and Wales.
             </p>
             <p>
               In these terms, &ldquo;Garage Gaffer&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo; and
@@ -256,8 +248,7 @@ export default function TermsPage() {
 
           <LegalSection id="contact" number={16} title="Contact us">
             <p>
-              Questions about these terms? Email us at{" "}
-              <Placeholder>support@garagegaffer.co.uk</Placeholder>.
+              Questions about these terms? Email us at support@garagegaffer.co.uk.
             </p>
           </LegalSection>
 
