@@ -3,7 +3,7 @@ import type { BookingSession } from "@/components/booking/useBookingSession";
 import { generateBookingRef } from "@/components/booking/bookingRef";
 import { formatVehicleLabel, formatWorkLabel, formatPriceLabel } from "@/components/booking/pricing";
 import { formatSlotLabel } from "@/components/booking/step3/slotLabel";
-import { upsertBookingContact, sendBookingConfirmationEmail } from "@/lib/brevo/client";
+import { upsertBookingContact, sendBookingConfirmationEmail /*, sendInternalAlertEmail, escapeHtml */ } from "@/lib/brevo/client";
 
 export async function POST(request: Request) {
   let body: Partial<BookingSession>;
@@ -40,12 +40,29 @@ export async function POST(request: Request) {
   };
 
   // Brevo is a notification/CRM sync, not part of the booking itself - a
-  // hiccup in either call should never stop the customer's booking from
-  // going through, and a failed contact sync must never suppress the
-  // confirmation email (or vice versa), so each is independent.
+  // hiccup in any of these calls should never stop the customer's booking
+  // from going through, and a failure in one must never suppress the others,
+  // so each is independent.
+  // Internal team alert disabled for now - re-enable once BREVO_TEAM_ALERT_EMAIL
+  // and BREVO_SENDER_EMAIL are set (see sendInternalAlertEmail in @/lib/brevo/client).
   const [contactResult, emailResult] = await Promise.allSettled([
     upsertBookingContact(contact, summary),
     sendBookingConfirmationEmail(contact, summary),
+    // sendInternalAlertEmail(
+    //   `New booking: ${bookingRef}`,
+    //   `<p>New booking received.</p>
+    //    <ul>
+    //      <li><strong>Booking ref:</strong> ${escapeHtml(bookingRef)}</li>
+    //      <li><strong>Name:</strong> ${escapeHtml(`${contact.firstName} ${contact.lastName}`.trim())}</li>
+    //      <li><strong>Email:</strong> ${escapeHtml(contact.email)}</li>
+    //      <li><strong>Phone:</strong> ${escapeHtml(contact.phone ?? "—")}</li>
+    //      <li><strong>Vehicle:</strong> ${escapeHtml(summary.vehicleLabel)}</li>
+    //      <li><strong>Work:</strong> ${escapeHtml(summary.workLabel)}</li>
+    //      <li><strong>Date/time:</strong> ${escapeHtml(summary.dateTimeLabel)}</li>
+    //      <li><strong>Location:</strong> ${escapeHtml(summary.locationLabel)}</li>
+    //      <li><strong>Price:</strong> ${escapeHtml(summary.priceLabel)}</li>
+    //    </ul>`,
+    // ),
   ]);
   if (contactResult.status === "rejected") {
     console.error("Brevo contact sync failed", contactResult.reason);

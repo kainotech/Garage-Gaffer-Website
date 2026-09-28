@@ -25,6 +25,39 @@ export type BookingEmailSummary = {
   priceLabel: string;
 };
 
+type SupportContact = {
+  email: string;
+  name: string;
+  phone?: string;
+};
+
+export type SupportEmailSummary = {
+  topic: string;
+  message: string;
+  bookingRef?: string;
+};
+
+type MechanicContact = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  phone?: string;
+};
+
+export type MechanicEmailSummary = {
+  role: string;
+};
+
+/** Escapes user-supplied text before it's interpolated into the internal alert email's raw HTML. */
+export function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 /**
  * Brevo's SMS attribute requires international format, but the booking form
  * collects UK numbers the normal local way (e.g. "07700 900123") with no
@@ -114,5 +147,113 @@ export async function sendBookingConfirmationEmail(contact: BookingContact, summ
       LOCATION_LABEL: summary.locationLabel,
       PRICE_LABEL: summary.priceLabel,
     },
+  });
+}
+
+/**
+ * Upserts the enquirer as a Brevo Contact (matched by email) into the
+ * support enquiries list, stamping their latest enquiry onto custom
+ * attributes so the business can see enquiry history against each contact.
+ */
+export async function upsertSupportContact(contact: SupportContact, summary: SupportEmailSummary): Promise<void> {
+  const listId = process.env.BREVO_SUPPORT_LIST_ID;
+  const [firstName, ...rest] = contact.name.trim().split(/\s+/);
+
+  await brevoFetch("/contacts", {
+    email: contact.email,
+    updateEnabled: true,
+    listIds: listId ? [Number(listId)] : undefined,
+    attributes: {
+      FIRSTNAME: firstName,
+      LASTNAME: rest.join(" "),
+      SMS: normalizePhoneForBrevo(contact.phone),
+      LAST_ENQUIRY_TOPIC: summary.topic,
+      LAST_ENQUIRY_MESSAGE: summary.message,
+      LAST_ENQUIRY_BOOKING_REF: summary.bookingRef ?? "",
+    },
+  });
+}
+
+/**
+ * Sends the support enquiry acknowledgement via the "Garage Gaffer - Support
+ * Enquiry Received" transactional template (BREVO_SUPPORT_TEMPLATE_ID).
+ * Content lives in Brevo, not here - same pattern as the booking confirmation.
+ */
+export async function sendSupportAcknowledgementEmail(contact: SupportContact, summary: SupportEmailSummary): Promise<void> {
+  const templateId = process.env.BREVO_SUPPORT_TEMPLATE_ID;
+  if (!templateId) throw new BrevoError("BREVO_SUPPORT_TEMPLATE_ID is not set");
+
+  await brevoFetch("/smtp/email", {
+    to: [{ email: contact.email, name: contact.name }],
+    templateId: Number(templateId),
+    params: {
+      // Escaped because these are free-text fields substituted into the
+      // template's raw HTML - Brevo does not HTML-escape params itself.
+      NAME: escapeHtml(contact.name),
+      TOPIC: escapeHtml(summary.topic),
+      MESSAGE: escapeHtml(summary.message).replace(/\n/g, "<br/>"),
+      BOOKING_REF: summary.bookingRef ? escapeHtml(summary.bookingRef) : "",
+    },
+  });
+}
+
+/**
+ * Upserts the applicant as a Brevo Contact (matched by email) into the
+ * mechanic applications list, stamping their applicant role onto a custom
+ * attribute so the business can see it against each contact.
+ */
+export async function upsertMechanicContact(contact: MechanicContact, summary: MechanicEmailSummary): Promise<void> {
+  const listId = process.env.BREVO_MECHANIC_LIST_ID;
+
+  await brevoFetch("/contacts", {
+    email: contact.email,
+    updateEnabled: true,
+    listIds: listId ? [Number(listId)] : undefined,
+    attributes: {
+      FIRSTNAME: contact.firstName,
+      LASTNAME: contact.lastName,
+      SMS: normalizePhoneForBrevo(contact.phone),
+      APPLICANT_ROLE: summary.role,
+    },
+  });
+}
+
+/**
+ * Sends the mechanic application acknowledgement via the "Garage Gaffer -
+ * Mechanic Application Received" transactional template
+ * (BREVO_MECHANIC_TEMPLATE_ID). Content lives in Brevo, not here.
+ */
+export async function sendMechanicAcknowledgementEmail(contact: MechanicContact, summary: MechanicEmailSummary): Promise<void> {
+  const templateId = process.env.BREVO_MECHANIC_TEMPLATE_ID;
+  if (!templateId) throw new BrevoError("BREVO_MECHANIC_TEMPLATE_ID is not set");
+
+  await brevoFetch("/smtp/email", {
+    to: [{ email: contact.email, name: `${contact.firstName} ${contact.lastName}`.trim() }],
+    templateId: Number(templateId),
+    params: {
+      FIRSTNAME: escapeHtml(contact.firstName),
+      APPLICANT_ROLE: escapeHtml(summary.role),
+    },
+  });
+}
+
+/**
+ * Sends a plain internal notification to the team inbox (BREVO_TEAM_ALERT_EMAIL).
+ * Used for every form on the site (bookings, support, mechanic applications) so
+ * staff don't have to rely on checking Brevo's contact list for new activity.
+ * Unlike the customer-facing emails, this has no Brevo template - callers must
+ * escape any user-supplied text themselves (see escapeHtml) before building htmlContent.
+ */
+export async function sendInternalAlertEmail(subject: string, htmlContent: string): Promise<void> {
+  const toEmail = process.env.BREVO_TEAM_ALERT_EMAIL;
+  const senderEmail = process.env.BREVO_SENDER_EMAIL;
+  if (!toEmail) throw new BrevoError("BREVO_TEAM_ALERT_EMAIL is not set");
+  if (!senderEmail) throw new BrevoError("BREVO_SENDER_EMAIL is not set");
+
+  await brevoFetch("/smtp/email", {
+    to: [{ email: toEmail }],
+    sender: { name: "Garage Gaffer Website", email: senderEmail },
+    subject,
+    htmlContent,
   });
 }

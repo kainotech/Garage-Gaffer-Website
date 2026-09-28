@@ -1,8 +1,7 @@
-const WrenchIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
-  </svg>
-);
+import Image from "next/image";
+
+// Social links are on hold for now — flip this back on once the accounts are ready to link.
+const SHOW_SOCIALS = false;
 
 const socials = [
   {
@@ -23,77 +22,58 @@ const socials = [
   },
 ];
 
-const footerLinks = [
-  {
-    heading: "Services",
-    links: [
-      { label: "Servicing", href: "/services?category=servicing" },
-      { label: "Brakes", href: "/services?category=brakes" },
-      { label: "Engine & Mechanical", href: "/services?category=engine-mechanical" },
-      { label: "Electrical & Diagnostics", href: "/services?category=electrical-diagnostics" },
-      { label: "All Services", href: "/services" },
-    ],
-  },
-  {
-    heading: "Company",
-    links: [
-      { label: "About us", href: "/about" },
-      { label: "How it works", href: "/how-it-works" },
-    ],
-  },
-  {
-    heading: "For mechanics",
-    links: [
-      { label: "Become a Gaffer", href: "/become-a-mechanic" },
-    ],
-  },
-  {
-    heading: "Support",
-    links: [
-      { label: "Help centre", href: "/support" },
-      { label: "Contact us", href: "/support" },
-      { label: "Warranty claim", href: "/support" },
-      { label: "0117 000 0000", href: "#" },
-    ],
-  },
+const footerColumns = [
+  [
+    { label: "Services", href: "/services" },
+    { label: "How it works", href: "/how-it-works" },
+  ],
+  [
+    { label: "About us", href: "/about" },
+    { label: "Become a Gaffer", href: "/become-a-mechanic" },
+  ],
+  [
+    { label: "Support", href: "/support" },
+  ],
 ];
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0A1412] text-white/75 pt-20 pb-8" id="mechanics">
+    <footer className="bg-[#0A1412] text-white/75 pt-14 pb-6" id="mechanics">
       <div className="max-w-[1200px] mx-auto px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] gap-8 pb-12 border-b border-white/8">
+        <div className="flex flex-col md:flex-row md:items-start justify-between gap-8 pb-8 border-b border-white/8">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2.5 font-[family-name:var(--font-open-sans)] font-extrabold text-[17px] text-white mb-4">
-              <span className="w-7 h-7 rounded-full bg-gradient-to-br from-[#0D7A5F] to-[#055240] flex items-center justify-center shadow-[0_4px_10px_rgba(13,122,95,0.3)]">
-                <WrenchIcon />
-              </span>
-              Garage Gaffer
-            </div>
-            <p className="text-[13.5px] leading-[1.65] text-white/65 max-w-[280px] mb-5">
-              Bristol&apos;s home for vetted mobile mechanics. Honest work, fair prices, parked on your driveway.
+            <Image
+              src="/footer-logo.png"
+              alt="Garage Gaffer"
+              width={1653}
+              height={524}
+              className="h-[46px] w-auto mb-3"
+            />
+            <p className="text-pretty text-[13.5px] leading-[1.65] text-white/65 max-w-[340px] mb-4">
+              Matching you with trusted, fully vetted local garages.
             </p>
-            <div className="flex gap-2">
-              {socials.map((s) => (
-                <a
-                  key={s.label}
-                  href="#"
-                  aria-label={s.label}
-                  className="w-9 h-9 rounded-full bg-white/8 text-white flex items-center justify-center hover:bg-[#0D7A5F] hover:-translate-y-0.5 transition-all"
-                >
-                  {s.icon}
-                </a>
-              ))}
-            </div>
+            {SHOW_SOCIALS && (
+              <div className="flex gap-2">
+                {socials.map((s) => (
+                  <a
+                    key={s.label}
+                    href="#"
+                    aria-label={s.label}
+                    className="w-9 h-9 rounded-full bg-white/8 text-white flex items-center justify-center hover:bg-[#0D7A5F] hover:-translate-y-0.5 transition-all"
+                  >
+                    {s.icon}
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
 
-          {/* Link columns */}
-          {footerLinks.map((col) => (
-            <div key={col.heading}>
-              <h4 className="font-[family-name:var(--font-rubik)] text-[13px] font-bold uppercase tracking-[0.06em] text-white mb-4">{col.heading}</h4>
-              <ul className="flex flex-col gap-2.5 list-none p-0">
-                {col.links.map((link) => (
+          {/* Links */}
+          <div className="flex gap-10 md:ml-auto">
+            {footerColumns.map((col, i) => (
+              <ul key={i} className="flex flex-col gap-2.5 list-none p-0">
+                {col.map((link) => (
                   <li key={link.label}>
                     <a href={link.href} className="text-white/65 text-[14px] hover:text-white transition-colors">
                       {link.label}
@@ -101,12 +81,12 @@ export default function Footer() {
                   </li>
                 ))}
               </ul>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        <div className="flex justify-between items-center pt-8 text-[13px] text-white/45 flex-wrap gap-4">
-          <span>© 2026 Garage Gaffer Ltd. Registered in England &amp; Wales.</span>
+        <div className="flex justify-between items-center pt-6 text-[13px] text-white/45 flex-wrap gap-4">
+          <span>© 2026 Garage Gaffer Ltd.</span>
           <div className="flex gap-5">
             {[
               { label: "Terms", href: "/terms" },
