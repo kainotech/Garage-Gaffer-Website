@@ -108,8 +108,11 @@ export default function Footer() {
         <div className="flex justify-between items-center pt-8 text-[13px] text-white/45 flex-wrap gap-4">
           <span>© 2026 Garage Gaffer Ltd. Registered in England &amp; Wales.</span>
           <div className="flex gap-5">
-            {["Privacy", "Terms", "Cookies"].map((l) => (
-              <a key={l} href="#" className="text-white/60 hover:text-white transition-colors">{l}</a>
+            {[
+              { label: "Terms", href: "/terms" },
+              { label: "Cookies", href: "/cookie-policy" },
+            ].map((l) => (
+              <a key={l.label} href={l.href} className="text-white/60 hover:text-white transition-colors">{l.label}</a>
             ))}
           </div>
         </div>

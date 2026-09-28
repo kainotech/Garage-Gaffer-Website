@@ -40,10 +40,12 @@ export default function QuoteWidget({ idSuffix = "", defaultService, layout = "c
         <div className="flex flex-col sm:flex-row items-stretch bg-white rounded-2xl sm:rounded-full border border-[#DADCDB] shadow-[0_16px_48px_rgba(13,122,95,0.12),0_8px_16px_rgba(0,0,0,0.06)] overflow-hidden">
           {/* Registration */}
           <div className="flex-1 flex items-center gap-2.5 px-5 py-3.5 border-b sm:border-b-0 sm:border-r border-[#DADCDB]">
-            <span className="flex-shrink-0 w-7 h-5 bg-[#06417A] text-white rounded-[4px] flex flex-col items-center justify-center pointer-events-none">
-              <span className="text-[#FFD02A] text-[6px] leading-none">★ ★ ★</span>
-              <span className="text-[7px] font-bold">GB</span>
-            </span>
+            <svg className="flex-shrink-0 w-4 h-4 text-[#8A8D8C]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2" />
+              <path d="M9 17h6" />
+              <circle cx="7" cy="17" r="2" />
+              <circle cx="17" cy="17" r="2" />
+            </svg>
             <input
               id={`reg${idSuffix}`}
               ref={regRef}
@@ -114,17 +116,19 @@ export default function QuoteWidget({ idSuffix = "", defaultService, layout = "c
           Car registration
         </label>
         <div className="relative">
-          <span className="absolute left-1 top-1 bottom-1 w-7 bg-[#06417A] text-white rounded-[6px] flex flex-col items-center justify-center pointer-events-none">
-            <span className="text-[#FFD02A] text-[8px] leading-none">★ ★ ★</span>
-            <span className="text-[9px] font-bold mt-0.5">GB</span>
-          </span>
+          <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#8A8D8C] pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2" />
+            <path d="M9 17h6" />
+            <circle cx="7" cy="17" r="2" />
+            <circle cx="17" cy="17" r="2" />
+          </svg>
           <input
             id={`reg${idSuffix}`}
             ref={regRef}
             type="text"
             placeholder="AB12 CDE"
             maxLength={8}
-            className="w-full bg-[#FFD02A] border-[1.5px] border-[#CFA100] rounded-lg pl-10 pr-3.5 py-3 text-[14px] font-[family-name:var(--font-open-sans)] font-extrabold tracking-[2px] uppercase text-[#1A1E1D] placeholder:text-[#8A8D8C] placeholder:normal-case placeholder:tracking-normal focus:outline-none transition-all"
+            className="w-full bg-white border-[1.5px] border-[#DADCDB] rounded-lg pl-10 pr-3.5 py-3 text-[14px] uppercase text-[#1A1E1D] placeholder:text-[#8A8D8C] placeholder:normal-case hover:border-[#b0bab5] focus:outline-none focus:border-[#0D7A5F] focus:shadow-[0_0_0_3px_rgba(13,122,95,0.12)] transition-all"
             onChange={(e) => (e.target.value = e.target.value.toUpperCase())}
           />
         </div>

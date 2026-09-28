@@ -1,9 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { SERVICE_CATEGORIES } from "@/data/services";
-import { CategoryIcon, accentForIndex } from "@/data/serviceCategoryVisuals";
+import { CategoryIcon } from "@/data/serviceCategoryVisuals";
 
 interface ServicesCatalogProps {
   initialCategorySlug?: string;
@@ -38,8 +37,7 @@ export default function ServicesCatalog({ initialCategorySlug }: ServicesCatalog
           {/* Category list */}
           <nav aria-label="Service categories" className="md:sticky md:top-[88px] md:self-start">
             <ul className="list-none p-0 flex flex-col gap-1 bg-white border border-[#DADCDB] rounded-2xl p-2 shadow-[0_1px_3px_rgba(0,0,0,0.06)]">
-              {SERVICE_CATEGORIES.map((category, i) => {
-                const colors = accentForIndex(i);
+              {SERVICE_CATEGORIES.map((category) => {
                 const isActive = category.slug === activeSlug;
                 return (
                   <li key={category.slug}>
@@ -48,15 +46,15 @@ export default function ServicesCatalog({ initialCategorySlug }: ServicesCatalog
                       aria-current={isActive}
                       className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-colors"
                       style={{
-                        background: isActive ? colors.well : "transparent",
+                        background: isActive ? "#ECF7EF" : "transparent",
                       }}
                     >
                       <span
                         className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 border"
                         style={{
-                          background: isActive ? "white" : colors.well,
-                          borderColor: `color-mix(in srgb, ${colors.accent} 15%, transparent)`,
-                          color: colors.accent,
+                          background: isActive ? "white" : "#ECF7EF",
+                          borderColor: "color-mix(in srgb, #0D7A5F 15%, transparent)",
+                          color: "#0D7A5F",
                         }}
                       >
                         <CategoryIcon slug={category.slug} />
@@ -70,7 +68,7 @@ export default function ServicesCatalog({ initialCategorySlug }: ServicesCatalog
                       <span
                         className="font-[family-name:var(--font-rubik)] text-[11.5px] font-semibold px-1.5 py-0.5 rounded-md"
                         style={{
-                          color: isActive ? colors.accent : "#8A8D8C",
+                          color: isActive ? "#0D7A5F" : "#8A8D8C",
                           background: isActive ? "white" : "transparent",
                         }}
                       >
@@ -87,14 +85,14 @@ export default function ServicesCatalog({ initialCategorySlug }: ServicesCatalog
                 Not sure what you need?
               </h3>
               <p className="text-[#595C5B] text-[13px] leading-[1.6] mb-4">
-                Get a free quote and we&apos;ll help you figure out what your car needs.
+                Send us an enquiry and tell us what&apos;s going on with your car. We&apos;ll help you work out what it needs, free of charge.
               </p>
-              <Link
-                href="/booking"
+              <a
+                href="mailto:support@garagegaffer.co.uk?subject=Help%20me%20find%20the%20right%20service&body=Hi%20Garage%20Gaffer%2C%0D%0A%0D%0AHere's%20what's%20going%20on%20with%20my%20car%3A%0D%0A%0D%0A"
                 className="inline-flex items-center justify-center w-full px-3.5 py-2 rounded-lg text-[13px] font-semibold font-[family-name:var(--font-rubik)] bg-[#0D7A5F] text-white shadow-[0_2px_8px_rgba(13,122,95,0.25)] hover:bg-[#055240] transition-colors"
               >
-                Get a quote
-              </Link>
+                Send an enquiry
+              </a>
             </div>
           </nav>
 

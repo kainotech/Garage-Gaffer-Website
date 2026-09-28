@@ -13,7 +13,6 @@ type BookingContact = {
   firstName: string;
   lastName: string;
   phone?: string;
-  optIn: boolean;
 };
 
 /** Plain-text labels shared with the confirmation page, so the email and the on-screen summary always agree. */
@@ -84,7 +83,6 @@ export async function upsertBookingContact(contact: BookingContact, summary: Boo
       FIRSTNAME: contact.firstName,
       LASTNAME: contact.lastName,
       SMS: normalizePhoneForBrevo(contact.phone),
-      OPT_IN: contact.optIn,
       LAST_BOOKING_REF: summary.bookingRef,
       LAST_BOOKING_VEHICLE: summary.vehicleLabel,
       LAST_BOOKING_SERVICE: summary.workLabel,

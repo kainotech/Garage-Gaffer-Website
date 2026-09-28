@@ -5,11 +5,11 @@ import { useState } from "react";
 const mechanicFaqs = [
   {
     q: "How much does it cost to join?",
-    a: "Registration and viewing jobs is free. Once approved, we charge a flat monthly platform fee of £49. We do not charge per lead and we do not take a percentage of your quote. You keep 100% of your labour and parts.",
+    a: "Joining Garage Gaffer costs nothing. Registration, vetting and viewing jobs are all free, and we don't charge per lead or take a percentage of your quote. You keep 100% of your labour and parts.",
   },
   {
     q: "How do I get paid?",
-    a: "Drivers pay securely through the platform when you complete the job. We process all payments and transfer the full amount (minus any relevant parts if purchased through our network) to your bank account every Friday.",
+    a: "Customers pay securely through the platform when you complete the job. We process all payments and transfer the full amount to your bank account every Friday.",
   },
   {
     q: "Can I keep my existing customers?",
@@ -21,7 +21,7 @@ const mechanicFaqs = [
   },
   {
     q: "How does the quoting process work?",
-    a: "When a driver posts a job in your area, you'll get an alert. You can see the car details and the driver's description. You send an itemised quote through the platform. The driver reviews all quotes and books the one that suits them. You only pay the platform fee when you're live and ready to take jobs.",
+    a: "When a customer posts a job in your area, we'll reach out to you. You can see the car details and the customer's description, then send an itemised quote through the platform. The customer reviews all quotes and books the one that suits them. You only pay the platform fee once you're live and ready to take jobs.",
   },
 ];
 
@@ -31,65 +31,60 @@ export default function MechanicFAQ() {
   return (
     <section className="bg-[#FBFDFC] border-t border-[#DADCDB] py-24 md:py-16">
       <div className="max-w-[1200px] mx-auto px-6">
-        <div className="max-w-[760px] mx-auto text-center mb-12 reveal">
-          <span className="inline-block font-[family-name:var(--font-rubik)] text-[11px] font-bold tracking-[0.1em] uppercase text-[#0D7A5F] mb-3">
-            FAQ
-          </span>
-          <h2 className="font-[family-name:var(--font-open-sans)] text-[34px] font-extrabold tracking-[-0.5px] leading-[1.15] text-[#1A1E1D] mb-4">
-            Common questions from mechanics.
-          </h2>
-          <p className="font-[family-name:var(--font-rubik)] text-[16px] text-[#595C5B]">
-            Everything you need to know about joining and working with Garage Gaffer.
-          </p>
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.3fr] gap-14 items-start">
+          {/* Left */}
+          <div className="reveal">
+            <span className="inline-block font-[family-name:var(--font-rubik)] text-[11px] font-bold tracking-[0.1em] uppercase text-[#0D7A5F] mb-3">
+              FAQ
+            </span>
+            <h2 className="font-[family-name:var(--font-open-sans)] text-[34px] font-extrabold tracking-[-0.5px] leading-[1.15]">
+              Common questions from mechanics.
+            </h2>
+            <p className="text-[#595C5B] text-[16px] leading-[1.7] mt-3.5">
+              Everything you need to know about joining and working with Garage Gaffer.
+            </p>
+            <a href="/support" className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 bg-transparent text-[#0D7A5F] font-[family-name:var(--font-rubik)] font-semibold text-[14px] rounded-lg border-[1.5px] border-[#0D7A5F] hover:bg-[#ECF7EF] transition-all">
+              Visit our help centre
+            </a>
+          </div>
 
-        <div className="max-w-[760px] mx-auto flex flex-col gap-3">
-          {mechanicFaqs.map((faq, i) => (
-            <div
-              key={i}
-              className={`bg-white border rounded-2xl px-6 overflow-hidden transition-all duration-300 reveal ${
-                open === i 
-                  ? "border-[#0D7A5F] shadow-[0_4px_12px_rgba(13,122,95,0.08)]" 
-                  : "border-[#DADCDB] hover:border-[#b0bab5]"
-              }`}
-            >
-              <button
-                className="w-full flex justify-between items-center gap-4 py-5 text-left font-[family-name:var(--font-open-sans)] font-bold text-[16px] text-[#1A1E1D]"
-                onClick={() => setOpen(open === i ? null : i)}
-                aria-expanded={open === i}
+          {/* Accordion */}
+          <div className="flex flex-col gap-3">
+            {mechanicFaqs.map((faq, i) => (
+              <div
+                key={i}
+                className={`bg-white border rounded-2xl px-5 overflow-hidden transition-all duration-300 reveal ${open === i ? "border-[#0D7A5F] shadow-[0_4px_12px_rgba(13,122,95,0.08)]" : "border-[#DADCDB] hover:border-[#b0bab5]"}`}
               >
-                {faq.q}
-                <span className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
-                  open === i ? "bg-[#0D7A5F] text-white rotate-45" : "bg-[#ECF7EF] text-[#0D7A5F]"
-                }`}>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="w-3.5 h-3.5">
-                    <path d="M12 5v14M5 12h14" />
-                  </svg>
-                </span>
-              </button>
-              <div 
-                className="grid transition-[grid-template-rows,opacity] duration-300 ease-in-out"
-                style={{ 
-                  gridTemplateRows: open === i ? "1fr" : "0fr",
-                  opacity: open === i ? 1 : 0
-                }}
-              >
-                <div className="overflow-hidden">
-                  <div className="pb-6">
-                    <p className="font-[family-name:var(--font-rubik)] text-[14.5px] leading-[1.7] text-[#595C5B]">
-                      {faq.a}
-                    </p>
+                <button
+                  className="w-full flex justify-between items-center gap-4 py-4 text-left font-[family-name:var(--font-open-sans)] font-bold text-[16px] text-[#1A1E1D]"
+                  onClick={() => setOpen(open === i ? null : i)}
+                  aria-expanded={open === i}
+                >
+                  {faq.q}
+                  <span className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${open === i ? "bg-[#0D7A5F] text-white rotate-45" : "bg-[#ECF7EF] text-[#0D7A5F]"}`}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" className="w-3.5 h-3.5">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                  </span>
+                </button>
+                <div
+                  className="grid transition-[grid-template-rows,opacity] duration-300 ease-in-out"
+                  style={{
+                    gridTemplateRows: open === i ? "1fr" : "0fr",
+                    opacity: open === i ? 1 : 0
+                  }}
+                >
+                  <div className="overflow-hidden">
+                    <div className="pb-5">
+                      <p className="text-[14.5px] leading-[1.7] text-[#595C5B]">
+                        {faq.a}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-10 text-center reveal">
-          <p className="font-[family-name:var(--font-rubik)] text-[15px] text-[#595C5B]">
-            Still have questions? <a href="/support" className="text-[#0D7A5F] font-semibold hover:underline">Visit our help centre</a> or reach out to our team.
-          </p>
+            ))}
+          </div>
         </div>
       </div>
     </section>

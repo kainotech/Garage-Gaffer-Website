@@ -13,7 +13,6 @@ const STEPS = [
 
 function getActiveStep(pathname: string): number {
   if (pathname.startsWith("/booking/step-1")) return 1;
-  if (pathname.startsWith("/booking/service-select")) return 2;
   if (pathname.startsWith("/booking/step-2")) return 2;
   if (pathname.startsWith("/booking/step-3")) return 3;
   if (pathname.startsWith("/booking/step-4")) return 4;

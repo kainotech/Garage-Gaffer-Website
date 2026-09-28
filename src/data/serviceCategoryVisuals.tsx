@@ -17,40 +17,58 @@ export function accentForIndex(index: number): CategoryAccent {
 
 export const CATEGORY_ICONS: Record<string, ReactNode> = {
   servicing: (
-    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+    <path d="M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7Zm7.43-2.5c.04-.33.07-.66.07-1s-.03-.67-.07-1l2.11-1.65a.5.5 0 0 0 .12-.64l-2-3.46a.5.5 0 0 0-.6-.22l-2.49 1a7.3 7.3 0 0 0-1.73-1L14.5 2.5a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 0-.5.5l-.34 2.03c-.63.22-1.2.54-1.73.94l-2.49-1a.5.5 0 0 0-.6.22l-2 3.46a.5.5 0 0 0 .12.64L4.57 10.5c-.04.33-.07.66-.07 1s.03.67.07 1l-2.11 1.65a.5.5 0 0 0-.12.64l2 3.46a.5.5 0 0 0 .6.22l2.49-1c.53.4 1.1.72 1.73.94l.34 2.03a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5l.34-2.03c.63-.22 1.2-.54 1.73-.94l2.49 1a.5.5 0 0 0 .6-.22l2-3.46a.5.5 0 0 0-.12-.64L19.43 13Z" />
   ),
   brakes: (
-    <>
-      <circle cx="12" cy="12" r="9" />
-      <circle cx="12" cy="12" r="3" />
-    </>
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2Zm0 15a5 5 0 1 1 0-10 5 5 0 0 1 0 10Z"
+    />
   ),
   "engine-mechanical": (
-    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+    <path d="M22.7 19 13.6 9.9c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6l-3 3-4.3-4.3C.6 7.1 1 10.1 3 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1 0-1.4Z" />
   ),
   "exhaust-emissions": (
-    <path d="M17.5 19H9a5 5 0 1 1 1.5-9.8A6 6 0 0 1 22 12.5a4.5 4.5 0 0 1-4.5 6.5z" />
+    <path d="M6.5 19a4.5 4.5 0 1 1 .5-8.98A5.5 5.5 0 0 1 17.5 8.06 4 4 0 0 1 17 19H6.5Z" />
   ),
   "electrical-diagnostics": <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" />,
   "suspension-steering": (
     <>
-      <circle cx="12" cy="12" r="8" />
-      <path d="M12 4v4M12 16v4M4 12h4M16 12h4" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 17.5a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
+      />
+      <circle cx="12" cy="12" r="2.3" />
+      <rect x="11" y="4.5" width="2" height="6" rx="1" />
+      <rect x="11" y="4.5" width="2" height="6" rx="1" transform="rotate(120 12 12)" />
+      <rect x="11" y="4.5" width="2" height="6" rx="1" transform="rotate(240 12 12)" />
     </>
   ),
   "heating-air-conditioning": (
-    <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" />
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M12 2a2.5 2.5 0 0 0-2.5 2.5v8.6a4.5 4.5 0 1 0 5 0V4.5A2.5 2.5 0 0 0 12 2Zm0 3a1 1 0 0 1 1 1v7.35l.7.5a2.5 2.5 0 1 1-3.4 0l.7-.5V6a1 1 0 0 1 1-1Z"
+    />
   ),
   "bodywork-cosmetic": (
     <>
-      <rect x="3" y="6" width="12" height="5" rx="1.5" />
-      <path d="M9 11v4M9 15h4a2 2 0 0 1 2 2v3" />
+      <rect x="8" y="9" width="8" height="13" rx="2" />
+      <rect x="10" y="5" width="4" height="4" rx="1" />
+      <rect x="10.5" y="2" width="3" height="2.4" rx="1" />
+      <circle cx="6" cy="8" r="1.1" />
+      <circle cx="18" cy="6" r="1.1" />
+      <circle cx="5.5" cy="4.5" r="0.9" />
     </>
   ),
   "ev-hybrid": (
     <>
-      <rect x="7" y="3" width="10" height="18" rx="2" />
-      <path d="M10 3V1M14 3V1M11 8l-2 4h3l-2 4" />
+      <rect x="6" y="9" width="12" height="10" rx="3" />
+      <rect x="9" y="4" width="2.2" height="6" rx="1.1" />
+      <rect x="12.8" y="4" width="2.2" height="6" rx="1.1" />
+      <rect x="10.5" y="19" width="3" height="3" rx="1" />
     </>
   ),
   "cooling-system": (
@@ -58,9 +76,12 @@ export const CATEGORY_ICONS: Record<string, ReactNode> = {
   ),
   "fuel-system": (
     <>
-      <path d="M4 21V6a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v15" />
-      <path d="M4 11h7M3 21h11" />
-      <path d="M15 8h1.5L19 10.5V18a1.5 1.5 0 0 1-3 0v-4h-1" />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M4 3a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v18h1a1 1 0 1 1 0 2H3a1 1 0 1 1 0-2h1V3Zm2.5 1.5v6h4v-6h-4Z"
+      />
+      <path d="M14.5 8h1.7L19 10.8v6.7a1.5 1.5 0 0 1-3 0v-3.5a1 1 0 0 0-1-1h-.5V8Z" />
     </>
   ),
 };
@@ -69,11 +90,8 @@ export function CategoryIcon({ slug, className }: { slug: string; className?: st
   return (
     <svg
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.8}
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      fill="currentColor"
+      stroke="none"
       className={className ?? "w-4 h-4"}
       aria-hidden="true"
     >

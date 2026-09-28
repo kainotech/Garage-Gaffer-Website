@@ -59,7 +59,7 @@ export default function PriceSummaryStickyBar({
 
           <div className="pssb-divider" />
 
-          <p className="pssb-note">This is the labour fee, including VAT where applicable. If parts are needed, we&apos;ll send a full quotation — with your date confirmed — within 1 working day.</p>
+          <p className="pssb-note">All prices shown are for <strong className="pssb-highlight">labour only</strong>, including VAT where applicable. Once you submit your booking, we&apos;ll be in touch within 1 working day with your full price — including parts, if your job needs any.</p>
         </div>
       )}
 
@@ -130,6 +130,10 @@ export default function PriceSummaryStickyBar({
         .pssb-item-price { font-size: 13px; font-weight: 700; }
         .pssb-divider { height: 1px; background: var(--color-divider); }
         .pssb-note { font-size: 11px; color: var(--color-text-disabled); margin: 4px 0 0; line-height: 1.5; }
+        .pssb-highlight {
+          font-weight: 800; color: var(--color-brand-deep);
+          background: #ECF7EF; padding: 1px 5px; border-radius: 4px;
+        }
         .pssb-bar {
           background: #fff; border-top: 1px solid var(--color-divider);
           padding: 12px 16px; display: flex; align-items: center; gap: 12px;

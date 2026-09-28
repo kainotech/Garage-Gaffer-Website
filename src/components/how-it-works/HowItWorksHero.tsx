@@ -35,17 +35,6 @@ export default function HowItWorksHero() {
               Get your price
               <ArrowIcon />
             </a>
-            <span className="hiw-micro">
-              Takes under 2 minutes &middot; No card needed to book
-            </span>
-          </div>
-
-          <div className="hiw-meta">
-            <span>Vetted Bristol mechanics</span>
-            <span className="hiw-meta-dot" />
-            <span>Instant pricing</span>
-            <span className="hiw-meta-dot" />
-            <span>Trusted partner garages</span>
           </div>
         </div>
       </div>
@@ -58,7 +47,7 @@ export default function HowItWorksHero() {
             radial-gradient(700px 400px at 15% 100%, rgba(49,167,168,0.05), transparent 60%),
             #F8FAF9;
           overflow: hidden;
-          padding: 72px 0 88px;
+          padding: 56px 0 48px;
           border-bottom: 1px solid #DADCDB;
         }
 
@@ -147,7 +136,6 @@ export default function HowItWorksHero() {
           flex-direction: column;
           align-items: center;
           gap: 12px;
-          margin-bottom: 32px;
         }
 
         .hiw-btn {
@@ -176,34 +164,9 @@ export default function HowItWorksHero() {
           transform: translateY(1px);
         }
 
-        .hiw-micro {
-          font-size: 13px;
-          color: #8A8D8C;
-        }
-
-        .hiw-meta {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 16px;
-          flex-wrap: wrap;
-          font-family: var(--font-rubik), sans-serif;
-          font-size: 12.5px;
-          color: #595C5B;
-        }
-
-        .hiw-meta-dot {
-          width: 3px;
-          height: 3px;
-          border-radius: 50%;
-          background: #8A8D8C;
-          display: inline-block;
-          flex-shrink: 0;
-        }
-
         @media (max-width: 820px) {
           .hiw-hero {
-            padding: 56px 0 72px;
+            padding: 40px 0 36px;
           }
           .hiw-h1 {
             font-size: 34px;

@@ -9,7 +9,6 @@ export type SelectedItem = {
   name: string;
   /** undefined means the item is custom-quoted (no fixed price) */
   price?: number;
-  labourTime?: string;
   partsIncluded?: boolean;
 };
 
@@ -32,7 +31,6 @@ export type BookingSession = {
     firstName: string;
     lastName: string;
     email: string;
-    optIn: boolean;
     address1: string;
     address2?: string;
     city: string;
@@ -60,7 +58,6 @@ const DEFAULT_SESSION: BookingSession = {
     firstName: "",
     lastName: "",
     email: "",
-    optIn: true,
     address1: "",
     address2: "",
     city: "",

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { SERVICE_CATEGORIES } from "@/data/services";
 import { SERVICE_BASE_HOURS } from "@/data/servicePricing";
-import { calculateServicePrice, VEHICLE_TYPE_MULTIPLIERS, type VehicleType } from "@/data/pricingConfig";
+import { calculateServicePrice, type VehicleType } from "@/data/pricingConfig";
 import { formatItemPrice } from "../pricing";
 import type { SelectedItem } from "../useBookingSession";
 
@@ -43,28 +43,27 @@ export default function CategoryTab({ categorySlug, vehicleType, selectedWork, o
       </div>
 
       <div className="ct-section">
-        <h3 className="ct-section-title">{category.name}</h3>
+        <div className="ct-section-head">
+          <h3 className="ct-section-title">{category.name}</h3>
+          <span className="ct-section-count">{filtered.length} service{filtered.length === 1 ? "" : "s"}</span>
+        </div>
         <div className="ct-list">
           {filtered.map((service) => {
             const id = `${category.slug}::${service.name}`;
             const added = selectedIds.has(id);
             const baseHours = SERVICE_BASE_HOURS[id] ?? 0;
             const price = calculateServicePrice(baseHours, vehicleType);
-            const labourTime = `${(baseHours * VEHICLE_TYPE_MULTIPLIERS[vehicleType]).toFixed(1)}h`;
             return (
-              <div key={id} className="ct-item">
-                <div className="ct-item-info">
-                  <span className="ct-item-name">{service.name}</span>
-                  <span className="ct-item-desc">{service.description}</span>
+              <div key={id} className={`ct-card${added ? " ct-card--added" : ""}`}>
+                <div className="ct-card-info">
+                  <span className="ct-card-name">{service.name}</span>
+                  <span className="ct-card-desc">{service.description}</span>
                 </div>
-                <div className="ct-item-right">
-                  <span className="ct-item-price-col">
-                    <span className="ct-item-price">{formatItemPrice({ id, name: service.name, price })}</span>
-                    <span className="ct-item-time">Est. {labourTime} labour</span>
-                  </span>
+                <div className="ct-card-action">
+                  <span className="ct-card-price">{formatItemPrice({ id, name: service.name, price })}</span>
                   <button
-                    className={`ct-item-btn${added ? " ct-item-btn--remove" : ""}`}
-                    onClick={() => (added ? onRemove(id) : onAdd({ id, name: service.name, price, labourTime }))}
+                    className={`ct-card-btn${added ? " ct-card-btn--remove" : ""}`}
+                    onClick={() => (added ? onRemove(id) : onAdd({ id, name: service.name, price }))}
                     type="button"
                     aria-label={added ? `Remove ${service.name}` : `Add ${service.name}`}
                   >
@@ -89,41 +88,49 @@ export default function CategoryTab({ categorySlug, vehicleType, selectedWork, o
         }
         .ct-search-input { padding-left: 40px !important; }
         .ct-section { display: flex; flex-direction: column; gap: 12px; }
+        .ct-section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
         .ct-section-title {
           font-family: var(--font-open-sans), sans-serif;
+          font-size: 18px; font-weight: 800; color: var(--color-text-primary);
+        }
+        .ct-section-count { font-size: 12.5px; color: var(--color-text-secondary); white-space: nowrap; }
+        .ct-list { display: flex; flex-direction: column; gap: 8px; }
+        .ct-card {
+          display: flex; align-items: center; justify-content: space-between; gap: 16px;
+          padding: 11px 16px; border-radius: var(--radius-lg);
+          background: #fff; border: 1.5px solid var(--color-divider);
+          box-shadow: var(--shadow-sm);
+          transition: border-color var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast);
+        }
+        .ct-card:hover { border-color: #b0bab5; transform: translateY(-1px); box-shadow: var(--shadow-md); }
+        .ct-card--added { border-color: var(--color-brand-primary); background: #ECF7EF; }
+        .ct-card-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+        .ct-card-name { font-size: 13px; font-weight: 700; color: var(--color-text-primary); }
+        .ct-card-desc { font-size: 12.5px; color: var(--color-text-secondary); line-height: 1.5; }
+        .ct-card-action { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+        .ct-card-price {
           font-size: 15px; font-weight: 800; color: var(--color-text-primary);
+          font-family: var(--font-open-sans), sans-serif; white-space: nowrap;
         }
-        .ct-list { display: flex; flex-direction: column; gap: 2px; }
-        .ct-item {
-          display: flex; align-items: center; justify-content: space-between; gap: 12px;
-          padding: 12px 14px; border-radius: var(--radius-md);
-          background: var(--color-bg); transition: background var(--t-fast);
-        }
-        .ct-item:hover { background: #ECF7EF; }
-        .ct-item-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-        .ct-item-name { font-size: 14px; font-weight: 600; color: var(--color-text-primary); }
-        .ct-item-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
-        .ct-item-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-        .ct-item-price-col { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
-        .ct-item-price {
-          font-size: 12px; font-weight: 700; color: var(--color-brand-primary);
-          text-transform: uppercase; letter-spacing: 0.04em;
-        }
-        .ct-item-time { font-size: 10.5px; color: var(--color-text-disabled); white-space: nowrap; }
-        .ct-item-btn {
-          padding: 6px 14px; border-radius: var(--radius-md);
+        .ct-card-btn {
+          padding: 7px 14px; border-radius: var(--radius-md);
           background: var(--color-brand-primary); color: #fff;
           border: none; cursor: pointer; font-family: var(--font-rubik), sans-serif;
-          font-size: 12px; font-weight: 600;
+          font-size: 12.5px; font-weight: 600; white-space: nowrap;
           transition: background var(--t-fast), transform var(--t-fast);
         }
-        .ct-item-btn:hover { background: var(--color-brand-deep); transform: translateY(-1px); }
-        .ct-item-btn--remove { background: #fff; color: var(--color-error); border: 1.5px solid var(--color-error); }
-        .ct-item-btn--remove:hover { background: #FFF0F0; }
+        .ct-card-btn:hover { background: var(--color-brand-deep); transform: translateY(-1px); }
+        .ct-card-btn--remove { background: #fff; color: var(--color-error); border: 1.5px solid var(--color-error); }
+        .ct-card-btn--remove:hover { background: #FFF0F0; }
         .ct-empty { font-size: 14px; color: var(--color-text-secondary); padding: 16px 0; }
 
+        @media (max-width: 500px) {
+          .ct-card { flex-direction: column; align-items: stretch; gap: 12px; }
+          .ct-card-action { justify-content: space-between; }
+        }
+
         @media (prefers-reduced-motion: reduce) {
-          .ct-item, .ct-item-btn { transition: none; }
+          .ct-card, .ct-card-btn { transition: none; }
         }
       `}</style>
     </div>

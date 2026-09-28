@@ -37,7 +37,6 @@ export async function POST(request: Request) {
     firstName: details.firstName,
     lastName: details.lastName ?? "",
     phone: details.phone,
-    optIn: details.optIn ?? false,
   };
 
   // Brevo is a notification/CRM sync, not part of the booking itself - a

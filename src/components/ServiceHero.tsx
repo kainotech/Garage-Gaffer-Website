@@ -1,61 +1,40 @@
 "use client";
 
 import React from "react";
-import CompactQuoteWidget from "@/components/CompactQuoteWidget";
+
+const ArrowIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M5 12h14M13 6l6 6-6 6" />
+  </svg>
+);
 
 interface ServiceHeroProps {
-  breadcrumb: {
-    parent: string;
-    current: string;
-  };
+  current: string;
   title: React.ReactNode;
   subtitle: string;
-  meta: {
-    mechanicCount: number;
-    quoteTime: string;
-  };
-  defaultService?: string;
-  idSuffix?: string;
 }
 
-export default function ServiceHero({
-  breadcrumb,
-  title,
-  subtitle,
-  meta,
-  defaultService,
-  idSuffix,
-}: ServiceHeroProps) {
+export default function ServiceHero({ current, title, subtitle }: ServiceHeroProps) {
   return (
     <section className="sh-hero">
       <div className="sh-container">
         <div className="sh-head reveal">
           <div className="sh-breadcrumb">
-            <span>{breadcrumb.parent}</span>
+            <span>Garage Gaffer</span>
             <span className="sh-dot" />
-            <span className="sh-here">{breadcrumb.current}</span>
+            <span className="sh-here">{current}</span>
           </div>
 
           <h1 className="sh-h1">{title}</h1>
 
           <p className="sh-sub">{subtitle}</p>
-        </div>
 
-        <div className="reveal">
-          <CompactQuoteWidget defaultService={defaultService} idSuffix={idSuffix} />
-        </div>
-
-        <div className="sh-meta reveal">
-          <span>
-            <span className="sh-live-dot" />
-            <strong>{meta.mechanicCount}</strong>&nbsp;mechanics live in Bristol
-          </span>
-          <span className="sh-meta-dot" />
-          <span>
-            Average quote in <strong>{meta.quoteTime}</strong>
-          </span>
-          <span className="sh-meta-dot" />
-          <span>Free to post — no card needed</span>
+          <div className="sh-cta-wrap">
+            <a href="/booking" className="sh-btn">
+              Get your price
+              <ArrowIcon />
+            </a>
+          </div>
         </div>
       </div>
 
@@ -67,7 +46,7 @@ export default function ServiceHero({
             radial-gradient(800px 400px at 10% 100%, rgba(49,167,168,0.06), transparent 60%),
             #F8FAF9;
           overflow: hidden;
-          padding: 64px 0 96px;
+          padding: 56px 0 48px;
         }
         .sh-hero::before {
           content: "";
@@ -92,8 +71,8 @@ export default function ServiceHero({
         .sh-head {
           position: relative;
           text-align: center;
-          max-width: 760px;
-          margin: 0 auto 40px;
+          max-width: 700px;
+          margin: 0 auto;
         }
         .sh-breadcrumb {
           display: inline-flex;
@@ -101,7 +80,7 @@ export default function ServiceHero({
           gap: 8px;
           font-family: var(--font-rubik), sans-serif;
           font-size: 11px;
-          font-weight: 600;
+          font-weight: 700;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: #595C5B;
@@ -118,11 +97,11 @@ export default function ServiceHero({
         }
         .sh-h1 {
           font-family: var(--font-open-sans), sans-serif;
-          font-size: 60px;
-          line-height: 1.02;
-          letter-spacing: -1.8px;
+          font-size: 48px;
+          line-height: 1.1;
+          letter-spacing: -1.5px;
           font-weight: 800;
-          margin: 0 0 16px;
+          margin: 0 0 20px;
           color: #1A1E1D;
         }
         .sh-h1 :global(em) {
@@ -135,63 +114,59 @@ export default function ServiceHero({
         }
         .sh-sub {
           font-family: var(--font-rubik), sans-serif;
-          font-size: 16px;
+          font-size: 18px;
           line-height: 1.55;
           color: #595C5B;
-          max-width: 560px;
-          margin: 0 auto;
+          max-width: 580px;
+          margin: 0 auto 32px;
         }
 
-        .sh-meta {
+        .sh-cta-wrap {
           display: flex;
+          flex-direction: column;
           align-items: center;
-          justify-content: center;
-          gap: 16px;
-          margin-top: 22px;
-          flex-wrap: wrap;
-          font-family: var(--font-rubik), sans-serif;
-          font-size: 12.5px;
-          color: #595C5B;
+          gap: 12px;
         }
-        .sh-meta .sh-meta-dot {
-          width: 3px;
-          height: 3px;
-          border-radius: 50%;
-          background: #8A8D8C;
-        }
-        .sh-meta strong {
-          color: #1A1E1D;
-          font-weight: 600;
-        }
-        .sh-live-dot {
-          width: 7px;
-          height: 7px;
-          border-radius: 50%;
+        .sh-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 14px 28px;
           background: #0D7A5F;
-          box-shadow: 0 0 0 0 rgba(13,122,95,0.5);
-          animation: sh-pulse 2s infinite;
-          display: inline-block;
-          margin-right: 4px;
+          color: #FFFFFF;
+          font-family: var(--font-rubik), sans-serif;
+          font-weight: 600;
+          font-size: 15px;
+          border-radius: 12px;
+          box-shadow: 0 2px 8px rgba(13,122,95,0.35);
+          transition: all 0.2s ease;
+          text-decoration: none;
         }
-        @keyframes sh-pulse {
-          0% { box-shadow: 0 0 0 0 rgba(13,122,95,0.55); }
-          70% { box-shadow: 0 0 0 6px rgba(13,122,95,0); }
-          100% { box-shadow: 0 0 0 0 rgba(13,122,95,0); }
+        .sh-btn:hover {
+          background: #055240;
+          box-shadow: 0 6px 20px rgba(13,122,95,0.4);
+          transform: translateY(-1px);
+        }
+        .sh-btn:active {
+          transform: translateY(1px);
         }
 
         @media (max-width: 820px) {
           .sh-hero {
-            padding: 48px 0 72px;
+            padding: 40px 0 36px;
           }
           .sh-h1 {
-            font-size: 40px;
-            letter-spacing: -1.2px;
+            font-size: 34px;
+            letter-spacing: -1px;
+          }
+          .sh-sub {
+            font-size: 16px;
           }
         }
 
-        @media (prefers-reduced-motion: reduce) {
-          .sh-live-dot {
-            animation: none;
+        @media (max-width: 560px) {
+          .sh-container {
+            padding: 0 20px;
           }
         }
       `}</style>

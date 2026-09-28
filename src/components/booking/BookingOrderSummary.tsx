@@ -23,17 +23,11 @@ export default function BookingOrderSummary({ session, showTrustBadges }: Bookin
           <div className="bos-price-col">
             <p className="bos-label">LABOUR FEE</p>
             {customQuote ? (
-              <>
-                <div className="bos-price bos-price--quote">Priced after inspection</div>
-                <p className="bos-vat">Your mechanic will confirm the price</p>
-              </>
+              <div className="bos-price bos-price--quote">Priced after inspection</div>
             ) : (
-              <>
-                <div className="bos-price">£{total.toFixed(2)}</div>
-                <p className="bos-vat">Includes VAT where applicable</p>
-              </>
+              <div className="bos-price">£{total.toFixed(2)}</div>
             )}
-            <p className="bos-vat">This covers labour only. If parts are needed, we&apos;ll send a full quotation — with your date confirmed — within 1 working day.</p>
+            <p className="bos-vat">All prices shown are for <strong className="bos-highlight">labour only</strong>, including VAT where applicable. Once you submit your booking, we&apos;ll be in touch within 1 working day with your full price — including parts, if your job needs any.</p>
             <p className="bos-vehicle">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <rect x="1" y="3" width="15" height="13" rx="2" /><polygon points="16 8 20 8 23 11 23 16 16 16 16 8" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" />
@@ -57,10 +51,8 @@ export default function BookingOrderSummary({ session, showTrustBadges }: Bookin
                 <div key={item.id} className="bos-item">
                   <div className="bos-item-info">
                     <span className="bos-item-name">{item.name}</span>
-                    {(item.labourTime || item.partsIncluded) && (
-                      <span className="bos-item-sub">
-                        {[item.labourTime, item.partsIncluded && "Parts included"].filter(Boolean).join(" · ")}
-                      </span>
+                    {item.partsIncluded && (
+                      <span className="bos-item-sub">Parts included</span>
                     )}
                   </div>
                   <span className="bos-item-price">{formatItemPrice(item)}</span>
@@ -116,6 +108,10 @@ export default function BookingOrderSummary({ session, showTrustBadges }: Bookin
         }
         .bos-price--quote { font-size: 22px; letter-spacing: -0.2px; }
         .bos-vat { font-size: 11px; color: rgba(255,255,255,0.5); margin: 6px 0 0; }
+        .bos-highlight {
+          font-weight: 800; color: #fff;
+          background: rgba(255,255,255,0.18); padding: 1px 5px; border-radius: 4px;
+        }
         .bos-vehicle {
           display: flex; align-items: center; gap: 5px;
           font-size: 12px; color: rgba(255,255,255,0.55); margin: 8px 0 0;

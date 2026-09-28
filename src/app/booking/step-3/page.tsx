@@ -13,7 +13,6 @@ interface DetailsState {
   firstName: string;
   lastName: string;
   email: string;
-  optIn: boolean;
   address1: string;
   address2: string;
   city: string;
@@ -25,7 +24,7 @@ interface DetailsState {
 }
 
 const DEFAULT_DETAILS: DetailsState = {
-  firstName: "", lastName: "", email: "", optIn: true,
+  firstName: "", lastName: "", email: "",
   address1: "", address2: "", city: "", postcode: "", phone: "",
   availability: null, drivable: true, instructions: "",
 };
@@ -53,7 +52,6 @@ export default function Step3Page() {
         firstName: s.details.firstName || "",
         lastName: s.details.lastName || "",
         email: s.details.email || "",
-        optIn: s.details.optIn ?? true,
         address1: s.details.address1 || "",
         address2: s.details.address2 || "",
         city: s.details.city || "",
@@ -111,7 +109,7 @@ export default function Step3Page() {
         <div className="s3-section s3-form-card">
           <h2 className="s3-section-title">Your details</h2>
           <YourDetailsForm
-            values={{ firstName: details.firstName, lastName: details.lastName, email: details.email, optIn: details.optIn }}
+            values={{ firstName: details.firstName, lastName: details.lastName, email: details.email }}
             onChange={(field, value) => updateField(field as keyof DetailsState, value as DetailsState[keyof DetailsState])}
           />
         </div>

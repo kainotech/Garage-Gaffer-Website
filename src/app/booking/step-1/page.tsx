@@ -148,13 +148,7 @@ function Step1Content() {
     }
 
     markStepComplete(1);
-
-    const session = getSession();
-    if (session.service) {
-      router.push("/booking/step-2");
-    } else {
-      router.push("/booking/service-select");
-    }
+    router.push("/booking/step-2");
   }
 
   if (autoLookup) {

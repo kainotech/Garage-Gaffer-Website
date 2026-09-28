@@ -8,7 +8,7 @@ import {
   YEARS,
   ENGINE_SIZES_BY_VEHICLE_TYPE,
 } from "@/data/vehicleMakes";
-import CustomSelect from "@/components/booking/CustomSelect";
+import CustomSelect from "@/components/CustomSelect";
 
 export interface CarDetailsValues {
   make: string;

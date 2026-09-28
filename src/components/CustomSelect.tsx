@@ -10,9 +10,11 @@ interface CustomSelectProps {
   options: string[];
   placeholder: string;
   disabled?: boolean;
+  /** "sm" (default) matches the compact quote-widget selects; "md" matches standard form-field height. */
+  size?: "sm" | "md";
 }
 
-export default function CustomSelect({ id, label, value, onChange, options, placeholder, disabled }: CustomSelectProps) {
+export default function CustomSelect({ id, label, value, onChange, options, placeholder, disabled, size = "sm" }: CustomSelectProps) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -38,6 +40,7 @@ export default function CustomSelect({ id, label, value, onChange, options, plac
         type="button"
         className={[
           "cs-trigger",
+          `cs-trigger--${size}`,
           open ? "cs-trigger--open" : "",
           disabled ? "cs-trigger--disabled" : "",
           value ? "cs-trigger--filled" : "",
@@ -93,9 +96,6 @@ export default function CustomSelect({ id, label, value, onChange, options, plac
           align-items: center;
           justify-content: space-between;
           gap: 8px;
-          padding: 0 10px;
-          height: 36px;
-          line-height: 36px;
           border-radius: var(--radius-md);
           border: 1.5px solid var(--color-divider);
           background: #fff;
@@ -106,6 +106,12 @@ export default function CustomSelect({ id, label, value, onChange, options, plac
           box-sizing: border-box;
         }
         .cs-trigger:hover:not(:disabled) { border-color: #b0bab5; }
+
+        .cs-trigger--sm { padding: 0 10px; height: 36px; line-height: 36px; }
+        .cs-trigger--sm .cs-trigger-text { font-size: 13px; }
+
+        .cs-trigger--md { padding: 10px 14px; }
+        .cs-trigger--md .cs-trigger-text { font-size: 14px; }
         .cs-trigger--open {
           border-color: var(--color-brand-primary);
           box-shadow: 0 0 0 3px rgba(13, 122, 95, 0.12);
@@ -117,7 +123,6 @@ export default function CustomSelect({ id, label, value, onChange, options, plac
         }
 
         .cs-trigger-text {
-          font-size: 13px;
           color: var(--color-text-primary);
           white-space: nowrap;
           overflow: hidden;

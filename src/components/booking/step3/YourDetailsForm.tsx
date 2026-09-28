@@ -4,7 +4,6 @@ interface YourDetailsValues {
   firstName: string;
   lastName: string;
   email: string;
-  optIn: boolean;
 }
 
 interface YourDetailsFormProps {
@@ -58,31 +57,9 @@ export default function YourDetailsForm({ values, onChange }: YourDetailsFormPro
         />
       </div>
 
-      <label className="ydf-checkbox-label">
-        <input
-          type="checkbox"
-          className="ydf-checkbox"
-          checked={values.optIn}
-          onChange={(e) => onChange("optIn", e.target.checked)}
-        />
-        <span className="ydf-checkbox-text">
-          Opt in to receive MOT reminders and monthly promotions
-        </span>
-      </label>
-
       <style jsx>{`
         .ydf-wrap { display: flex; flex-direction: column; gap: 4px; }
         .ydf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
-        .ydf-checkbox-label {
-          display: flex; align-items: flex-start; gap: 10px; cursor: pointer;
-          font-size: 13.5px; color: var(--color-text-secondary); line-height: 1.5;
-          margin-bottom: 4px;
-        }
-        .ydf-checkbox {
-          width: 16px; height: 16px; flex-shrink: 0; margin-top: 1px;
-          accent-color: var(--color-brand-primary); cursor: pointer;
-        }
-        .ydf-checkbox-text { }
         @media (max-width: 500px) {
           .ydf-grid { grid-template-columns: 1fr; }
         }

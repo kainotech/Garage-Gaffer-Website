@@ -5,23 +5,23 @@ import { useState } from "react";
 const faqs = [
   {
     q: "How do you vet your mechanics?",
-    a: "Every mechanic on Garage Gaffer goes through a proper check-up before they take a single booking. We verify qualifications, confirm public liability insurance, run DBS background checks, and review work history. After that, your ratings and reviews do the rest — mechanics who consistently drop below 4.5 stars are removed from the platform.",
+    a: "Every mechanic is checked before they can take a booking — we verify their qualifications, confirm they're insured, and run a DBS background check. After that, it's down to you: mechanics who consistently score below 4.5 stars are removed from the platform.",
   },
   {
     q: "How does pricing work? Are there any hidden fees?",
-    a: "Your quote is fully inclusive — parts, labour, VAT and the mechanic's call-out are all in one price. If your mechanic spots something unexpected on the day (say a worn brake disc during a pad change), they'll stop, explain what they've found, and get your approval before doing any extra work. You'll never get a surprise bill.",
+    a: "The price you see upfront is the labour charge only, confirmed before you book. If your mechanic finds that parts are needed, we'll get in touch to confirm the cost and get your go-ahead before doing any extra work — you'll never get a surprise bill.",
   },
   {
     q: "What if something goes wrong after the job?",
-    a: "Every job comes with a 12-month workmanship warranty, plus the manufacturer warranty on any new parts. If anything's not right, message us and we'll sort it — usually with a free return visit from your original mechanic. You're never on your own once the spanner is down.",
+    a: "Fill in our support form and we'll get back to you — usually within one working day. From there, we'll work with you directly to get it sorted.",
   },
   {
     q: "Will a mobile mechanic void my manufacturer warranty?",
-    a: "No — your servicing can be carried out by any qualified mechanic using the right parts, without affecting your warranty (it's a piece of EU law called Block Exemption). Our mechanics stamp your service book and keep a digital record, so your car's history is all neatly in one place.",
+    a: "No — whatever's agreed for your service or repair is exactly what gets provided, so your manufacturer warranty isn't affected.",
   },
   {
-    q: "Where can the mechanic work on my car?",
-    a: "Your driveway, the street outside your house, your office car park, a friend's place — anywhere with reasonable space and access. For some bigger jobs (like clutch replacements) we may need a flat surface and a bit more room; your mechanic will flag that when they accept the booking.",
+    q: "Where does the work get done?",
+    a: "Right now, all work is carried out at one of our trusted partner garages — you simply drop your car off for the day. We're rolling out mobile mechanics who come to you soon.",
   },
 ];
 

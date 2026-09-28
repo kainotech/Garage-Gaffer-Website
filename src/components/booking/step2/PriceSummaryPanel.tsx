@@ -31,19 +31,11 @@ export default function PriceSummaryPanel({
           <span className="psp-price-label">{customQuote ? "YOUR REQUEST" : "LABOUR FEE"}</span>
         </div>
         {customQuote ? (
-          <>
-            <div className="psp-price-amount psp-price-amount--quote">Priced after inspection</div>
-            <p className="psp-vat-text">Your mechanic will confirm the price once they&apos;ve reviewed your booking.</p>
-          </>
+          <div className="psp-price-amount psp-price-amount--quote">Priced after inspection</div>
         ) : (
-          <>
-            <div className="psp-price-amount">£{total.toFixed(2)}</div>
-            <div className="psp-vat-row">
-              <span className="psp-vat-text">Includes VAT where applicable</span>
-            </div>
-          </>
+          <div className="psp-price-amount">£{total.toFixed(2)}</div>
         )}
-        <p className="psp-vat-text">This covers labour only. If your job needs spare parts, we&apos;ll review your booking and send a full quotation — with your date confirmed — within 1 working day.</p>
+        <p className="psp-vat-text">All prices shown are for <strong className="psp-highlight">labour only</strong>, including VAT where applicable. Once you submit your booking, we&apos;ll be in touch within 1 working day with your full price — including parts, if your job needs any.</p>
       </div>
 
       {/* Vehicle info */}
@@ -79,10 +71,8 @@ export default function PriceSummaryPanel({
                 </button>
                 <div className="psp-item-info">
                   <span className="psp-item-name">{item.name}</span>
-                  {(item.labourTime || item.partsIncluded) && (
-                    <span className="psp-item-sub">
-                      {[item.labourTime, item.partsIncluded && "Parts included"].filter(Boolean).join(" · ")}
-                    </span>
+                  {item.partsIncluded && (
+                    <span className="psp-item-sub">Parts included</span>
                   )}
                 </div>
                 <span className="psp-item-price">{formatItemPrice(item)}</span>
@@ -122,8 +112,11 @@ export default function PriceSummaryPanel({
         .psp-price-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-secondary); }
         .psp-price-amount { font-size: 32px; font-weight: 900; font-family: var(--font-open-sans), sans-serif; color: var(--color-text-primary); letter-spacing: -0.5px; }
         .psp-price-amount--quote { font-size: 20px; letter-spacing: -0.2px; }
-        .psp-vat-row { display: flex; align-items: center; gap: 4px; }
         .psp-vat-text { font-size: 11.5px; color: var(--color-text-secondary); }
+        .psp-highlight {
+          font-weight: 800; color: var(--color-brand-deep);
+          background: #ECF7EF; padding: 1px 5px; border-radius: 4px;
+        }
         .psp-vehicle {
           display: flex; align-items: center; gap: 6px;
           background: var(--color-bg); border-radius: var(--radius-md);

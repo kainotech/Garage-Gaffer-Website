@@ -14,16 +14,17 @@ export default function MechanicHero() {
           <div className="mech-breadcrumb">
             <span>Garage Gaffer</span>
             <span className="mech-dot" />
-            <span className="mech-here">For mechanics</span>
+            <span className="mech-here">For mechanics &amp; garages</span>
           </div>
 
           <h1 className="mech-h1">
-            Build your mobile business in <em>Bristol</em>.
+            Grow your business in <em>Bristol</em>.
           </h1>
 
           <p className="mech-sub">
-            Get a steady stream of itemised jobs in your area. No marketing costs, 
-            no lead fees, and you keep 100% of what you quote.
+            Get a steady stream of itemised jobs sent your way, whether you&apos;re
+            an independent mechanic or run a garage. No lead fees, and you keep
+            100% of what you quote.
           </p>
 
           <div className="mech-cta-wrap">
@@ -34,17 +35,6 @@ export default function MechanicHero() {
               Apply to join
               <ArrowRight />
             </a>
-            <span className="mech-micro">
-              Vetting takes ~3 working days &middot; No joining fee
-            </span>
-          </div>
-
-          <div className="mech-meta">
-            <span>Bristol-only platform</span>
-            <span className="mech-meta-dot" />
-            <span>0% commission on jobs</span>
-            <span className="mech-meta-dot" />
-            <span>Weekly payouts</span>
           </div>
         </div>
       </div>
@@ -146,7 +136,6 @@ export default function MechanicHero() {
           flex-direction: column;
           align-items: center;
           gap: 12px;
-          margin-bottom: 40px;
         }
 
         .mech-btn {
@@ -169,32 +158,6 @@ export default function MechanicHero() {
           background: #055240;
           box-shadow: 0 8px 24px rgba(13,122,95,0.4);
           transform: translateY(-1px);
-        }
-
-        .mech-micro {
-          font-size: 13px;
-          color: #8A8D8C;
-          font-family: var(--font-rubik), sans-serif;
-        }
-
-        .mech-meta {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 16px;
-          flex-wrap: wrap;
-          font-family: var(--font-rubik), sans-serif;
-          font-size: 12.5px;
-          color: #595C5B;
-        }
-
-        .mech-meta-dot {
-          width: 3px;
-          height: 3px;
-          border-radius: 50%;
-          background: #DADCDB;
-          display: inline-block;
-          flex-shrink: 0;
         }
 
         @media (max-width: 820px) {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import CustomSelect from "@/components/booking/CustomSelect";
+import CustomSelect from "@/components/CustomSelect";
 import { formatSlotLabel } from "./slotLabel";
 
 export { formatSlotLabel };

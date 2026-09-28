@@ -12,7 +12,7 @@ export default function AboutHero() {
           </div>
 
           <h1 className="about-h1">
-            We&apos;re a small Bristol team that got <em>tired</em> of how finding a mechanic works.
+            We got <em>tired</em> of how finding a mechanic works.
           </h1>
 
           <p className="about-sub">
@@ -20,11 +20,11 @@ export default function AboutHero() {
           </p>
 
           <div className="about-meta">
-            <span>Bristol-based team</span>
+            <span>Vetted Bristol mechanics</span>
             <span className="about-meta-dot" />
-            <span>Founded in 2024</span>
+            <span>Fixed, upfront pricing</span>
             <span className="about-meta-dot" />
-            <span>Independent platform</span>
+            <span>No card needed to book</span>
           </div>
         </div>
       </div>
