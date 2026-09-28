@@ -7,11 +7,13 @@ import LegalHero from "@/components/legal/LegalHero";
 import LegalSidebarNav from "@/components/legal/LegalSidebarNav";
 import LegalSection from "@/components/legal/LegalSection";
 import Placeholder from "@/components/legal/Placeholder";
+import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions — Garage Gaffer",
+  title: "Terms & Conditions",
   description:
     "The terms that apply when you book vehicle work through Garage Gaffer, Bristol's fixed-price mechanic marketplace.",
+  alternates: { canonical: absoluteUrl("/terms") },
 };
 
 const sections = [

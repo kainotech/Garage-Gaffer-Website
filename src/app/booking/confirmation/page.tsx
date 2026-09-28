@@ -112,7 +112,7 @@ export default function ConfirmationPage() {
             </svg>
             You will only be charged after the work is complete.
           </p>
-          <p className="conf-payment-note">This is the labour fee. If parts are needed, we&apos;ll send a full quotation — with your date confirmed — within 1 working day.</p>
+          <p className="conf-payment-note">This is the labour fee. If parts are needed, we&apos;ll send a full quotation, with your date confirmed, within 1 working day.</p>
         </div>
       )}
 

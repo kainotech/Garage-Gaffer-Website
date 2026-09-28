@@ -9,7 +9,7 @@ import BookingOrderSummary from "@/components/booking/BookingOrderSummary";
 const REASSURANCE_POINTS = [
   {
     title: "You Won't Be Charged Today",
-    desc: "No card details needed — we only take payment once the work is complete.",
+    desc: "No card details needed, we only take payment once the work is complete.",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <rect x="1" y="4" width="22" height="16" rx="2" /><line x1="1" y1="10" x2="23" y2="10" />
@@ -18,7 +18,7 @@ const REASSURANCE_POINTS = [
   },
   {
     title: "Parts Quoted Within a Day",
-    desc: "The price above is the labour fee. If your job needs spare parts, we'll review it and send a full quotation — with your date confirmed — within 1 working day.",
+    desc: "The price above is the labour fee. If your job needs spare parts, we'll review it and send a full quotation, with your date confirmed, within 1 working day.",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />

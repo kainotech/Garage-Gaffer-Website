@@ -29,7 +29,7 @@ export default function ServicesCatalog({ initialCategorySlug }: ServicesCatalog
             Every service, sorted by category.
           </h2>
           <p className="text-[#595C5B] text-[16px] leading-[1.7]">
-            Pick a category to see what&apos;s included — every job is quoted for your exact vehicle, so there&apos;s no guessing on price.
+            Pick a category to see what&apos;s included, every job is quoted for your exact vehicle, so there&apos;s no guessing on price.
           </p>
         </div>
 

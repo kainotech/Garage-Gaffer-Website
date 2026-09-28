@@ -12,7 +12,7 @@ export default function Hero() {
             A trusted <em>local garage</em>, without the hassle.
           </h1>
           <p className="hero-sub">
-            Garage Gaffer matches you with a trusted, fully vetted Bristol garage. No guesswork, no surprise bills — just honest work, done right first time.
+            Garage Gaffer matches you with a trusted, fully vetted Bristol garage. No guesswork, no surprise bills, just honest work, done right first time.
           </p>
 
           <div className="hero-form">

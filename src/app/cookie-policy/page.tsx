@@ -7,10 +7,12 @@ import LegalHero from "@/components/legal/LegalHero";
 import LegalSidebarNav from "@/components/legal/LegalSidebarNav";
 import LegalSection from "@/components/legal/LegalSection";
 import Placeholder from "@/components/legal/Placeholder";
+import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Cookie Policy — Garage Gaffer",
+  title: "Cookie Policy",
   description: "How Garage Gaffer uses cookies and browser storage on garagegaffer.co.uk.",
+  alternates: { canonical: absoluteUrl("/cookie-policy") },
 };
 
 const sections = [

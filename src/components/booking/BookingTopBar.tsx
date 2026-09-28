@@ -18,7 +18,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: "What does the price I'm shown cover?",
-        a: "It's the labour fee for the job, worked out from your vehicle type — the mechanic coming to you is included, with no separate call-out charge. If your job turns out to need spare parts, we'll review your booking and send you a full quotation, with your date confirmed, within 1 working day.",
+        a: "It's the labour fee for the job, worked out from your vehicle type. The mechanic coming to you is included, with no separate call-out charge. If your job turns out to need spare parts, we'll review your booking and send you a full quotation, with your date confirmed, within 1 working day.",
       },
       {
         q: "Is there a cancellation fee?",
@@ -47,7 +47,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: "Can I add more work after I've booked?",
-        a: "Yes — message your mechanic directly once assigned, or contact our support team and we'll update the booking for you.",
+        a: "Yes, message your mechanic directly once assigned, or contact our support team and we'll update the booking for you.",
       },
     ],
   },

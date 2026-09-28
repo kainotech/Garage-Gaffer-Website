@@ -5,11 +5,14 @@ import ScrollReveal from "@/components/ScrollReveal";
 import AboutHero from "@/components/about/AboutHero";
 import Coverage from "@/components/Coverage";
 import Services from "@/components/Services";
+import { SITE_URL, absoluteUrl } from "@/lib/site";
+import { JsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
-  title: "About Us — Garage Gaffer | Bristol's Vetted Mechanic Marketplace",
+  title: "About Us",
   description:
     "Garage Gaffer connects Bristol drivers with vetted local mobile mechanics. Honest quotes, transparent vetting, no jargon.",
+  alternates: { canonical: absoluteUrl("/about") },
 };
 
 /* ─── Page ───────────────────────────────────────────────────── */
@@ -18,26 +21,23 @@ export default function AboutPage() {
   return (
     <>
       {/* Organisation / LocalBusiness structured data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": ["Organization", "LocalBusiness"],
-            name: "Garage Gaffer",
-            url: "https://garagegaffer.co.uk",
-            description:
-              "Bristol's vetted mobile mechanic marketplace. Post a job, get quotes from checked local mechanics, and book the one that suits you.",
-            address: {
-              "@type": "PostalAddress",
-              addressLocality: "Bristol",
-              addressCountry: "GB",
-            },
-            areaServed: {
-              "@type": "City",
-              name: "Bristol",
-            },
-          }),
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": ["Organization", "LocalBusiness"],
+          name: "Garage Gaffer",
+          url: SITE_URL,
+          description:
+            "Bristol's vetted mobile mechanic marketplace. Post a job, get quotes from checked local mechanics, and book the one that suits you.",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Bristol",
+            addressCountry: "GB",
+          },
+          areaServed: {
+            "@type": "City",
+            name: "Bristol",
+          },
         }}
       />
 
@@ -59,7 +59,7 @@ export default function AboutPage() {
             </div>
 
             <p className="font-[family-name:var(--font-rubik)] text-[16px] leading-[1.75] text-[#595C5B] mb-6 reveal">
-              If your car breaks down or starts making a noise you don&apos;t recognise, the first thing most people do is ask around. Because the alternative — just ringing garages — is a bad experience. You ring. They&apos;re busy. You leave a voicemail. They don&apos;t ring back. Or they do, give you a number off the top of their head with no breakdown, and you have no idea whether it&apos;s fair.
+              If your car breaks down or starts making a noise you don&apos;t recognise, the first thing most people do is ask around. Because the alternative, just ringing garages, is a bad experience. You ring. They&apos;re busy. You leave a voicemail. They don&apos;t ring back. Or they do, give you a number off the top of their head with no breakdown, and you have no idea whether it&apos;s fair.
             </p>
 
             <p className="font-[family-name:var(--font-rubik)] text-[16px] leading-[1.75] text-[#595C5B] mb-8 reveal">
@@ -75,7 +75,7 @@ export default function AboutPage() {
             </p>
 
             <p className="font-[family-name:var(--font-rubik)] text-[16px] leading-[1.75] text-[#595C5B] reveal">
-              That&apos;s the gap Garage Gaffer is for. Tell us your reg and what you need, and we&apos;ll show you a clear, upfront price straight away — no ringing round, no waiting on a callback. Book the slot that suits you, and a mechanic who&apos;s actually been checked — not just listed — comes to you.
+              That&apos;s the gap Garage Gaffer is for. Tell us your reg and what you need, and we&apos;ll show you a clear, upfront price straight away, no ringing round, no waiting on a callback. Book the slot that suits you, and a mechanic who&apos;s actually been checked, not just listed, comes to you.
             </p>
           </div>
         </section>

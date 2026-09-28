@@ -45,7 +45,7 @@ export default function HowItWorksFAQ() {
               Still got questions?
             </h2>
             <p className="text-[#595C5B] text-[16px] leading-[1.7] mt-3.5">
-              Can&apos;t find what you&apos;re looking for? Drop us a line — we&apos;re usually back within a few hours.
+              Can&apos;t find what you&apos;re looking for? Drop us a line, we&apos;re usually back within a few hours.
             </p>
             <a href="/support" className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 bg-transparent text-[#0D7A5F] font-[family-name:var(--font-rubik)] font-semibold text-[14px] rounded-lg border-[1.5px] border-[#0D7A5F] hover:bg-[#ECF7EF] transition-all">
               Visit our help centre

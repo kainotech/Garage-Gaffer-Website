@@ -5,11 +5,13 @@ import ScrollReveal from "@/components/ScrollReveal";
 import ServiceHero from "@/components/ServiceHero";
 import ServicesCatalog from "@/components/services/ServicesCatalog";
 import CTARepeat from "@/components/CTARepeat";
+import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "All Services — Bristol Mobile Mechanics | Garage Gaffer",
+  title: "Services",
   description:
-    "Every service Garage Gaffer's vetted Bristol mechanics offer, organised by category. Servicing, brakes, engine, electrics, bodywork and more — quoted for your exact vehicle.",
+    "Every service our vetted Bristol mechanics offer, by category: servicing, brakes, engine, electrics, bodywork and more, quoted for your exact vehicle.",
+  alternates: { canonical: absoluteUrl("/services") },
 };
 
 interface ServicesPageProps {

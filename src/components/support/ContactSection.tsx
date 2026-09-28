@@ -33,7 +33,7 @@ export default function ContactSection() {
             Send us a message
           </h3>
           <p className="font-[family-name:var(--font-rubik)] text-[13.5px] text-[#595C5B] mb-6">
-            We aim to respond within one working day. For booking or payment issues, include your booking reference — it speeds things up.
+            We aim to respond within one working day. For booking or payment issues, include your booking reference, it speeds things up.
           </p>
 
           <form className="space-y-4">

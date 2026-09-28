@@ -2,7 +2,7 @@ const whyItems = [
   {
     num: "01",
     title: "A straight price before you book",
-    desc: "See the labour price upfront. If parts are needed, we'll confirm those within a day — your slot's booked either way.",
+    desc: "See the labour price upfront. If parts are needed, we'll confirm those within a day, your slot's booked either way.",
   },
   {
     num: "02",
@@ -12,7 +12,7 @@ const whyItems = [
   {
     num: "03",
     title: "Pay only when it's done",
-    desc: "No card details needed to book — we only take payment once the work's complete.",
+    desc: "No card details needed to book, we only take payment once the work's complete.",
   },
 ];
 

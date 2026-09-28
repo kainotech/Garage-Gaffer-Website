@@ -6,11 +6,13 @@ import ScrollReveal from "@/components/ScrollReveal";
 import CTARepeat from "@/components/CTARepeat";
 import HowItWorksFAQ from "@/components/how-it-works/HowItWorksFAQ";
 import HowItWorksHero from "@/components/how-it-works/HowItWorksHero";
+import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "How It Works — Garage Gaffer | Instant Price, Book Online",
+  title: "How It Works",
   description:
     "Enter your reg and postcode, see an instant fixed price, and book online. Drop your car at a trusted partner garage, no card needed until the job's done.",
+  alternates: { canonical: absoluteUrl("/how-it-works") },
 };
 
 /* ─── Inline SVG icons ──────────────────────────────────────── */

@@ -20,7 +20,7 @@ export default function SupportHero() {
 
           {/* Subheadline */}
           <p className="suph-sub">
-            Send us a message and we&apos;ll get back to you — usually within one working day.
+            Send us a message and we&apos;ll get back to you, usually within one working day.
           </p>
         </div>
       </div>

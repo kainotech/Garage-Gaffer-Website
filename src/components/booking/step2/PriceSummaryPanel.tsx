@@ -35,7 +35,7 @@ export default function PriceSummaryPanel({
         ) : (
           <div className="psp-price-amount">£{total.toFixed(2)}</div>
         )}
-        <p className="psp-vat-text">All prices shown are for <strong className="psp-highlight">labour only</strong>, including VAT where applicable. Once you submit your booking, we&apos;ll be in touch within 1 working day with your full price — including parts, if your job needs any.</p>
+        <p className="psp-vat-text">All prices shown are for <strong className="psp-highlight">labour only</strong>, including VAT where applicable. Once you submit your booking, we&apos;ll be in touch within 1 working day with your full price, including parts, if your job needs any.</p>
       </div>
 
       {/* Vehicle info */}

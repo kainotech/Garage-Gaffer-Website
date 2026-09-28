@@ -59,7 +59,7 @@ export default function PriceSummaryStickyBar({
 
           <div className="pssb-divider" />
 
-          <p className="pssb-note">All prices shown are for <strong className="pssb-highlight">labour only</strong>, including VAT where applicable. Once you submit your booking, we&apos;ll be in touch within 1 working day with your full price — including parts, if your job needs any.</p>
+          <p className="pssb-note">All prices shown are for <strong className="pssb-highlight">labour only</strong>, including VAT where applicable. Once you submit your booking, we&apos;ll be in touch within 1 working day with your full price, including parts, if your job needs any.</p>
         </div>
       )}
 

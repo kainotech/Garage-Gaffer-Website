@@ -183,7 +183,7 @@ export default function AvailabilityGrid({ selected, onSelect }: AvailabilityGri
       {selectedDay ? (
         <div className="ag-slots-section">
           <p className="ag-slots-heading">
-            Available times — {selectedDay.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" })}
+            Available times: {selectedDay.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" })}
           </p>
           <div className="ag-slots-grid">
             {TIME_SLOTS.map((slot) => {

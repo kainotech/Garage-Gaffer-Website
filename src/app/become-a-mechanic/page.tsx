@@ -6,11 +6,13 @@ import ScrollReveal from "@/components/ScrollReveal";
 import MechanicHero from "@/components/mechanics/MechanicHero";
 import MechanicFAQ from "@/components/mechanics/MechanicFAQ";
 import MechanicApplicationForm from "@/components/mechanics/MechanicApplicationForm";
+import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Join as a Mechanic or Garage — Garage Gaffer | Bristol",
+  title: "Join as a Mechanic or Garage",
   description:
-    "Apply to join Bristol's vetted mechanic and garage network. Get a steady stream of itemised jobs, keep 100% of your quote, and manage your own schedule. No lead fees.",
+    "Apply to join Bristol's vetted mechanic and garage network. Steady itemised jobs, keep 100% of your quote, and manage your own schedule. No lead fees.",
+  alternates: { canonical: absoluteUrl("/become-a-mechanic") },
 };
 
 const benefits = [

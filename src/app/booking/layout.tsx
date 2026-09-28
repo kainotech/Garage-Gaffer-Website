@@ -1,11 +1,13 @@
+import type { Metadata } from "next";
 import BookingTopBar from "@/components/booking/BookingTopBar";
 import Footer from "@/components/Footer";
 import BookingProgressBar from "@/components/booking/BookingProgressBar";
 import { Suspense } from "react";
 
-export const metadata = {
-  title: "Book a Mobile Mechanic — Garage Gaffer",
-  description: "Book a trusted, vetted mobile mechanic in Bristol. Get an instant price and choose your availability.",
+export const metadata: Metadata = {
+  title: "Book a Service",
+  description: "Book trusted, vetted vehicle repairs and servicing in Bristol. Get an instant price and choose your availability.",
+  robots: { index: false, follow: false },
 };
 
 export default function BookingLayout({ children }: { children: React.ReactNode }) {

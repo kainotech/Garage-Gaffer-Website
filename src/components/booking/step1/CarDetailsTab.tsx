@@ -92,7 +92,7 @@ export default function CarDetailsTab({ values, onChange }: CarDetailsTabProps) 
         <input
           id="cdt-postcode"
           type="text"
-          placeholder="Postcode — e.g. BS1 4DJ"
+          placeholder="Postcode, e.g. BS1 4DJ"
           autoComplete="postal-code"
           className="cdt-input"
           value={values.postcode}
