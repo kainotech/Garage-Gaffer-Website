@@ -4,16 +4,16 @@ export type VehicleType = "car" | "motorcycle" | "lgv" | "hgv" | "bus";
 // hgv = Heavy Goods Vehicles (HGVs) · bus = Buses and Coaches
 
 /**
- * UK mobile-mechanic labour rate. Researched range: £40-£70/hr, with £50-£55/hr
- * the common middle ground outside London (Bristol is outside London). Independent
+ * Labour rate paid to the mechanic - £30/hr, a business decision. Note this is
+ * below the researched UK mobile-mechanic range (£40-£70/hr, with £50-£55/hr the
+ * common middle ground outside London; Bristol is outside London). Independent
  * garages run £55-£95/hr, main dealers £130-£220/hr - shown for context only.
  * Change this single number to retune every price in the app.
  */
-export const HOURLY_LABOUR_RATE = 55; // £/hour
+export const HOURLY_LABOUR_RATE = 30; // £/hour
 
 /**
- * PLACEHOLDER - not researched, no source exists for this figure. This is a business
- * decision that needs confirming before launch. 20% is a reasonable placeholder only.
+ * Platform margin - 5%, a business decision (not researched; no market source).
  * Change this single number to retune every price in the app.
  *
  * This is charged ON TOP of raw labour cost, collected from the customer - not
@@ -21,7 +21,7 @@ export const HOURLY_LABOUR_RATE = 55; // £/hour
  * (1 + margin); the mechanic's payout is baseHours × multiplier × rate (unaffected
  * by this number); the margin is Garage Gaffer's cut of the difference.
  */
-export const PLATFORM_MARGIN_PERCENT = 20; // %
+export const PLATFORM_MARGIN_PERCENT = 5; // %
 
 /**
  * Scales baseHours per vehicle type. Edit any value independently - each vehicle
