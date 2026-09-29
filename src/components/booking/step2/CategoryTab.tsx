@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { SERVICE_CATEGORIES } from "@/data/services";
+import { SERVICE_CATEGORIES, ALL_CATEGORIES_SLUG } from "@/data/services";
 import { SERVICE_BASE_HOURS } from "@/data/servicePricing";
 import { calculateServicePrice, type VehicleType } from "@/data/pricingConfig";
 import { formatItemPrice } from "../pricing";
@@ -17,14 +17,22 @@ interface CategoryTabProps {
 
 export default function CategoryTab({ categorySlug, vehicleType, selectedWork, onAdd, onRemove }: CategoryTabProps) {
   const [search, setSearch] = useState("");
-  const category = SERVICE_CATEGORIES.find((c) => c.slug === categorySlug);
+  const isAll = categorySlug === ALL_CATEGORIES_SLUG;
+  const category = isAll ? undefined : SERVICE_CATEGORIES.find((c) => c.slug === categorySlug);
   const selectedIds = new Set(selectedWork.map((w) => w.id));
 
-  if (!category) return null;
+  if (!isAll && !category) return null;
 
-  const filtered = search.trim()
-    ? category.services.filter((s) => s.name.toLowerCase().includes(search.toLowerCase()))
-    : category.services;
+  // "All categories" searches every service; a single category searches just its own.
+  const query = search.trim().toLowerCase();
+  const groups = (isAll ? SERVICE_CATEGORIES : [category!])
+    .map((cat) => ({
+      cat,
+      services: query ? cat.services.filter((s) => s.name.toLowerCase().includes(query)) : cat.services,
+    }))
+    .filter((g) => !isAll || g.services.length > 0);
+  const matchCount = groups.reduce((sum, g) => sum + g.services.length, 0);
+  const scopeName = isAll ? "all services" : category!.name.toLowerCase();
 
   return (
     <div className="ct-wrap">
@@ -34,50 +42,53 @@ export default function CategoryTab({ categorySlug, vehicleType, selectedWork, o
         </svg>
         <input
           type="search"
-          placeholder={`Search ${category.name.toLowerCase()}`}
+          placeholder={`Search ${scopeName}`}
           className="form-input ct-search-input"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          aria-label={`Search ${category.name}`}
+          aria-label={`Search ${scopeName}`}
         />
       </div>
 
-      <div className="ct-section">
-        <div className="ct-section-head">
-          <h3 className="ct-section-title">{category.name}</h3>
-          <span className="ct-section-count">{filtered.length} service{filtered.length === 1 ? "" : "s"}</span>
-        </div>
-        <div className="ct-list">
-          {filtered.map((service) => {
-            const id = `${category.slug}::${service.name}`;
-            const added = selectedIds.has(id);
-            const baseHours = SERVICE_BASE_HOURS[id] ?? 0;
-            const price = calculateServicePrice(baseHours, vehicleType);
-            return (
-              <div key={id} className={`ct-card${added ? " ct-card--added" : ""}`}>
-                <div className="ct-card-info">
-                  <span className="ct-card-name">{service.name}</span>
-                  <span className="ct-card-desc">{service.description}</span>
+      {groups.map(({ cat, services }) => (
+        <div key={cat.slug} className="ct-section">
+          <div className="ct-section-head">
+            <h3 className="ct-section-title">{cat.name}</h3>
+            <span className="ct-section-count">{services.length} service{services.length === 1 ? "" : "s"}</span>
+          </div>
+          <div className="ct-list">
+            {services.map((service) => {
+              const id = `${cat.slug}::${service.name}`;
+              const added = selectedIds.has(id);
+              const baseHours = SERVICE_BASE_HOURS[id] ?? 0;
+              const price = calculateServicePrice(baseHours, vehicleType);
+              return (
+                <div key={id} className={`ct-card${added ? " ct-card--added" : ""}`}>
+                  <div className="ct-card-info">
+                    <span className="ct-card-name">{service.name}</span>
+                    <span className="ct-card-desc">{service.description}</span>
+                  </div>
+                  <div className="ct-card-action">
+                    <span className="ct-card-price">{formatItemPrice({ id, name: service.name, price })}</span>
+                    <button
+                      className={`ct-card-btn${added ? " ct-card-btn--remove" : ""}`}
+                      onClick={() => (added ? onRemove(id) : onAdd({ id, name: service.name, price }))}
+                      type="button"
+                      aria-label={added ? `Remove ${service.name}` : `Add ${service.name}`}
+                    >
+                      {added ? "Remove" : "Add"}
+                    </button>
+                  </div>
                 </div>
-                <div className="ct-card-action">
-                  <span className="ct-card-price">{formatItemPrice({ id, name: service.name, price })}</span>
-                  <button
-                    className={`ct-card-btn${added ? " ct-card-btn--remove" : ""}`}
-                    onClick={() => (added ? onRemove(id) : onAdd({ id, name: service.name, price }))}
-                    type="button"
-                    aria-label={added ? `Remove ${service.name}` : `Add ${service.name}`}
-                  >
-                    {added ? "Remove" : "Add"}
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-          {filtered.length === 0 && (
-            <p className="ct-empty">No services matching &quot;{search}&quot;</p>
-          )}
+              );
+            })}
+          </div>
         </div>
-      </div>
+      ))}
+
+      {matchCount === 0 && (
+        <p className="ct-empty">No services matching &quot;{search}&quot;</p>
+      )}
 
       <style jsx>{`
         .ct-wrap { display: flex; flex-direction: column; gap: 24px; }

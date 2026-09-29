@@ -5,11 +5,7 @@ import { useState } from "react";
 const mechanicFaqs = [
   {
     q: "How much does it cost to join?",
-    a: "Joining Garage Gaffer costs nothing. Registration, vetting and viewing jobs are all free, and we don't charge per lead or take a percentage of your quote. You keep 100% of your labour and parts.",
-  },
-  {
-    q: "How do I get paid?",
-    a: "Customers pay securely through the platform when you complete the job. We process all payments and transfer the full amount to your bank account every Friday.",
+    a: "Joining Garage Gaffer costs nothing. Registration, vetting and receiving jobs are all free, and we don't charge per lead.",
   },
   {
     q: "Can I keep my existing customers?",
@@ -20,10 +16,14 @@ const mechanicFaqs = [
     a: "You'll need to provide proof of Level 3 qualifications (City & Guilds, IMI or equivalent), valid Public Liability Insurance (minimum £1m coverage), and a clear DBS check. If you don't have a current DBS, we can help you apply for one during the onboarding.",
   },
   {
-    q: "How does the quoting process work?",
-    a: "When a customer posts a job in your area, we'll reach out to you. You can see the car details and the customer's description, then send an itemised quote through the platform. The customer reviews all quotes and books the one that suits them. You only pay the platform fee once you're live and ready to take jobs.",
+    q: "How do I get jobs?",
+    a: "When a customer books a job in your area, we'll get in touch to confirm the details. You'll see the car details and what the customer needs, and you'll agree any extra work or parts with them before you start.",
   },
 ];
+
+const HELP_HREF = "/support";
+const HELP_BTN =
+  "items-center gap-2 mt-6 px-5 py-2.5 bg-transparent text-[#0D7A5F] font-[family-name:var(--font-rubik)] font-semibold text-[14px] rounded-lg border-[1.5px] border-[#0D7A5F] hover:bg-[#ECF7EF] transition-all";
 
 export default function MechanicFAQ() {
   const [open, setOpen] = useState<number | null>(null);
@@ -43,7 +43,8 @@ export default function MechanicFAQ() {
             <p className="text-[#595C5B] text-[16px] leading-[1.7] mt-3.5">
               Everything you need to know about joining and working with Garage Gaffer.
             </p>
-            <a href="/support" className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 bg-transparent text-[#0D7A5F] font-[family-name:var(--font-rubik)] font-semibold text-[14px] rounded-lg border-[1.5px] border-[#0D7A5F] hover:bg-[#ECF7EF] transition-all">
+            {/* Desktop: sits under the intro. Mobile: moves below the accordion (see end of list). */}
+            <a href={HELP_HREF} className={`hidden md:inline-flex ${HELP_BTN}`}>
               Visit our help centre
             </a>
           </div>
@@ -84,6 +85,12 @@ export default function MechanicFAQ() {
                 </div>
               </div>
             ))}
+
+            <div className="md:hidden flex justify-center">
+              <a href={HELP_HREF} className={`inline-flex ${HELP_BTN}`}>
+                Visit our help centre
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -22,9 +22,8 @@ export default function MechanicHero() {
           </h1>
 
           <p className="mech-sub">
-            Get a steady stream of itemised jobs sent your way, whether you&apos;re
-            an independent mechanic or run a garage. No lead fees, and you keep
-            100% of what you quote.
+            Get a steady stream of local jobs sent your way, whether you&apos;re
+            an independent mechanic or run a garage. No joining fee.
           </p>
 
           <div className="mech-cta-wrap">

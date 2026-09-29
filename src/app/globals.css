@@ -254,6 +254,17 @@ body {
   box-shadow: 0 0 0 3px rgba(13,122,95,0.12);
 }
 
+/* iOS Safari zooms the page when a focused field's font-size is under 16px.
+   Keep fields at 16px on touch devices so tapping one never shifts the view.
+   !important is needed to beat the per-component (styled-jsx) sizes. */
+@media (hover: none) and (pointer: coarse) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
 /* ─── Motion & Reveal ───────────────────────────────────────── */
 
 .reveal {

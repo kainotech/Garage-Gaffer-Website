@@ -80,9 +80,6 @@ export default function Step3Page() {
     if (!details.firstName.trim()) { setError("Please enter your first name."); return; }
     if (!details.lastName.trim()) { setError("Please enter your last name."); return; }
     if (!details.email.trim() || !details.email.includes("@")) { setError("Please enter a valid email address."); return; }
-    if (!details.address1.trim()) { setError("Please enter your street address."); return; }
-    if (!details.city.trim()) { setError("Please enter your city."); return; }
-    if (!details.postcode.trim()) { setError("Please enter your postcode."); return; }
     if (!details.phone.trim()) { setError("Please enter your phone number."); return; }
     if (!details.availability) { setError("Please select a date and time slot."); return; }
 
@@ -90,6 +87,7 @@ export default function Step3Page() {
       selectedWork,
       details: {
         ...details,
+        address1: details.address1.trim(),
         address2: details.address2 || undefined,
         instructions: details.instructions || undefined,
       },

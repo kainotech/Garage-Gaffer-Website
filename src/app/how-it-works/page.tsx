@@ -11,7 +11,7 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "How It Works",
   description:
-    "Enter your reg and postcode, see an instant fixed price, and book online. Drop your car at a trusted partner garage, no card needed until the job's done.",
+    "Enter your reg and postcode, see an instant labour price, and book online. Drop your car at a trusted partner garage, no card needed until the job's done.",
   alternates: { canonical: absoluteUrl("/how-it-works") },
 };
 
@@ -28,8 +28,8 @@ const ArrowIcon = () => (
 const miniSteps = [
   {
     img: "/how-it-works-select-vehicle.png",
-    title: "Select your vehicle",
-    desc: "Enter your reg or car details, plus your postcode. We'll give you an instant price for the job.",
+    title: "Select your job",
+    desc: "Enter your reg or car details, plus your postcode. We'll give you an instant labour price for the job.",
     context: "Your price is worked out from your exact vehicle and the job you pick, there and then. No waiting on a call back, no vague estimate over the phone.",
   },
   {
@@ -70,6 +70,9 @@ const vetCards = [
   },
 ];
 
+// Flip to true to bring the testimonials strip back.
+const SHOW_TESTIMONIALS = false;
+
 const reviews = [
   {
     name: "Marcus B.",
@@ -81,7 +84,7 @@ const reviews = [
     name: "Claire H.",
     location: "Bedminster",
     quote:
-      "The price I was quoted online was the price I paid. That's never happened at a garage. I was genuinely shocked.",
+      "The labour price I saw online was exactly what I paid for the work, and I was told about parts before anything went ahead. That's never happened at a garage. I was genuinely shocked.",
   },
   {
     name: "Tom R.",
@@ -195,7 +198,8 @@ export default function HowItWorksPage() {
           </div>
         </section>
 
-        {/* ── Section 4: Social Proof Strip ────────────────────── */}
+        {/* ── Section 4: Social Proof Strip (hidden until we have real reviews) ── */}
+        {SHOW_TESTIMONIALS && (
         <section className="bg-[#F5F7F6] border-t border-[#DADCDB] py-24 md:py-16">
           <div className="max-w-[1200px] mx-auto px-6">
             {/* Section header */}
@@ -254,6 +258,7 @@ export default function HowItWorksPage() {
             </div>
           </div>
         </section>
+        )}
 
         {/* ── Section 5: FAQ (client component) ────────────────── */}
         <HowItWorksFAQ />

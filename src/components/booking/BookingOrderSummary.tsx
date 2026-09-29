@@ -27,7 +27,7 @@ export default function BookingOrderSummary({ session, showTrustBadges }: Bookin
             ) : (
               <div className="bos-price">£{total.toFixed(2)}</div>
             )}
-            <p className="bos-vat">All prices shown are for <strong className="bos-highlight">labour only</strong>, including VAT where applicable. Once you submit your booking, we&apos;ll be in touch within 1 working day with your full price, including parts, if your job needs any.</p>
+            <p className="bos-vat">All prices shown are for <strong className="bos-highlight">labour only</strong>, including VAT where applicable. Once you submit your booking, we&apos;ll confirm and allocate a mechanic within 2 hours. If your job needs spare parts, we&apos;ll send a full quotation within 1 working day.</p>
             <p className="bos-vehicle">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <rect x="1" y="3" width="15" height="13" rx="2" /><polygon points="16 8 20 8 23 11 23 16 16 16 16 8" /><circle cx="5.5" cy="18.5" r="2.5" /><circle cx="18.5" cy="18.5" r="2.5" />
@@ -63,11 +63,12 @@ export default function BookingOrderSummary({ session, showTrustBadges }: Bookin
 
           {showTrustBadges && (
             <div className="bos-trust-col">
-              <p className="bos-label">YOU&apos;RE COVERED</p>
+              <p className="bos-label">WHAT TO EXPECT</p>
               <div className="bos-trust-badges">
                 {[
                   "Qualified, DBS-checked mechanics",
-                  "No hidden extras",
+                  "Extra work agreed with you first",
+                  "Mechanic allocated within 2 hours",
                   "Parts quoted within 1 working day",
                 ].map((badge) => (
                   <div key={badge} className="bos-trust-badge">

@@ -133,7 +133,7 @@ export default function MechanicApplicationForm() {
           {isSubmitting ? "Submitting…" : "Submit application"}
         </button>
         <p className="text-[12px] text-[#8A8D8C] text-center mt-4">
-          By submitting, you agree to our <a href="/terms" className="underline hover:text-[#0D7A5F]">Terms</a> and Privacy Policy.
+          By submitting, you agree to our <a href="/terms#partner-garages" className="underline hover:text-[#0D7A5F]">Terms</a>, including the section for garage and mechanic partners.
           We&apos;ll be in touch within 24 hours.
         </p>
       </form>

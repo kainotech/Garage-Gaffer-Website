@@ -8,6 +8,25 @@ interface ServicesCatalogProps {
   initialCategorySlug?: string;
 }
 
+function NotSureCard() {
+  return (
+    <div className="mt-4 bg-white border border-[#DADCDB] rounded-2xl p-5">
+      <h3 className="font-[family-name:var(--font-open-sans)] text-[15px] font-bold mb-1.5">
+        Not sure what you need?
+      </h3>
+      <p className="text-[#595C5B] text-[13px] leading-[1.6] mb-4">
+        Send us an enquiry and tell us what&apos;s going on with your car. We&apos;ll help you work out what it needs, free of charge.
+      </p>
+      <a
+        href="mailto:support@garagegaffer.co.uk?subject=Help%20me%20find%20the%20right%20service&body=Hi%20Garage%20Gaffer%2C%0D%0A%0D%0AHere's%20what's%20going%20on%20with%20my%20car%3A%0D%0A%0D%0A"
+        className="inline-flex items-center justify-center w-full px-3.5 py-2 rounded-lg text-[13px] font-semibold font-[family-name:var(--font-rubik)] bg-[#0D7A5F] text-white shadow-[0_2px_8px_rgba(13,122,95,0.25)] hover:bg-[#055240] transition-colors"
+      >
+        Send an enquiry
+      </a>
+    </div>
+  );
+}
+
 export default function ServicesCatalog({ initialCategorySlug }: ServicesCatalogProps) {
   const initialSlug =
     (initialCategorySlug && SERVICE_CATEGORIES.some((c) => c.slug === initialCategorySlug)
@@ -80,19 +99,9 @@ export default function ServicesCatalog({ initialCategorySlug }: ServicesCatalog
               })}
             </ul>
 
-            <div className="mt-4 bg-white border border-[#DADCDB] rounded-2xl p-5">
-              <h3 className="font-[family-name:var(--font-open-sans)] text-[15px] font-bold mb-1.5">
-                Not sure what you need?
-              </h3>
-              <p className="text-[#595C5B] text-[13px] leading-[1.6] mb-4">
-                Send us an enquiry and tell us what&apos;s going on with your car. We&apos;ll help you work out what it needs, free of charge.
-              </p>
-              <a
-                href="mailto:support@garagegaffer.co.uk?subject=Help%20me%20find%20the%20right%20service&body=Hi%20Garage%20Gaffer%2C%0D%0A%0D%0AHere's%20what's%20going%20on%20with%20my%20car%3A%0D%0A%0D%0A"
-                className="inline-flex items-center justify-center w-full px-3.5 py-2 rounded-lg text-[13px] font-semibold font-[family-name:var(--font-rubik)] bg-[#0D7A5F] text-white shadow-[0_2px_8px_rgba(13,122,95,0.25)] hover:bg-[#055240] transition-colors"
-              >
-                Send an enquiry
-              </a>
+            {/* Desktop: sits under the category list. Mobile: shown after the services instead. */}
+            <div className="hidden md:block">
+              <NotSureCard />
             </div>
           </nav>
 
@@ -121,6 +130,10 @@ export default function ServicesCatalog({ initialCategorySlug }: ServicesCatalog
                   </p>
                 </article>
               ))}
+            </div>
+
+            <div className="md:hidden">
+              <NotSureCard />
             </div>
           </div>
         </div>

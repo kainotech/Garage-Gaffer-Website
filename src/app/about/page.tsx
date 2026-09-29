@@ -11,7 +11,7 @@ import { JsonLd } from "@/lib/jsonld";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Garage Gaffer connects Bristol drivers with vetted local mobile mechanics. Honest quotes, transparent vetting, no jargon.",
+    "Garage Gaffer connects Bristol drivers with vetted local garages and mechanics. Honest pricing, transparent vetting, no jargon.",
   alternates: { canonical: absoluteUrl("/about") },
 };
 
@@ -28,7 +28,7 @@ export default function AboutPage() {
           name: "Garage Gaffer",
           url: SITE_URL,
           description:
-            "Bristol's vetted mobile mechanic marketplace. Post a job, get quotes from checked local mechanics, and book the one that suits you.",
+            "Your trusted mechanic partner in Bristol. Tell us what your car needs and we'll match you with a vetted local garage.",
           address: {
             "@type": "PostalAddress",
             addressLocality: "Bristol",
@@ -63,7 +63,7 @@ export default function AboutPage() {
             </p>
 
             <p className="font-[family-name:var(--font-rubik)] text-[16px] leading-[1.75] text-[#595C5B] mb-8 reveal">
-              Mobile mechanics are a better answer for a lot of jobs. They come to you, their overheads are lower, and the good ones are genuinely excellent. But finding a vetted one in Bristol who does your type of repair, is available when you need them, and will give you a straight quote upfront? That&apos;s a lottery. Word-of-mouth if you&apos;re lucky. A directory listing if you&apos;re not.
+              A good local garage is the better answer for a lot of jobs, and the best ones are genuinely excellent. But finding a vetted one in Bristol who does your type of repair, is available when you need them, and will give you a straight labour price upfront? That&apos;s a lottery. Word-of-mouth if you&apos;re lucky. A directory listing if you&apos;re not.
             </p>
 
             {/* Pull-quote — inline typographic treatment, no card or border */}
@@ -75,7 +75,7 @@ export default function AboutPage() {
             </p>
 
             <p className="font-[family-name:var(--font-rubik)] text-[16px] leading-[1.75] text-[#595C5B] reveal">
-              That&apos;s the gap Garage Gaffer is for. Tell us your reg and what you need, and we&apos;ll show you a clear, upfront price straight away, no ringing round, no waiting on a callback. Book the slot that suits you, and a mechanic who&apos;s actually been checked, not just listed, comes to you.
+              That&apos;s the gap Garage Gaffer is for. Tell us your reg and what you need, and we&apos;ll show you a clear, upfront labour price straight away, no ringing round, no waiting on a callback. Book the slot that suits you, and we&apos;ll match you with a garage that&apos;s actually been checked, not just listed.
             </p>
           </div>
         </section>

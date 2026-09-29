@@ -10,23 +10,27 @@ const FAQ_SECTIONS = [
     items: [
       {
         q: "How does Garage Gaffer work?",
-        a: "You enter your car details and postcode, select the work you need, and we match you with a vetted local mechanic who comes to you. You pay only after the job is done.",
+        a: "You enter your car details and postcode, choose the work you need and pick a date and time. We then match your booking with a trusted, vetted partner garage and confirm it with you. You only pay once the work is done.",
       },
       {
-        q: "Who are the mechanics?",
-        a: "All Garage Gaffer mechanics are fully qualified, DBS-checked, and reviewed by real customers. Many are ex-main dealer technicians with years of experience.",
+        q: "Where does the work take place?",
+        a: "At one of our trusted partner garages in Bristol. You drop your car off at your chosen time, and we'll keep you updated until it's ready to collect.",
+      },
+      {
+        q: "Who will look after my car?",
+        a: "Every mechanic on Garage Gaffer is qualified, DBS-checked and insured before they can take a booking.",
       },
       {
         q: "What does the price I'm shown cover?",
-        a: "It's the labour fee for the job, worked out from your vehicle type. The mechanic coming to you is included, with no separate call-out charge. If your job turns out to need spare parts, we'll review your booking and send you a full quotation, with your date confirmed, within 1 working day.",
+        a: "It's the labour fee for the job, worked out from your vehicle. Once you submit your booking, we'll confirm and allocate a garage within 2 hours. If your job needs spare parts, we'll review your booking and send you a quotation within 1 working day, and nothing extra goes ahead without your agreement.",
       },
       {
         q: "Is there a cancellation fee?",
-        a: "You can cancel for free up to 24 hours before your booking. After that, a small fee may apply to cover the mechanic's travel.",
+        a: "No. You can cancel or reschedule any time before your appointment, and we don't take any payment upfront. We'd appreciate as much notice as possible, so the garage isn't left holding a slot.",
       },
       {
         q: "Can I supply my own parts?",
-        a: "We recommend using our vetted parts suppliers, sourced as part of your full quotation. If you'd like to supply your own parts, please let us know in the booking notes and a mechanic will advise.",
+        a: "Let us know in the booking notes and we'll check with the garage whether that's possible.",
       },
     ],
   },
@@ -35,19 +39,19 @@ const FAQ_SECTIONS = [
     items: [
       {
         q: "I'm not sure what's wrong, what should I do?",
-        a: "Add a Diagnostic Inspection to your booking. Our mechanic will identify the fault and give you a full report before any further work is carried out.",
+        a: "Add a Diagnostic Inspection to your booking. The mechanic will identify the fault and give you a full report before any further work is carried out.",
       },
       {
         q: "When can I book in for?",
-        a: "You choose one date and a 30-minute time slot that suits you. Your mechanic will confirm that exact appointment by text and email.",
+        a: "You choose one date and a 30-minute time slot that suits you. We'll confirm your appointment by email once a garage has been allocated.",
       },
       {
         q: "I can't find my repair, help!",
-        a: "Use the search bar on the Select Work screen, or browse by category. If you still can't find it, add a Diagnostic and our mechanic will assess and quote on the day.",
+        a: "Use the search bar on the Select Work screen, or browse by category. If you still can't find it, add a Diagnostic Inspection and the mechanic will assess it when you bring the car in.",
       },
       {
         q: "Can I add more work after I've booked?",
-        a: "Yes, message your mechanic directly once assigned, or contact our support team and we'll update the booking for you.",
+        a: "Yes, just contact our support team and we'll update your booking for you.",
       },
     ],
   },
