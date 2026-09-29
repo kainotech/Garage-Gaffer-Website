@@ -1,25 +1,35 @@
 # Garage Gaffer
 
-> Bristol, UK marketplace connecting drivers with trusted, vetted partner garages and mechanics for vehicle repairs, diagnostics and servicing.
+> Bristol, UK car-repair booking platform. Drivers get an instant labour price online, book a slot, and their car is looked after at a trusted, vetted partner garage.
 
-Garage Gaffer lets drivers in Bristol, UK enter their vehicle registration and postcode to get an instant labour price for common repairs and servicing, then book online. If the job needs spare parts, their cost is confirmed separately within a day; the labour price itself is quoted immediately. We allocate each booking to a vetted local partner garage, where the work is carried out. Garage Gaffer also recruits and vets mechanics and garages who want a steady stream of local jobs.
+Garage Gaffer lets drivers in Bristol, UK enter their vehicle registration (or make and model) and postcode, choose the job they need, and see an instant labour price. They then pick a date and time and book online. Garage Gaffer confirms the booking and allocates it to a vetted local partner garage, where the work is carried out; the customer drops their car off at the chosen time.
+
+Garage Gaffer is a booking platform, not a garage itself. Each mechanic or garage is an independent business.
+
+## How pricing and payment work
+
+- The price shown is the labour price for the job, worked out for the customer's specific vehicle.
+- Spare parts are not included in the labour price. If a job needs parts, their cost is confirmed with the customer separately, within one working day, and extra work only goes ahead with the customer's agreement.
+- No card details are taken when booking. Payment is only due once the work has been completed.
+- Bookings can be cancelled or rescheduled any time before the appointment.
 
 ## Audiences
 
 - Drivers in Bristol, UK looking to book vehicle repairs, diagnostics or servicing.
-- Mechanics and garages in Bristol, UK looking to join the network as service providers.
+- Mechanics and garages in Bristol, UK looking to join the network. There is no joining fee, and every applicant is vetted (qualifications, public liability insurance and a DBS check) before taking jobs.
 
 ## Main pages
 
 - [Home](https://garagegaffer.co.uk/): overview and instant price search.
-- [Services](https://garagegaffer.co.uk/services): full list of services offered, by category.
+- [Services](https://garagegaffer.co.uk/services): full list of services offered, by category, with search.
 - [How It Works](https://garagegaffer.co.uk/how-it-works): the booking process, step by step.
 - [About](https://garagegaffer.co.uk/about): what Garage Gaffer is and how vetting works.
-- [Become a Mechanic](https://garagegaffer.co.uk/become-a-mechanic): how mechanics and garages join the network.
+- [Become a Mechanic](https://garagegaffer.co.uk/become-a-mechanic): how mechanics and garages apply to join the network.
 - [Support](https://garagegaffer.co.uk/support): contact and help.
+- [Terms & Conditions](https://garagegaffer.co.uk/terms): terms for customers booking work and for garage and mechanic partners.
+- [Cookie Policy](https://garagegaffer.co.uk/cookie-policy): how cookies and browser storage are used.
 
 ## Notes
 
-- Booking (`/booking/*`) is a private, session-based checkout flow, not indexable content, and isn't listed individually here.
-- Coverage is Bristol, UK only. Labour pricing and availability are provided at the time of booking, not fixed catalog prices.
-- The instant price covers labour only. If a job turns out to need spare parts, their cost is confirmed separately within a day, not included in the instant quote.
+- Booking (`/booking/*`) is a private, session-based flow, not indexable content, and isn't listed individually here.
+- Garage Gaffer covers all of Bristol, UK.

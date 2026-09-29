@@ -42,7 +42,7 @@ export default function Footer() {
       <div className="max-w-[1200px] mx-auto px-6">
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-8 pb-8 border-b border-white/8">
           {/* Brand */}
-          <div>
+          <div className="flex flex-col items-center text-center md:items-start md:text-left">
             <Image
               src="/footer-logo.png"
               alt="Garage Gaffer"
@@ -50,11 +50,11 @@ export default function Footer() {
               height={524}
               className="h-[46px] w-auto mb-3"
             />
-            <p className="text-pretty text-[13.5px] leading-[1.65] text-white/65 max-w-[340px] mb-4">
+            <p className="text-pretty text-[13.5px] leading-[1.65] text-white/65 max-w-[340px] mb-4 mx-auto md:mx-0">
               Matching you with trusted, fully vetted local garages.
             </p>
             {SHOW_SOCIALS && (
-              <div className="flex gap-2">
+              <div className="flex gap-2 justify-center md:justify-start">
                 {socials.map((s) => (
                   <a
                     key={s.label}
@@ -70,9 +70,9 @@ export default function Footer() {
           </div>
 
           {/* Links */}
-          <div className="flex gap-10 md:ml-auto">
+          <div className="flex flex-col items-center gap-2.5 md:flex-row md:items-start md:gap-10 md:ml-auto">
             {footerColumns.map((col, i) => (
-              <ul key={i} className="flex flex-col gap-2.5 list-none p-0">
+              <ul key={i} className="flex flex-col items-center md:items-start gap-2.5 list-none p-0 m-0">
                 {col.map((link) => (
                   <li key={link.label}>
                     <a href={link.href} className="text-white/65 text-[14px] hover:text-white transition-colors">

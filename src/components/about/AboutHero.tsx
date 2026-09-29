@@ -18,14 +18,6 @@ export default function AboutHero() {
           <p className="about-sub">
             So we built something that fixes the worst parts of it.
           </p>
-
-          <div className="about-meta">
-            <span>Vetted Bristol mechanics</span>
-            <span className="about-meta-dot" />
-            <span>Upfront labour pricing</span>
-            <span className="about-meta-dot" />
-            <span>No card needed to book</span>
-          </div>
         </div>
       </div>
 
@@ -37,7 +29,7 @@ export default function AboutHero() {
             radial-gradient(700px 400px at 15% 100%, rgba(49,167,168,0.05), transparent 60%),
             #F8FAF9;
           overflow: hidden;
-          padding: 72px 0 88px;
+          padding: 52px 0 56px;
           border-bottom: 1px solid #DADCDB;
         }
 
@@ -77,7 +69,7 @@ export default function AboutHero() {
           letter-spacing: 0.14em;
           text-transform: uppercase;
           color: #595C5B;
-          margin-bottom: 22px;
+          margin-bottom: 16px;
         }
 
         .about-dot {
@@ -118,32 +110,12 @@ export default function AboutHero() {
           line-height: 1.55;
           color: #595C5B;
           max-width: 560px;
-          margin: 0 auto 28px;
-        }
-
-        .about-meta {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 16px;
-          flex-wrap: wrap;
-          font-family: var(--font-rubik), sans-serif;
-          font-size: 12.5px;
-          color: #8A8D8C;
-        }
-
-        .about-meta-dot {
-          width: 3px;
-          height: 3px;
-          border-radius: 50%;
-          background: #DADCDB;
-          display: inline-block;
-          flex-shrink: 0;
+          margin: 0 auto;
         }
 
         @media (max-width: 820px) {
           .about-hero {
-            padding: 56px 0 72px;
+            padding: 40px 0 44px;
           }
           .about-h1 {
             font-size: 34px;

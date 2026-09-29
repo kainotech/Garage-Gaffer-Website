@@ -10,7 +10,7 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Every service our vetted Bristol mechanics offer, by category: servicing, brakes, engine, electrics, bodywork and more, quoted for your exact vehicle.",
+    "Every service our vetted Bristol mechanics offer, by category: servicing, brakes, engine, electrics, bodywork and more, with an instant labour price for your exact vehicle.",
   alternates: { canonical: absoluteUrl("/services") },
 };
 

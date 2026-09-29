@@ -149,9 +149,6 @@ export default function HowItWorksPage() {
                 Get your price
                 <ArrowIcon />
               </a>
-              <span className="text-[13px] text-[#8A8D8C]">
-                Takes 2 minutes, no card needed to see your price
-              </span>
             </div>
           </div>
         </section>

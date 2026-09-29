@@ -44,9 +44,9 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: "/og-image.jpg",
+        url: "/social-preview.jpg",
         width: 1200,
-        height: 600,
+        height: 675,
         alt: "Garage Gaffer — Your Trusted Mechanic Partner",
       },
     ],
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["/og-image.jpg"],
+    images: ["/social-preview.jpg"],
   },
 };
 

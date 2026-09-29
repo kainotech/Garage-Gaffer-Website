@@ -13,7 +13,7 @@ const mechanicFaqs = [
   },
   {
     q: "What vetting documents do I need?",
-    a: "You'll need to provide proof of Level 3 qualifications (City & Guilds, IMI or equivalent), valid Public Liability Insurance (minimum £1m coverage), and a clear DBS check. If you don't have a current DBS, we can help you apply for one during the onboarding.",
+    a: "You'll need to provide proof of Level 3 qualifications (City & Guilds, IMI or equivalent), valid Public Liability Insurance, and a clear DBS check. If you don't have a current DBS, we can help you apply for one during the onboarding.",
   },
   {
     q: "How do I get jobs?",
@@ -35,10 +35,10 @@ export default function MechanicFAQ() {
           {/* Left */}
           <div className="reveal">
             <span className="inline-block font-[family-name:var(--font-rubik)] text-[11px] font-bold tracking-[0.1em] uppercase text-[#0D7A5F] mb-3">
-              FAQ
+              Common questions
             </span>
             <h2 className="font-[family-name:var(--font-open-sans)] text-[34px] font-extrabold tracking-[-0.5px] leading-[1.15]">
-              Common questions from mechanics.
+              Everything mechanics ask us.
             </h2>
             <p className="text-[#595C5B] text-[16px] leading-[1.7] mt-3.5">
               Everything you need to know about joining and working with Garage Gaffer.

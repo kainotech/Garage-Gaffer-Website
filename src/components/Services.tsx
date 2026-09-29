@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { TOTAL_SERVICE_COUNT } from "@/data/services";
 
 const serviceAreas = [
   {
@@ -62,7 +61,7 @@ export default function Services() {
             Whatever your car needs, we&apos;ve got a mechanic for it.
           </h2>
           <p className="text-[#595C5B] text-[16px] leading-[1.7]">
-            {`${TOTAL_SERVICE_COUNT} services, priced for your exact vehicle. From routine servicing to bodywork, big or small.`}
+            We cover everything, priced for your exact vehicle. From routine servicing to bodywork, big or small.
           </p>
         </div>
 
