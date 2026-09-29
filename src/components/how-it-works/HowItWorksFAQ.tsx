@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     q: "How quickly do I get my price?",
-    a: "Straight away. Enter your car and the job you need, and your price is calculated on the spot, no waiting for a callback, no quote landing in your inbox hours later.",
+    a: "Straight away. Enter your car and the job you need, and your labour price is calculated on the spot, no waiting for a callback. If your job needs spare parts, we'll send you a separate quotation for those within one working day.",
   },
   {
     q: "Is it free to get a price?",

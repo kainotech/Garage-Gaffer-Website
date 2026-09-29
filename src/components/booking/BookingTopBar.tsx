@@ -93,11 +93,11 @@ export default function BookingTopBar() {
 
       {/* Modal overlay */}
       {modalOpen && (
-        <div className="btb-overlay" onClick={() => setModalOpen(false)} role="dialog" aria-modal="true" aria-label="Frequently asked questions">
+        <div className="btb-overlay" onClick={() => setModalOpen(false)} role="dialog" aria-modal="true" aria-label="Common questions">
           <div className="btb-modal" onClick={(e) => e.stopPropagation()}>
             {/* Modal header */}
             <div className="btb-modal-header">
-              <h2 className="btb-modal-title">Frequently asked questions</h2>
+              <h2 className="btb-modal-title">Common questions</h2>
               <button
                 className="btb-modal-close"
                 onClick={() => setModalOpen(false)}

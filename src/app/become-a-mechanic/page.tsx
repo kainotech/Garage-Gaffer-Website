@@ -78,15 +78,12 @@ const onboardingSteps = [
 const mechanicRequirements = [
   "Registered as self-employed with HMRC, or trading as a limited company",
   "Right to work in the UK",
-  "Public liability insurance (industry standard for client-facing work)",
   "F-Gas certification if you carry out air conditioning work",
-  "Waste carrier registration with the Environment Agency if you dispose of oil, tyres or batteries as part of the job",
 ];
 
 const garageRequirements = [
   "Business registered with HMRC or Companies House",
-  "Employers' Liability Insurance (legally required, min. £5m cover) if you employ staff",
-  "Waste carrier registration with the Environment Agency",
+  "Employers' Liability Insurance, if you employ staff",
   "F-Gas certification for any staff carrying out air-con work",
   "Valid DVSA MOT testing station authorisation and qualified testers, if you offer MOT testing",
 ];
@@ -164,12 +161,12 @@ export default function BecomeMechanicPage() {
         </section>
 
         {/* ── Section 4: Requirements ─────────────────────────── */}
-        <section className="bg-white py-24 md:py-16" id="apply">
+        <section className="bg-white py-16 md:py-10" id="apply">
           <div className="max-w-[1200px] mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
               <div className="reveal">
                 <span className="inline-block font-[family-name:var(--font-rubik)] text-[11px] font-bold tracking-[0.1em] uppercase text-[#0D7A5F] mb-3">
-                  Requirements
+                  Become a member
                 </span>
                 <h2 className="font-[family-name:var(--font-open-sans)] text-[34px] font-extrabold leading-[1.15] tracking-[-0.5px] text-[#1A1E1D] mb-6">
                   What you need to get started.
@@ -210,14 +207,6 @@ export default function BecomeMechanicPage() {
                     </li>
                   ))}
                 </ul>
-
-                <div className="w-full h-px bg-[#DADCDB] my-8" />
-
-                <p className="font-[family-name:var(--font-rubik)] text-[13px] leading-[1.6] text-[#8A8D8C]">
-                  On top of these legal minimums, we also check proof of qualifications
-                  (City &amp; Guilds, IMI or equivalent) and run a DBS check as part of our
-                  own vetting, that&apos;s on us to verify, not a legal requirement to operate.
-                </p>
               </div>
 
               <div className="reveal">

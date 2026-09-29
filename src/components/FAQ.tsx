@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     q: "How does pricing work? Are there any hidden fees?",
-    a: "The price you see upfront is the labour charge only, confirmed before you book. If your mechanic finds that parts are needed, we'll get in touch to confirm the cost and get your go-ahead before doing any extra work, you'll never get a surprise bill.",
+    a: "The price you see is the labour charge for the job, shown before you book. If your job needs spare parts, we'll confirm their cost with you within one working day, and nothing extra goes ahead without your go-ahead, so there are no surprise bills.",
   },
   {
     q: "What if something goes wrong after the job?",
@@ -35,7 +35,7 @@ export default function FAQ() {
           {/* Left */}
           <div className="reveal">
             <span className="inline-block font-[family-name:var(--font-rubik)] text-[11px] font-bold tracking-[0.1em] uppercase text-[#0D7A5F] mb-3">
-              FAQ
+              Common questions
             </span>
             <h2 className="font-[family-name:var(--font-open-sans)] text-[34px] font-extrabold tracking-[-0.5px] leading-[1.15]">
               Questions we hear a lot.
