@@ -21,12 +21,17 @@ const description =
   "Your trusted mechanic partner in Bristol. Tell us what your car needs and we'll match you with a vetted local partner garage. See your labour price upfront and book online.";
 
 // Link previews (WhatsApp, iMessage, Slack) fetch the image from the exact URL
-// in the tags. Until the custom domain is pointed at Vercel, that URL would
+// in the tags. Until a custom domain is pointed at Vercel, that URL would
 // 404, so on Vercel with no explicit NEXT_PUBLIC_SITE_URL we build the tags
-// from the deployment's own host instead.
+// from the deployment's own *.vercel.app host instead. Once a custom domain is
+// attached, Vercel reports that instead (the shortest one, which would be the
+// secondary garagegaffer.com), so we ignore it and stay on SITE_URL (the
+// primary garagegaffer.co.uk) to match the canonicals.
 const vercelHost = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL;
 const previewBase =
-  !process.env.NEXT_PUBLIC_SITE_URL && vercelHost ? `https://${vercelHost}` : SITE_URL;
+  !process.env.NEXT_PUBLIC_SITE_URL && vercelHost?.endsWith(".vercel.app")
+    ? `https://${vercelHost}`
+    : SITE_URL;
 
 export const metadata: Metadata = {
   metadataBase: new URL(previewBase),
