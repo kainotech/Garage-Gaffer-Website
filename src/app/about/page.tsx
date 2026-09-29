@@ -54,16 +54,16 @@ export default function AboutPage() {
                 Why we built this
               </span>
               <h2 className="font-[family-name:var(--font-open-sans)] text-[34px] font-extrabold leading-[1.15] tracking-[-0.5px] mb-8 text-[#1A1E1D]">
-                Finding a good mechanic in Bristol is harder than it should be.
+                Finding a garage you can trust shouldn&apos;t feel like a gamble.
               </h2>
             </div>
 
             <p className="font-[family-name:var(--font-rubik)] text-[16px] leading-[1.75] text-[#595C5B] mb-6 reveal">
-              If your car breaks down or starts making a noise you don&apos;t recognise, the first thing most people do is ask around. Because the alternative, just ringing garages, is a bad experience. You ring. They&apos;re busy. You leave a voicemail. They don&apos;t ring back. Or they do, give you a number off the top of their head with no breakdown, and you have no idea whether it&apos;s fair.
+              Ask around in Bristol and most people have a story. The quote that grew once the car was on the ramp. The extra work nobody asked for. The garage that never rang back.
             </p>
 
             <p className="font-[family-name:var(--font-rubik)] text-[16px] leading-[1.75] text-[#595C5B] mb-8 reveal">
-              A good local garage is the better answer for a lot of jobs, and the best ones are genuinely excellent. But finding a vetted one in Bristol who does your type of repair, is available when you need them, and will give you a straight labour price upfront? That&apos;s a lottery. Word-of-mouth if you&apos;re lucky. A directory listing if you&apos;re not.
+              It isn&apos;t just a Bristol thing. In a March 2026 survey of 2,000 UK drivers, 52% said they either suspect, or can&apos;t tell, whether they&apos;ve been overcharged on a repair in the past five years. When the same routine fault was taken to ten different workshops, the quotes varied by hundreds of pounds.
             </p>
 
             {/* Pull-quote — inline typographic treatment, no card or border */}
@@ -75,7 +75,7 @@ export default function AboutPage() {
             </p>
 
             <p className="font-[family-name:var(--font-rubik)] text-[16px] leading-[1.75] text-[#595C5B] reveal">
-              That&apos;s the gap Garage Gaffer is for. Tell us your reg and what you need, and we&apos;ll show you a clear, upfront labour price straight away, no ringing round, no waiting on a callback. Book the slot that suits you, and we&apos;ll match you with a garage that&apos;s actually been checked, not just listed.
+              So we built Garage Gaffer around what goes wrong. You see the labour price before you book. If your job needs spare parts, we&apos;ll send a separate quotation within one working day, and nothing extra goes ahead without your say-so. And your car goes to a garage we&apos;ve checked ourselves, not one that just paid to be listed.
             </p>
           </div>
         </section>

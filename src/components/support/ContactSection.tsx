@@ -228,12 +228,18 @@ export default function ContactSection() {
         }
         .con-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 0 16px;
+        }
+        /* minmax(0, 1fr) + min-width: 0 stop wide children (phone group, select)
+           from stretching the column past the card. */
+        .con-grid > :global(*) {
+          min-width: 0;
         }
         @media (max-width: 500px) {
           .con-grid {
-            grid-template-columns: 1fr;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 16px 0;
           }
         }
         .con-phone-group {
