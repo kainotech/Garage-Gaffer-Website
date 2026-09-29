@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 const benefits = [
   {
     title: "No joining fee",
-    desc: "Signing up and getting verified doesn't cost you anything.",
+    desc: "Signing up and getting verified costs you nothing.",
     icon: (
       <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z" />
     ),
@@ -35,21 +35,21 @@ const benefits = [
     ),
   },
   {
-    title: "Steady work sent to you",
+    title: "Steady work",
     desc: "We take the bookings and send them your way, so you spend less time chasing leads.",
     icon: (
       <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" />
     ),
   },
   {
-    title: "Labour price agreed upfront",
-    desc: "Customers see the labour price before they book, so there's no haggling. Extra work or parts are agreed with them first.",
+    title: "Upfront pricing",
+    desc: "Customers see the labour price before booking, so no haggling. Extra work or parts are agreed first.",
     icon: (
       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
     ),
   },
   {
-    title: "You stay independent",
+    title: "Stay independent",
     desc: "Take work from anywhere else too. No exclusivity, and you run things your own way.",
     icon: (
       <path d="M21.9 8.89l-1.05-4.37c-.22-.9-1-1.52-1.91-1.52H5.05c-.9 0-1.69.63-1.9 1.52L2.1 8.89c-.24 1.02-.02 2.06.62 2.88.08.11.19.19.28.29V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6.94c.09-.09.2-.18.28-.28.64-.82.87-1.87.62-2.89zM5 19v-6.03c.08.01.15.03.23.03.87 0 1.66-.36 2.24-.95.6.6 1.4.95 2.31.95.87 0 1.65-.36 2.23-.93.59.57 1.39.93 2.29.93.84 0 1.64-.35 2.24-.95.58.59 1.37.95 2.24.95.08 0 .15-.02.23-.03V19H5z" />
@@ -112,14 +112,14 @@ export default function BecomeMechanicPage() {
               {benefits.map((benefit, i) => (
                 <div
                   key={i}
-                  className="reveal bg-white border border-[#DADCDB] rounded-2xl p-6 flex flex-col items-center text-center shadow-[0_1px_3px_rgba(0,0,0,0.08)] hover:-translate-y-[2px] hover:shadow-[0_8px_24px_rgba(13,122,95,0.12),0_4px_8px_rgba(0,0,0,0.06)] transition-all duration-200"
+                  className="reveal bg-white border border-[#DADCDB] rounded-2xl p-5 flex flex-col items-center text-center shadow-[0_1px_3px_rgba(0,0,0,0.08)] hover:-translate-y-[2px] hover:shadow-[0_8px_24px_rgba(13,122,95,0.12),0_4px_8px_rgba(0,0,0,0.06)] transition-all duration-200"
                 >
                   <div className="w-16 h-16 rounded-full bg-[#0D7A5F] flex items-center justify-center mb-4">
                     <svg viewBox="0 0 24 24" fill="#fff" className="w-7 h-7" aria-hidden="true">
                       {benefit.icon}
                     </svg>
                   </div>
-                  <h3 className="font-[family-name:var(--font-open-sans)] text-[16px] font-bold mb-1.5">
+                  <h3 className="font-[family-name:var(--font-open-sans)] text-[15px] font-bold mb-1.5 whitespace-nowrap">
                     {benefit.title}
                   </h3>
                   <p className="text-[13px] text-[#595C5B] leading-[1.5]">{benefit.desc}</p>

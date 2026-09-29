@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import ScrollReveal from "@/components/ScrollReveal";
 import ServiceHero from "@/components/ServiceHero";
 import ServicesCatalog from "@/components/services/ServicesCatalog";
 import CTARepeat from "@/components/CTARepeat";
@@ -14,16 +13,12 @@ export const metadata: Metadata = {
   alternates: { canonical: absoluteUrl("/services") },
 };
 
-interface ServicesPageProps {
-  searchParams: Promise<{ category?: string }>;
-}
-
-export default async function ServicesPage({ searchParams }: ServicesPageProps) {
-  const { category } = await searchParams;
-
+// No server-side reading of ?category= here: that would make the page render on
+// every request instead of being prebuilt and cached. ServicesCatalog reads it in
+// the browser instead.
+export default function ServicesPage() {
   return (
     <>
-      <ScrollReveal />
       <Nav />
       <main>
         <ServiceHero
@@ -36,7 +31,7 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
           subtitle="From routine servicing to bodywork, pick what your car needs below and get an instant, upfront labour price."
         />
 
-        <ServicesCatalog initialCategorySlug={category} />
+        <ServicesCatalog />
 
         <CTARepeat />
       </main>

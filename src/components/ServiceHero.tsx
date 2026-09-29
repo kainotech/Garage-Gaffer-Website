@@ -18,7 +18,7 @@ export default function ServiceHero({ current, title, subtitle }: ServiceHeroPro
   return (
     <section className="sh-hero">
       <div className="sh-container">
-        <div className="sh-head reveal">
+        <div className="sh-head">
           <div className="sh-breadcrumb">
             <span>Garage Gaffer</span>
             <span className="sh-dot" />

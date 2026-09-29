@@ -1,13 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { SERVICE_CATEGORIES, ALL_CATEGORIES_SLUG, ALL_CATEGORIES_NAME, TOTAL_SERVICE_COUNT } from "@/data/services";
 import CustomSelect from "@/components/CustomSelect";
 import { CategoryIcon } from "@/data/serviceCategoryVisuals";
-
-interface ServicesCatalogProps {
-  initialCategorySlug?: string;
-}
 
 function NotSureCard() {
   return (
@@ -28,13 +24,18 @@ function NotSureCard() {
   );
 }
 
-export default function ServicesCatalog({ initialCategorySlug }: ServicesCatalogProps) {
-  const initialSlug =
-    initialCategorySlug && SERVICE_CATEGORIES.some((c) => c.slug === initialCategorySlug)
-      ? initialCategorySlug
-      : ALL_CATEGORIES_SLUG;
+const noopSubscribe = () => () => {};
+const readCategoryParam = () => new URLSearchParams(window.location.search).get("category");
 
-  const [activeSlug, setActiveSlug] = useState(initialSlug);
+export default function ServicesCatalog() {
+  // Links like /services?category=brakes: read in the browser so the page itself
+  // can stay prebuilt (and show the full catalogue immediately). The server
+  // snapshot is null, so hydration matches the prebuilt HTML.
+  const urlSlug = useSyncExternalStore(noopSubscribe, readCategoryParam, () => null);
+  const [pickedSlug, setPickedSlug] = useState<string | null>(null);
+  const activeSlug =
+    pickedSlug ??
+    (urlSlug && SERVICE_CATEGORIES.some((c) => c.slug === urlSlug) ? urlSlug : ALL_CATEGORIES_SLUG);
   const [search, setSearch] = useState("");
   const isAll = activeSlug === ALL_CATEGORIES_SLUG;
   const activeCategory = SERVICE_CATEGORIES.find((c) => c.slug === activeSlug);
@@ -53,13 +54,13 @@ export default function ServicesCatalog({ initialCategorySlug }: ServicesCatalog
   const scopeName = isAll ? "all services" : activeName.toLowerCase();
 
   function handleCategorySelect(name: string) {
-    setActiveSlug(SERVICE_CATEGORIES.find((c) => c.name === name)?.slug ?? ALL_CATEGORIES_SLUG);
+    setPickedSlug(SERVICE_CATEGORIES.find((c) => c.name === name)?.slug ?? ALL_CATEGORIES_SLUG);
   }
 
   return (
     <section className="bg-[#FBFDFC] border-t border-b border-[#DADCDB] py-24 md:py-16">
       <div className="max-w-[1200px] mx-auto px-6">
-        <div className="max-w-[640px] mb-12 reveal">
+        <div className="max-w-[640px] mb-12">
           <span className="inline-block font-[family-name:var(--font-rubik)] text-[11px] font-bold tracking-[0.1em] uppercase text-[#0D7A5F] mb-3">
             Full catalogue
           </span>
@@ -71,7 +72,7 @@ export default function ServicesCatalog({ initialCategorySlug }: ServicesCatalog
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6 reveal">
+        <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-6">
           {/* Category dropdown (mobile) */}
           <div className="md:hidden min-w-0">
             <label htmlFor="services-category-select" className="form-label">Category</label>
@@ -92,7 +93,7 @@ export default function ServicesCatalog({ initialCategorySlug }: ServicesCatalog
             <ul className="list-none p-0 flex flex-col gap-1 bg-white border border-[#DADCDB] rounded-2xl p-2 shadow-[0_1px_3px_rgba(0,0,0,0.06)]">
               <li>
                 <button
-                  onClick={() => setActiveSlug(ALL_CATEGORIES_SLUG)}
+                  onClick={() => setPickedSlug(ALL_CATEGORIES_SLUG)}
                   aria-current={isAll}
                   className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-colors"
                   style={{ background: isAll ? "#ECF7EF" : "transparent" }}
@@ -126,7 +127,7 @@ export default function ServicesCatalog({ initialCategorySlug }: ServicesCatalog
                 return (
                   <li key={category.slug}>
                     <button
-                      onClick={() => setActiveSlug(category.slug)}
+                      onClick={() => setPickedSlug(category.slug)}
                       aria-current={isActive}
                       className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-colors"
                       style={{

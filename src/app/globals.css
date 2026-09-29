@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* Tailwind v4 no longer gives buttons a hand cursor by default. */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+}
+
 @theme inline {
   /* Brand greens */
   --color-brand-primary:      #0D7A5F;
