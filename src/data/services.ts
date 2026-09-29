@@ -408,6 +408,10 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
   },
 ];
 
+/** Pseudo-category used by the booking flow to show every service at once. */
+export const ALL_CATEGORIES_SLUG = "all";
+export const ALL_CATEGORIES_NAME = "All categories";
+
 export const TOTAL_SERVICE_COUNT = SERVICE_CATEGORIES.reduce(
   (sum, category) => sum + category.services.length,
   0,

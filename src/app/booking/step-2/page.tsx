@@ -6,7 +6,8 @@ import { useBookingSession, useBookingLockGuard, SelectedItem, BookingSession } 
 import CategoryTab from "@/components/booking/step2/CategoryTab";
 import PriceSummaryPanel from "@/components/booking/step2/PriceSummaryPanel";
 import PriceSummaryStickyBar from "@/components/booking/step2/PriceSummaryStickyBar";
-import { SERVICE_CATEGORIES } from "@/data/services";
+import CustomSelect from "@/components/CustomSelect";
+import { SERVICE_CATEGORIES, ALL_CATEGORIES_SLUG, ALL_CATEGORIES_NAME, TOTAL_SERVICE_COUNT } from "@/data/services";
 import { SERVICE_BASE_HOURS } from "@/data/servicePricing";
 import { calculateServicePrice } from "@/data/pricingConfig";
 import { CategoryIcon } from "@/data/serviceCategoryVisuals";
@@ -19,7 +20,7 @@ function Step2Content() {
   useBookingLockGuard(!isFreshEntry);
 
   const [session, setSession] = useState<BookingSession>(() => getSession());
-  const [activeSlug, setActiveSlug] = useState(SERVICE_CATEGORIES[0].slug);
+  const [activeSlug, setActiveSlug] = useState(ALL_CATEGORIES_SLUG);
   const [selectedWork, setSelectedWork] = useState<SelectedItem[]>([]);
   const [initialized, setInitialized] = useState(false);
 
@@ -58,7 +59,7 @@ function Step2Content() {
         };
       }),
     );
-    if (isValidSlug(s.service)) {
+    if (isValidSlug(s.service) || s.service === ALL_CATEGORIES_SLUG) {
       setActiveSlug(s.service);
     }
     setInitialized(true);
@@ -86,6 +87,14 @@ function Step2Content() {
   }
 
   const currentSession = { ...session, service: activeSlug };
+  const categoryOptions = [ALL_CATEGORIES_NAME, ...SERVICE_CATEGORIES.map((c) => c.name)];
+  const activeCategoryName =
+    SERVICE_CATEGORIES.find((c) => c.slug === activeSlug)?.name ?? ALL_CATEGORIES_NAME;
+
+  function handleCategorySelect(name: string) {
+    setActiveSlug(SERVICE_CATEGORIES.find((c) => c.name === name)?.slug ?? ALL_CATEGORIES_SLUG);
+  }
+
   const vehicleLabel = [session.car.make, session.car.model].filter(Boolean).join(" ");
 
   return (
@@ -96,13 +105,42 @@ function Step2Content() {
           <h1 className="s2-title">
             {vehicleLabel ? `What does your ${vehicleLabel} need?` : "Select your work"}
           </h1>
-          <p className="s2-subtitle">You&apos;re just seconds away from a fixed price quote for your car. Pick a category to see what&apos;s included.</p>
+          <p className="s2-subtitle">Prices shown are for labour only. If your job needs spare parts, we&apos;ll confirm the cost with you separately.</p>
         </div>
 
         <div className="s2-body">
-          {/* Category nav */}
+          {/* Category dropdown (mobile / tablet) */}
+          <div className="s2-nav-mobile">
+            <label htmlFor="s2-category-select" className="form-label">Category</label>
+            <CustomSelect
+              id="s2-category-select"
+              label="Service category"
+              size="md"
+              value={activeCategoryName}
+              onChange={handleCategorySelect}
+              options={categoryOptions}
+              placeholder={ALL_CATEGORIES_NAME}
+              menuMaxHeight={320}
+            />
+          </div>
+
+          {/* Category nav (desktop) */}
           <nav className="s2-nav" aria-label="Service categories">
             <ul className="s2-nav-list">
+              <li>
+                <button
+                  type="button"
+                  aria-current={activeSlug === ALL_CATEGORIES_SLUG}
+                  className={`s2-nav-item${activeSlug === ALL_CATEGORIES_SLUG ? " s2-nav-item--active" : ""}`}
+                  onClick={() => setActiveSlug(ALL_CATEGORIES_SLUG)}
+                >
+                  <span className="s2-nav-icon">
+                    <CategoryIcon slug={ALL_CATEGORIES_SLUG} />
+                  </span>
+                  <span className="s2-nav-label">{ALL_CATEGORIES_NAME}</span>
+                  <span className="s2-nav-count">{TOTAL_SERVICE_COUNT}</span>
+                </button>
+              </li>
               {SERVICE_CATEGORIES.map((category) => {
                 const isActive = category.slug === activeSlug;
                 return (
@@ -206,6 +244,7 @@ function Step2Content() {
         }
         .s2-nav-item--active .s2-nav-count { color: var(--color-brand-primary); }
 
+        .s2-nav-mobile { display: none; min-width: 0; }
         .s2-main { min-width: 0; }
         .s2-sidebar { }
         .s2-sticky-mobile { display: none; }
@@ -214,12 +253,8 @@ function Step2Content() {
           .s2-body {
             grid-template-columns: 1fr;
           }
-          .s2-nav-list {
-            position: static; flex-direction: row; overflow-x: auto;
-            padding: 6px; gap: 4px;
-          }
-          .s2-nav-item { flex-shrink: 0; }
-          .s2-nav-label { white-space: nowrap; }
+          .s2-nav { display: none; }
+          .s2-nav-mobile { display: block; }
           .s2-sidebar { display: none; }
           .s2-sticky-mobile {
             display: block;

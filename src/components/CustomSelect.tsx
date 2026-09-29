@@ -12,9 +12,11 @@ interface CustomSelectProps {
   disabled?: boolean;
   /** "sm" (default) matches the compact quote-widget selects; "md" matches standard form-field height. */
   size?: "sm" | "md";
+  /** Max height of the open menu in px (default 200); raise for long lists. */
+  menuMaxHeight?: number;
 }
 
-export default function CustomSelect({ id, label, value, onChange, options, placeholder, disabled, size = "sm" }: CustomSelectProps) {
+export default function CustomSelect({ id, label, value, onChange, options, placeholder, disabled, size = "sm", menuMaxHeight = 200 }: CustomSelectProps) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -63,7 +65,7 @@ export default function CustomSelect({ id, label, value, onChange, options, plac
       </button>
 
       {open && (
-        <div className="cs-dropdown" role="listbox" aria-label={label}>
+        <div className="cs-dropdown" role="listbox" aria-label={label} style={{ maxHeight: menuMaxHeight }}>
           {options.map((opt) => {
             const selected = value === opt;
             return (

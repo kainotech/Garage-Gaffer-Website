@@ -22,7 +22,7 @@ export default function AboutHero() {
           <div className="about-meta">
             <span>Vetted Bristol mechanics</span>
             <span className="about-meta-dot" />
-            <span>Fixed, upfront pricing</span>
+            <span>Upfront labour pricing</span>
             <span className="about-meta-dot" />
             <span>No card needed to book</span>
           </div>

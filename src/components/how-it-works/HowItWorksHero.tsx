@@ -23,7 +23,7 @@ export default function HowItWorksHero() {
 
           <p className="hiw-sub">
             Tell us what&apos;s wrong with your car and get an instant, upfront
-            price. Book online and drop your car at a trusted partner garage.
+            labour price. Book online and drop your car at a trusted partner garage.
             No ringing round, no waiting on a callback.
           </p>
 

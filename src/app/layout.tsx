@@ -18,10 +18,18 @@ const openSans = Open_Sans({
 
 const title = "Garage Gaffer | Your Trusted Mechanic Partner in Bristol";
 const description =
-  "Book a trusted, vetted mobile mechanic in Bristol. Repairs, diagnostics and servicing at your driveway, with honest pricing and no surprises.";
+  "Your trusted mechanic partner in Bristol. Tell us what your car needs and we'll match you with a vetted local partner garage. See your labour price upfront and book online.";
+
+// Link previews (WhatsApp, iMessage, Slack) fetch the image from the exact URL
+// in the tags. Until the custom domain is pointed at Vercel, that URL would
+// 404, so on Vercel with no explicit NEXT_PUBLIC_SITE_URL we build the tags
+// from the deployment's own host instead.
+const vercelHost = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL;
+const previewBase =
+  !process.env.NEXT_PUBLIC_SITE_URL && vercelHost ? `https://${vercelHost}` : SITE_URL;
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL(previewBase),
   title: {
     default: title,
     template: "%s | Garage Gaffer",
@@ -30,15 +38,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_GB",
-    url: SITE_URL,
+    url: previewBase,
     siteName: "Garage Gaffer",
     title,
     description,
     images: [
       {
-        url: "/social-preview.jpg",
+        url: "/og-image.jpg",
         width: 1200,
-        height: 630,
+        height: 600,
         alt: "Garage Gaffer — Your Trusted Mechanic Partner",
       },
     ],
@@ -47,7 +55,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["/social-preview.jpg"],
+    images: ["/og-image.jpg"],
   },
 };
 

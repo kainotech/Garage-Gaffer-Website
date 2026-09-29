@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     vehicleLabel: formatVehicleLabel(body.car ?? { reg: "", postcode: "" }),
     workLabel: formatWorkLabel(selectedWork),
     dateTimeLabel: details.availability ? formatSlotLabel(details.availability) : "To be confirmed",
-    locationLabel: [details.address1, details.city, details.postcode].filter(Boolean).join(", "),
+    locationLabel: [details.address1, details.city, details.postcode].filter(Boolean).join(", ") || "Not provided",
     priceLabel: formatPriceLabel(selectedWork),
   };
 

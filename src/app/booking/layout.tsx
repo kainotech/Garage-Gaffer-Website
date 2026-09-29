@@ -6,7 +6,7 @@ import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Book a Service",
-  description: "Book trusted, vetted vehicle repairs and servicing in Bristol. Get an instant price and choose your availability.",
+  description: "Book trusted, vetted vehicle repairs and servicing in Bristol. Get an instant labour price and choose your availability.",
   robots: { index: false, follow: false },
 };
 

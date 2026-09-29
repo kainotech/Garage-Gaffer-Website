@@ -26,6 +26,9 @@ export default function ConfirmationPage() {
   const ref = session?.bookingRef || fallbackRef;
   const priceLabel = formatPriceLabel(session?.selectedWork ?? []);
   const car = session?.car;
+  const locationLabel = [session?.details?.address1, session?.details?.city, session?.details?.postcode]
+    .filter(Boolean)
+    .join(", ");
   const vehicleLabel = car
     ? formatVehicleLabel(car)
     : "";
@@ -43,7 +46,7 @@ export default function ConfirmationPage() {
         <p className="conf-sub">
           We&apos;ve sent a confirmation to{" "}
           <strong>{session?.details?.email || "your email"}</strong>.
-          A mechanic will be in touch shortly.
+          We&apos;ll confirm and allocate your mechanic within 2 hours.
         </p>
         <div className="conf-ref">
           Booking reference: <strong>{ref}</strong>
@@ -83,12 +86,10 @@ export default function ConfirmationPage() {
             </div>
           )}
 
-          {session.details?.address1 && (
+          {locationLabel && (
             <div className="conf-row">
               <span className="conf-row-label">Location</span>
-              <span className="conf-row-val">
-                {session.details.address1}, {session.details.city}, {session.details.postcode}
-              </span>
+              <span className="conf-row-val">{locationLabel}</span>
             </div>
           )}
 
@@ -112,13 +113,13 @@ export default function ConfirmationPage() {
             </svg>
             You will only be charged after the work is complete.
           </p>
-          <p className="conf-payment-note">This is the labour fee. If parts are needed, we&apos;ll send a full quotation, with your date confirmed, within 1 working day.</p>
+          <p className="conf-payment-note">This is the labour fee. If parts are needed, we&apos;ll send a full quotation within 1 working day.</p>
         </div>
       )}
 
       {/* Trust points */}
       <div className="conf-trust">
-        {["Fully vetted & insured mechanics", "Parts quoted within 1 working day"].map((t) => (
+        {["Fully vetted & insured mechanics", "Mechanic allocated within 2 hours", "Parts quoted within 1 working day"].map((t) => (
           <div key={t} className="conf-trust-item">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <polyline points="20 6 9 17 4 12" />

@@ -16,14 +16,14 @@ const faqs = [
     a: "Fill in our support form and we'll get back to you, usually within one working day. From there, we'll work with you directly to get it sorted.",
   },
   {
-    q: "Will a mobile mechanic void my manufacturer warranty?",
-    a: "No, whatever's agreed for your service or repair is exactly what gets provided, so your manufacturer warranty isn't affected.",
-  },
-  {
     q: "Where does the work get done?",
-    a: "Right now, all work is carried out at one of our trusted partner garages, you simply drop your car off for the day. We're rolling out mobile mechanics who come to you soon.",
+    a: "Your car is looked after at one of our trusted partner garages here in Bristol. Book online, drop it off at your chosen time, and we'll keep you updated until it's ready to collect.",
   },
 ];
+
+const HELP_HREF = "/support";
+const HELP_BTN =
+  "items-center gap-2 mt-6 px-5 py-2.5 bg-transparent text-[#0D7A5F] font-[family-name:var(--font-rubik)] font-semibold text-[14px] rounded-lg border-[1.5px] border-[#0D7A5F] hover:bg-[#ECF7EF] transition-all";
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(null);
@@ -43,7 +43,8 @@ export default function FAQ() {
             <p className="text-[#595C5B] text-[16px] leading-[1.7] mt-3.5">
               Can&apos;t find what you&apos;re looking for? Drop us a line, we&apos;re usually back within a few hours.
             </p>
-            <a href="/support" className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 bg-transparent text-[#0D7A5F] font-[family-name:var(--font-rubik)] font-semibold text-[14px] rounded-lg border-[1.5px] border-[#0D7A5F] hover:bg-[#ECF7EF] transition-all">
+            {/* Desktop: sits under the intro. Mobile: moves below the accordion (see end of list). */}
+            <a href={HELP_HREF} className={`hidden md:inline-flex ${HELP_BTN}`}>
               Visit our help centre
             </a>
           </div>
@@ -84,6 +85,12 @@ export default function FAQ() {
                 </div>
               </div>
             ))}
+
+            <div className="md:hidden flex justify-center">
+              <a href={HELP_HREF} className={`inline-flex ${HELP_BTN}`}>
+                Visit our help centre
+              </a>
+            </div>
           </div>
         </div>
       </div>

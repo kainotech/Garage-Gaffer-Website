@@ -170,7 +170,7 @@ export default function Hero() {
             font-size: 16px;
           }
           .hero-visual {
-            margin-top: 12px;
+            display: none;
           }
         }
 

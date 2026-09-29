@@ -11,33 +11,21 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Join as a Mechanic or Garage",
   description:
-    "Apply to join Bristol's vetted mechanic and garage network. Steady itemised jobs, keep 100% of your quote, and manage your own schedule. No lead fees.",
+    "Apply to join Bristol's vetted mechanic and garage network. Steady local jobs, manage your own schedule, and no joining fee.",
   alternates: { canonical: absoluteUrl("/become-a-mechanic") },
 };
 
 const benefits = [
   {
     title: "No joining fee",
-    desc: "Signing up and getting verified doesn't cost you anything. You only pay once you're live and quoting on jobs.",
+    desc: "Signing up and getting verified doesn't cost you anything.",
     icon: (
-      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+      <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z" />
     ),
   },
   {
-    title: "Zero lead fees",
-    desc: "We don't charge you to see or bid on jobs. No lead costs, no hidden charges, just a flat monthly fee once you're active.",
-    icon: <path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z" />,
-  },
-  {
-    title: "You keep 100%",
-    desc: "What you quote is what you get paid. We don't take a percentage cut from your labour or parts.",
-    icon: (
-      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6Zm-1 12.5-3.5-3.5 1.4-1.4 2.1 2.1 4.1-4.1 1.4 1.4-5.5 5.5Z" />
-    ),
-  },
-  {
-    title: "Local jobs only",
-    desc: "Every job comes from your area. No wasted quotes on drivers you'd never reasonably reach.",
+    title: "Jobs near you",
+    desc: "We match jobs to the area you cover, so the work is close to you.",
     icon: (
       <path
         fillRule="evenodd"
@@ -47,14 +35,24 @@ const benefits = [
     ),
   },
   {
-    title: "Weekly payouts",
-    desc: "No waiting 30 days for your money. Completed jobs are processed and paid into your account every Friday.",
+    title: "Steady work sent to you",
+    desc: "We take the bookings and send them your way, so you spend less time chasing leads.",
     icon: (
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 1 1 2 0v1h1a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1V3a1 1 0 0 1 1-1Zm13 8H4v10h16V10Z"
-      />
+      <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z" />
+    ),
+  },
+  {
+    title: "Labour price agreed upfront",
+    desc: "Customers see the labour price before they book, so there's no haggling. Extra work or parts are agreed with them first.",
+    icon: (
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+    ),
+  },
+  {
+    title: "You stay independent",
+    desc: "Take work from anywhere else too. No exclusivity, and you run things your own way.",
+    icon: (
+      <path d="M21.9 8.89l-1.05-4.37c-.22-.9-1-1.52-1.91-1.52H5.05c-.9 0-1.69.63-1.9 1.52L2.1 8.89c-.24 1.02-.02 2.06.62 2.88.08.11.19.19.28.29V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-6.94c.09-.09.2-.18.28-.28.64-.82.87-1.87.62-2.89zM5 19v-6.03c.08.01.15.03.23.03.87 0 1.66-.36 2.24-.95.6.6 1.4.95 2.31.95.87 0 1.65-.36 2.23-.93.59.57 1.39.93 2.29.93.84 0 1.64-.35 2.24-.95.58.59 1.37.95 2.24.95.08 0 .15-.02.23-.03V19H5z" />
     ),
   },
 ];
@@ -63,7 +61,7 @@ const onboardingSteps = [
   {
     img: "/become-mechanic-tell-us-about-you.png",
     title: "Tell us about you",
-    desc: "Share your experience, qualifications, and the areas you cover. Takes about 10 minutes.",
+    desc: "Tell us whether you're a mechanic or a garage and how to reach you. It only takes a couple of minutes.",
   },
   {
     img: "/become-mechanic-get-verified.png",
@@ -72,8 +70,8 @@ const onboardingSteps = [
   },
   {
     img: "/become-mechanic-start-quoting.png",
-    title: "Start quoting",
-    desc: "Once you're live, you'll get alerts for jobs that match what you do. Pick the ones you want, skip the ones you don't.",
+    title: "Start taking jobs",
+    desc: "Once you're live, we'll send you jobs that match what you do and where you work.",
   },
 ];
 
@@ -145,7 +143,7 @@ export default function BecomeMechanicPage() {
                 How to get started on Garage Gaffer.
               </h2>
               <p className="font-[family-name:var(--font-rubik)] text-[16px] leading-[1.7] text-[#595C5B]">
-                Three steps to get verified and start receiving job alerts, whether you&apos;re a solo mechanic or run a garage.
+                Three steps to get verified and start taking jobs, whether you&apos;re a solo mechanic or run a garage.
               </p>
             </div>
 
@@ -177,8 +175,7 @@ export default function BecomeMechanicPage() {
                   What you need to get started.
                 </h2>
                 <p className="font-[family-name:var(--font-rubik)] text-[16px] leading-[1.7] text-[#595C5B] mb-8">
-                  We take this seriously. It&apos;s why drivers trust the network and why
-                  the businesses on it can command fair prices. The legal minimum
+                  We take this seriously. It&apos;s why drivers trust the network. The legal minimum
                   differs slightly depending on how you&apos;re set up:
                 </p>
 

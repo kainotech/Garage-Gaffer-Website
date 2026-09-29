@@ -33,7 +33,7 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
               Everything your car needs. <em>All in one place.</em>
             </>
           }
-          subtitle="From routine servicing to bodywork, pick what your car needs below and get an instant, fixed price."
+          subtitle="From routine servicing to bodywork, pick what your car needs below and get an instant, upfront labour price."
         />
 
         <ServicesCatalog initialCategorySlug={category} />

@@ -7,7 +7,6 @@ const TOPIC_OPTIONS = [
   "Getting a quote or booking a job",
   "Changing or cancelling a booking",
   "A problem with completed work",
-  "Warranty claim",
   "Payment or invoice query",
   "Becoming a mechanic or garage partner",
   "Something else",

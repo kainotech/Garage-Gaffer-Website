@@ -3,8 +3,8 @@ import Image from "next/image";
 const steps = [
   {
     img: "/how-it-works-select-vehicle.png",
-    title: "Select your vehicle",
-    desc: "Enter your reg or car details, plus your postcode. We'll give you an instant price for the job.",
+    title: "Select your job",
+    desc: "Enter your reg or car details, plus your postcode. We'll give you an instant labour price for the job.",
   },
   {
     img: "/how-it-works-pick-date.png",
@@ -27,7 +27,7 @@ export default function HowItWorks() {
             How it works
           </span>
           <h2 className="font-[family-name:var(--font-open-sans)] text-[34px] font-extrabold leading-[1.15] tracking-[-0.5px] mb-3">
-            From reg plate to sorted, in three simple steps.
+            From select to sorted, in three simple steps.
           </h2>
           <p className="text-[#595C5B] text-[16px] leading-[1.7]">
             No ringing round, no waiting on quotes. Just enter your details, pick a time, and drop your car off.

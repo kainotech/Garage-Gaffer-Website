@@ -1,8 +1,8 @@
 # Garage Gaffer
 
-> Bristol, UK marketplace connecting drivers with vetted mobile mechanics and partner garages for vehicle repairs, diagnostics and servicing.
+> Bristol, UK marketplace connecting drivers with trusted, vetted partner garages and mechanics for vehicle repairs, diagnostics and servicing.
 
-Garage Gaffer lets drivers in Bristol, UK enter their vehicle registration and postcode to get an instant labour price for common repairs and servicing, then book online. If the job needs spare parts, their cost is confirmed separately within a day; the labour price itself is quoted immediately. Jobs are carried out by vetted local mechanics, either at the customer's driveway or at a trusted partner garage. Garage Gaffer also recruits and vets mechanics and garages who want a steady stream of itemised jobs.
+Garage Gaffer lets drivers in Bristol, UK enter their vehicle registration and postcode to get an instant labour price for common repairs and servicing, then book online. If the job needs spare parts, their cost is confirmed separately within a day; the labour price itself is quoted immediately. We allocate each booking to a vetted local partner garage, where the work is carried out. Garage Gaffer also recruits and vets mechanics and garages who want a steady stream of local jobs.
 
 ## Audiences
 
@@ -21,5 +21,5 @@ Garage Gaffer lets drivers in Bristol, UK enter their vehicle registration and p
 ## Notes
 
 - Booking (`/booking/*`) is a private, session-based checkout flow, not indexable content, and isn't listed individually here.
-- Coverage is Bristol, UK only. Exact pricing and availability are provided at the time of booking, not fixed catalog prices.
+- Coverage is Bristol, UK only. Labour pricing and availability are provided at the time of booking, not fixed catalog prices.
 - The instant price covers labour only. If a job turns out to need spare parts, their cost is confirmed separately within a day, not included in the instant quote.
