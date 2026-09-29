@@ -58,17 +58,22 @@ function formatDay(date: Date): { short: string; num: string } {
   return { short: days[date.getDay()], num: String(date.getDate()) };
 }
 
-/** Month labels from the current month through December of next year, e.g. "September 2026". */
-function getMonthOptions(): string[] {
+/** First day of each month from the current month through December of next year. */
+function getMonthStarts(): Date[] {
   const now = new Date();
   const end = new Date(now.getFullYear() + 1, 11, 1);
-  const opts: string[] = [];
+  const months: Date[] = [];
   const cur = new Date(now.getFullYear(), now.getMonth(), 1);
   while (cur <= end) {
-    opts.push(cur.toLocaleDateString("en-GB", { month: "long", year: "numeric" }));
+    months.push(new Date(cur));
     cur.setMonth(cur.getMonth() + 1);
   }
-  return opts;
+  return months;
+}
+
+/** e.g. "September 2026". */
+function formatMonthLabel(date: Date): string {
+  return date.toLocaleDateString("en-GB", { month: "long", year: "numeric" });
 }
 
 /** Day-count from today that lands the visible week on the given month (tomorrow if it's the current month). */
@@ -94,10 +99,9 @@ export default function AvailabilityGrid({ selected, onSelect }: AvailabilityGri
   const [weekOffset, setWeekOffset] = useState(1); // start from tomorrow
   const [selectedDay, setSelectedDay] = useState<Date | null>(() => parseSlotKeyDate(selected ?? ""));
   const days = getWeekDays(weekOffset);
-  const monthOptions = getMonthOptions();
-  const monthValue = days[0]
-    ? days[0].toLocaleDateString("en-GB", { month: "long", year: "numeric" })
-    : monthOptions[0];
+  const monthStarts = getMonthStarts();
+  const monthOptions = monthStarts.map(formatMonthLabel);
+  const monthValue = days[0] ? formatMonthLabel(days[0]) : monthOptions[0];
 
   function prevWeek() {
     setWeekOffset((o) => Math.max(1, o - 5));
@@ -106,7 +110,10 @@ export default function AvailabilityGrid({ selected, onSelect }: AvailabilityGri
     setWeekOffset((o) => o + 5);
   }
   function handleMonthChange(label: string) {
-    const picked = new Date(label);
+    // Look the month up instead of re-parsing the label: Safari/iOS can't parse
+    // "October 2026" with new Date(), which produced NaN dates on iPhones.
+    const picked = monthStarts[monthOptions.indexOf(label)];
+    if (!picked) return;
     setWeekOffset(offsetForMonthStart(picked.getFullYear(), picked.getMonth()));
   }
 

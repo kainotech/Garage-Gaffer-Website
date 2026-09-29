@@ -4,13 +4,13 @@ export type VehicleType = "car" | "motorcycle" | "lgv" | "hgv" | "bus";
 // hgv = Heavy Goods Vehicles (HGVs) · bus = Buses and Coaches
 
 /**
- * Labour rate paid to the mechanic - £30/hr, a business decision. Note this is
- * below the researched UK mobile-mechanic range (£40-£70/hr, with £50-£55/hr the
- * common middle ground outside London; Bristol is outside London). Independent
- * garages run £55-£95/hr, main dealers £130-£220/hr - shown for context only.
+ * Labour rate paid to the mechanic - £50/hr, a business decision. Researched UK
+ * mobile-mechanic range is £40-£70/hr, with £50-£55/hr the common middle ground
+ * outside London (Bristol is outside London). Independent garages run
+ * £55-£95/hr, main dealers £130-£220/hr - shown for context only.
  * Change this single number to retune every price in the app.
  */
-export const HOURLY_LABOUR_RATE = 30; // £/hour
+export const HOURLY_LABOUR_RATE = 50; // £/hour
 
 /**
  * Platform margin - 5%, a business decision (not researched; no market source).
