@@ -100,7 +100,7 @@ export default function Step3Page() {
 
   return (
     <div>
-      <BookingOrderSummary session={sessionForSummary} />
+      <BookingOrderSummary session={sessionForSummary} showTrustBadges />
 
       <div className="s3-outer container">
         {/* Your details */}
