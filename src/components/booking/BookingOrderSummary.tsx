@@ -92,9 +92,12 @@ export default function BookingOrderSummary({ session, showTrustBadges }: Bookin
         }
         .bos-main {
           display: grid;
-          /* Bounded first column + minmax(0, 1fr): the price column can't grow with its
-             text and squeeze "Selected work" into overlapping wrapped lines. */
-          grid-template-columns: minmax(160px, 320px) minmax(0, 1fr) auto;
+          /* Bounded columns so nothing squeezes "Selected work" into overlapping
+             lines. fit-content hugs the selected items so each name sits next to
+             its price; 320px fits the longest service name (~250px at 13.5px) plus
+             the price on one line. Spare width is shared between the columns. */
+          grid-template-columns: minmax(160px, 320px) fit-content(320px) auto;
+          justify-content: space-between;
           gap: 40px;
           align-items: flex-start;
         }
@@ -126,7 +129,7 @@ export default function BookingOrderSummary({ session, showTrustBadges }: Bookin
         .bos-slot svg { flex-shrink: 0; color: rgba(255,255,255,0.4); }
         .bos-items-col { min-width: 0; }
         .bos-items { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
-        .bos-item { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+        .bos-item { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
         .bos-item-info { flex: 1; min-width: 0; }
         .bos-item-name { font-size: 13.5px; font-weight: 600; color: rgba(255,255,255,0.9); display: block; }
         .bos-item-sub { font-size: 11px; color: rgba(255,255,255,0.45); display: block; margin-top: 2px; }
