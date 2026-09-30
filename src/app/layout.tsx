@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Open_Sans, Rubik } from "next/font/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
 import StyledJsxRegistry from "./registry";
 import { SITE_URL } from "@/lib/site";
@@ -32,6 +33,11 @@ const previewBase =
   !process.env.NEXT_PUBLIC_SITE_URL && vercelHost?.endsWith(".vercel.app")
     ? `https://${vercelHost}`
     : SITE_URL;
+
+// Google Tag Manager is the only analytics snippet on the site. GA4 is
+// configured inside the GTM container (not via gtag.js here), so the page
+// carries a single loader. Nothing renders when the ID isn't set.
+const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
 
 export const metadata: Metadata = {
   metadataBase: new URL(previewBase),
@@ -71,7 +77,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-GB" className={`${rubik.variable} ${openSans.variable}`}>
+      {gtmId && <GoogleTagManager gtmId={gtmId} />}
       <body>
+        {gtmId && (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+            />
+          </noscript>
+        )}
         <StyledJsxRegistry>{children}</StyledJsxRegistry>
       </body>
     </html>
