@@ -37,6 +37,18 @@ export async function POST(request: Request) {
     firstName: details.firstName,
     lastName: details.lastName ?? "",
     phone: details.phone,
+    address1: details.address1,
+    address2: details.address2,
+    city: details.city,
+    postcode: details.postcode,
+    drivable: details.drivable,
+    instructions: details.instructions,
+    vehicleReg: body.car?.reg,
+    vehicleMake: body.car?.make,
+    vehicleModel: body.car?.model,
+    vehicleFuelType: body.car?.fuelType,
+    vehicleEngineSize: body.car?.engineCapacity,
+    vehicleYear: body.car?.year,
   };
 
   // Brevo is a notification/CRM sync, not part of the booking itself - a

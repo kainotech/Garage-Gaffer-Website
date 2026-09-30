@@ -5,6 +5,7 @@ import {
   // sendInternalAlertEmail,
   // escapeHtml,
 } from "@/lib/brevo/client";
+import { isValidUkPhone, UK_PHONE_ERROR } from "@/lib/phone";
 
 type MechanicApplicationBody = {
   role?: string;
@@ -32,6 +33,10 @@ export async function POST(request: Request) {
       { error: "missing_details", message: "Role, name and email are required." },
       { status: 400 },
     );
+  }
+
+  if (body.phone?.trim() && !isValidUkPhone(body.phone)) {
+    return NextResponse.json({ error: "invalid_phone", message: UK_PHONE_ERROR }, { status: 400 });
   }
 
   const contact = { email, firstName, lastName, phone: body.phone?.trim() || undefined };
