@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     q: "How quickly do I get my price?",
-    a: "Straight away. Enter your car and the job you need, and your labour price is calculated on the spot, no waiting for a callback. If your job needs spare parts, we'll send you a separate quotation for those within one working day.",
+    a: "Straight away. Enter your car and the job you need, and your labour price is calculated on the spot, no waiting for a callback. Once you book, we confirm your garage within 2 hours and send a separate parts quotation if your job needs one.",
   },
   {
     q: "Is it free to get a price?",

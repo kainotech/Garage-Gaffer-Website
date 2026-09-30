@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     q: "How does pricing work? Are there any hidden fees?",
-    a: "The price you see is the labour charge for the job, shown before you book. If your job needs spare parts, we'll confirm their cost with you within one working day, and nothing extra goes ahead without your go-ahead, so there are no surprise bills.",
+    a: "The price you see is the labour charge for the job, shown before you book. Within 2 hours of booking, we confirm your garage and, if your job needs spare parts, send you a quotation. Nothing extra goes ahead without your go-ahead, so there are no surprise bills.",
   },
   {
     q: "What if something goes wrong after the job?",

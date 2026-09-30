@@ -53,7 +53,7 @@ export default function ConfirmationPage() {
         <p className="conf-sub">
           We&apos;ve sent a confirmation to{" "}
           <strong>{session?.details?.email || "your email"}</strong>.
-          We&apos;ll confirm and allocate your mechanic within 2 hours.
+          Within 2 hours, we&apos;ll confirm your garage and send a parts quotation if your job needs one.
         </p>
         <div className="conf-ref">
           Booking reference: <strong>{ref}</strong>
@@ -120,13 +120,13 @@ export default function ConfirmationPage() {
             </svg>
             You will only be charged after the work is complete.
           </p>
-          <p className="conf-payment-note">This is the labour fee. If parts are needed, we&apos;ll send a full quotation within 1 working day.</p>
+          <p className="conf-payment-note">This is the labour fee. Any spare parts needed will be quoted separately.</p>
         </div>
       )}
 
       {/* Trust points */}
       <div className="conf-trust">
-        {["Fully vetted & insured mechanics", "Mechanic allocated within 2 hours", "Parts quoted within 1 working day"].map((t) => (
+        {["Fully vetted & insured mechanics", "Garage and any parts quote confirmed within 2 hours"].map((t) => (
           <div key={t} className="conf-trust-item">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <polyline points="20 6 9 17 4 12" />

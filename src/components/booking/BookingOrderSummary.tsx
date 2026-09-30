@@ -68,8 +68,7 @@ export default function BookingOrderSummary({ session, showTrustBadges }: Bookin
                 {[
                   "Qualified, DBS-checked mechanics",
                   "Extra work agreed with you first",
-                  "Mechanic allocated within 2 hours",
-                  "Parts quoted within 1 working day",
+                  "Garage and any parts quote confirmed within 2 hours",
                 ].map((badge) => (
                   <div key={badge} className="bos-trust-badge">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

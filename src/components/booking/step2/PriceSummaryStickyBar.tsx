@@ -59,7 +59,7 @@ export default function PriceSummaryStickyBar({
 
           <div className="pssb-divider" />
 
-          <p className="pssb-note">All prices shown are for <strong className="pssb-highlight">labour only</strong>, including VAT where applicable. Once you submit your booking, we&apos;ll confirm and allocate a mechanic within 2 hours. If your job needs spare parts, we&apos;ll send a full quotation within 1 working day.</p>
+          <p className="pssb-note">All prices shown are for <strong className="pssb-highlight">labour only</strong>, including VAT where applicable. Once you submit your booking, we&apos;ll confirm your garage and send a parts quotation if your job needs one, all within 2 hours.</p>
         </div>
       )}
 

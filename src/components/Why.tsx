@@ -2,7 +2,7 @@ const whyItems = [
   {
     num: "01",
     title: "A straight price before you book",
-    desc: "See the labour price upfront. If parts are needed, we'll confirm those within a day, your slot's booked either way.",
+    desc: "See the labour price upfront. Within 2 hours of booking, we confirm your garage and any parts quote. Nothing extra goes ahead without your say-so.",
   },
   {
     num: "02",

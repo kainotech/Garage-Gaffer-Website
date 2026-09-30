@@ -2,14 +2,14 @@
 
 > Bristol, UK car-repair booking platform. Drivers get an instant labour price online, book a slot, and their car is looked after at a trusted, vetted partner garage.
 
-Garage Gaffer lets drivers in Bristol, UK enter their vehicle registration (or make and model) and postcode, choose the job they need, and see an instant labour price. They then pick a date and time and book online. Garage Gaffer confirms the booking and allocates it to a vetted local partner garage, where the work is carried out; the customer drops their car off at the chosen time.
+Garage Gaffer lets drivers in Bristol, UK enter their vehicle registration (or make and model) and postcode, choose the job they need, and see an instant labour price. They then pick a date and time and book online. Within 2 hours, Garage Gaffer confirms the booking, allocates it to a vetted local partner garage and, if the job needs spare parts, sends the customer a quotation. The customer drops their car off at the chosen time and the work is carried out at the garage.
 
 Garage Gaffer is a booking platform, not a garage itself. Each mechanic or garage is an independent business.
 
 ## How pricing and payment work
 
 - The price shown is the labour price for the job, worked out for the customer's specific vehicle.
-- Spare parts are not included in the labour price. If a job needs parts, their cost is confirmed with the customer separately, within one working day, and extra work only goes ahead with the customer's agreement.
+- Spare parts are not included in the labour price. If a job needs parts, a separate quotation is sent to the customer (within 2 hours of booking, alongside the garage allocation), and extra work only goes ahead with the customer's agreement.
 - No card details are taken when booking. Payment is only due once the work has been completed.
 - Bookings can be cancelled or rescheduled any time before the appointment.
 

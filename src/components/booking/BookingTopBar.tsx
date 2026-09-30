@@ -22,7 +22,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: "What does the price I'm shown cover?",
-        a: "It's the labour fee for the job, worked out from your vehicle. Once you submit your booking, we'll confirm and allocate a garage within 2 hours. If your job needs spare parts, we'll review your booking and send you a quotation within 1 working day, and nothing extra goes ahead without your agreement.",
+        a: "It's the labour fee for the job, worked out from your vehicle. Once you submit your booking, we'll confirm your garage and, if your job needs spare parts, send you a quotation, all within 2 hours. Nothing extra goes ahead without your agreement.",
       },
       {
         q: "Is there a cancellation fee?",
@@ -43,7 +43,7 @@ const FAQ_SECTIONS = [
       },
       {
         q: "When can I book in for?",
-        a: "You choose one date and a 30-minute time slot that suits you. We'll confirm your appointment by email once a garage has been allocated.",
+        a: "You choose one date and a 30-minute time slot that suits you. We'll confirm your appointment by email within 2 hours, once a garage has been allocated.",
       },
       {
         q: "I can't find my repair, help!",
