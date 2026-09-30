@@ -6,6 +6,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import LegalHero from "@/components/legal/LegalHero";
 import LegalSidebarNav from "@/components/legal/LegalSidebarNav";
 import LegalSection from "@/components/legal/LegalSection";
+import CookiePreferences from "@/components/consent/CookiePreferences";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -19,7 +20,7 @@ const sections = [
   { id: "cookies-we-use", label: "Cookies we use" },
   { id: "booking-storage", label: "Similar technology we do use" },
   { id: "if-this-changes", label: "If this changes" },
-  { id: "managing-storage", label: "Managing cookies and browser storage" },
+  { id: "managing-storage", label: "Your cookie choices" },
   { id: "contact", label: "Contact us" },
 ];
 
@@ -32,7 +33,7 @@ export default function CookiePolicyPage() {
         <LegalHero
           eyebrow="Legal"
           title="Cookie Policy"
-          meta="Last updated 28 September 2026"
+          meta="Last updated 30 September 2026"
           intro={
             <>
               This policy explains how garagegaffer.co.uk uses cookies and similar browser technology.
@@ -61,13 +62,28 @@ export default function CookiePolicyPage() {
 
           <LegalSection id="cookies-we-use" number={2} title="Cookies we use">
             <p>
-              We do not currently set any cookies on this site for analytics, advertising or marketing
-              purposes. We don&apos;t use tools like Google Analytics, advertising pixels, or similar
-              tracking technology.
+              We use a small number of cookies, and only set the optional ones if you say yes in the
+              cookie banner.
             </p>
+            <ul>
+              <li>
+                <strong>Necessary:</strong> there are no cookies in this group at the moment. The only
+                thing we store to make the site work is the booking session storage described below.
+              </li>
+              <li>
+                <strong>Analytics (optional):</strong> if you accept, we load Google Tag Manager and
+                Google Analytics 4 to see how people use the site, for example which pages are
+                visited. This sets cookies such as <code>_ga</code> and <code>_ga_*</code> in your
+                browser. If you decline, none of this loads.
+              </li>
+              <li>
+                <strong>Marketing (optional):</strong> we don&apos;t currently use any advertising or
+                marketing cookies.
+              </li>
+            </ul>
             <p>
-              Because of this, you won&apos;t see a cookie consent banner when you visit. There&apos;s
-              currently nothing on the site that needs your consent.
+              We also save your cookie choice in your browser (as <code>gg_cookie_consent</code>) so we
+              don&apos;t keep asking. We ask again after 12 months.
             </p>
           </LegalSection>
 
@@ -86,16 +102,20 @@ export default function CookiePolicyPage() {
 
           <LegalSection id="if-this-changes" number={4} title="If this changes">
             <p>
-              If we start using cookies or similar technology for analytics, marketing, or anything else
-              that isn&apos;t strictly necessary, we&apos;ll update this policy and ask for your consent
-              first, in line with UK law (the Privacy and Electronic Communications Regulations,
-              alongside UK GDPR).
+              If we start using cookies or similar technology for anything else that isn&apos;t strictly
+              necessary, we&apos;ll update this policy and ask for your consent first, in line with UK law
+              (the Privacy and Electronic Communications Regulations, alongside UK GDPR).
             </p>
           </LegalSection>
 
-          <LegalSection id="managing-storage" number={5} title="Managing cookies and browser storage">
+          <LegalSection id="managing-storage" number={5} title="Your cookie choices">
             <p>
-              Most browsers let you view, delete and block cookies and site storage through their
+              Change your mind whenever you like. Tick what you&apos;re happy with and save. If you switch
+              analytics off, we&apos;ll remove the analytics cookies we&apos;ve set.
+            </p>
+            <CookiePreferences />
+            <p>
+              You can also view, delete and block cookies and site storage through your browser&apos;s
               settings; check your browser&apos;s help pages for how to do this. Blocking storage
               entirely may stop parts of the booking flow, like remembering your progress between steps,
               from working properly.

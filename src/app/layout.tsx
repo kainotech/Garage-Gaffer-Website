@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Open_Sans, Rubik } from "next/font/google";
-import { GoogleTagManager } from "@next/third-parties/google";
+import ConsentGatedGTM from "@/components/consent/ConsentGatedGTM";
+import CookieBanner from "@/components/consent/CookieBanner";
 import "./globals.css";
 import StyledJsxRegistry from "./registry";
 import { SITE_URL } from "@/lib/site";
@@ -36,7 +37,8 @@ const previewBase =
 
 // Google Tag Manager is the only analytics snippet on the site. GA4 is
 // configured inside the GTM container (not via gtag.js here), so the page
-// carries a single loader. Nothing renders when the ID isn't set.
+// carries a single loader. It only loads after the visitor allows analytics
+// cookies, and nothing renders when the ID isn't set.
 const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
 
 export const metadata: Metadata = {
@@ -77,19 +79,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-GB" className={`${rubik.variable} ${openSans.variable}`}>
-      {gtmId && <GoogleTagManager gtmId={gtmId} />}
+      {gtmId && <ConsentGatedGTM gtmId={gtmId} />}
       <body>
-        {gtmId && (
-          <noscript>
-            <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
-              height="0"
-              width="0"
-              style={{ display: "none", visibility: "hidden" }}
-            />
-          </noscript>
-        )}
         <StyledJsxRegistry>{children}</StyledJsxRegistry>
+        <CookieBanner />
       </body>
     </html>
   );
