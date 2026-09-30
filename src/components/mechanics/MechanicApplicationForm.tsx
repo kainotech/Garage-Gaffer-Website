@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import CustomSelect from "@/components/CustomSelect";
 import { isValidUkPhone, UK_PHONE_ERROR } from "@/lib/phone";
+import { isValidEmail, INVALID_EMAIL_ERROR } from "@/lib/validation";
 
 const ROLE_OPTIONS = ["Independent mechanic", "Garage"];
 
@@ -23,7 +24,7 @@ export default function MechanicApplicationForm() {
     if (!role) { setError("Please select whether you're applying as a mechanic or a garage."); return; }
     if (!firstName.trim()) { setError("Please enter your first name."); return; }
     if (!lastName.trim()) { setError("Please enter your last name."); return; }
-    if (!email.trim() || !email.includes("@")) { setError("Please enter a valid email address."); return; }
+    if (!isValidEmail(email)) { setError(INVALID_EMAIL_ERROR); return; }
     if (phone.trim() && !isValidUkPhone(phone)) { setError(UK_PHONE_ERROR); return; }
 
     setIsSubmitting(true);

@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useBookingSession, BookingSession } from "@/components/booking/useBookingSession";
 import { formatItemPrice, formatPriceLabel, formatVehicleLabel } from "@/components/booking/pricing";
 import { formatSlotLabel } from "@/components/booking/step3/slotLabel";
 import { generateBookingRef } from "@/components/booking/bookingRef";
 
 export default function ConfirmationPage() {
+  const router = useRouter();
   const { getSession, clearSession } = useBookingSession();
   const [session, setSession] = useState<BookingSession | null>(null);
   // Normally set by POST /api/booking-confirm on Step 4; this fallback only
@@ -19,6 +21,11 @@ export default function ConfirmationPage() {
     // reads sessionStorage, which would produce a server/client mismatch since
     // the server has no storage to read from.
     const s = getSession();
+    // Nothing has been confirmed in this session (e.g. a direct link) - don't show a made-up confirmation.
+    if (!s.confirmed) {
+      router.replace("/booking/step-1");
+      return;
+    }
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setSession(s);
   }, []);

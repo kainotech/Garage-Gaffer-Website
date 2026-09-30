@@ -26,6 +26,14 @@ export function formatWorkLabel(items: SelectedItem[]): string {
   return items.map((item) => item.name).join(", ");
 }
 
+/** One row per selected service with its own price, for the itemised breakdown in the confirmation email. */
+export function formatWorkItems(items: SelectedItem[]): { name: string; priceLabel: string }[] {
+  return items.map((item) => ({
+    name: item.name,
+    priceLabel: item.price != null ? `£${item.price.toFixed(2)}` : "Custom quote",
+  }));
+}
+
 export function formatPriceLabel(items: SelectedItem[]): string {
   if (items.length === 0 || hasCustomQuoteItems(items)) return "Priced after inspection";
   return `£${sumFixedPrice(items).toFixed(2)}`;

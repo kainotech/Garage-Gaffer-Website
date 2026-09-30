@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useBookingSession, useBookingLockGuard, SelectedItem } from "@/components/booking/useBookingSession";
+import { useBookingSession, useBookingLockGuard, useBookingStepGuard, SelectedItem } from "@/components/booking/useBookingSession";
 import BookingOrderSummary from "@/components/booking/BookingOrderSummary";
 import YourDetailsForm from "@/components/booking/step3/YourDetailsForm";
 import BookingAddressForm from "@/components/booking/step3/BookingAddressForm";
 import AvailabilityGrid from "@/components/booking/step3/AvailabilityGrid";
 import VehicleDetailsForm from "@/components/booking/step3/VehicleDetailsForm";
 import { isValidUkPhone, UK_PHONE_ERROR } from "@/lib/phone";
+import { isValidEmail, INVALID_EMAIL_ERROR } from "@/lib/validation";
 
 interface DetailsState {
   firstName: string;
@@ -34,6 +35,7 @@ export default function Step3Page() {
   const router = useRouter();
   const { getSession, updateSession, markStepComplete } = useBookingSession();
   useBookingLockGuard();
+  useBookingStepGuard(3);
 
   const [session, setSession] = useState(getSession);
   const [details, setDetails] = useState<DetailsState>(DEFAULT_DETAILS);
@@ -80,7 +82,7 @@ export default function Step3Page() {
 
     if (!details.firstName.trim()) { setError("Please enter your first name."); return; }
     if (!details.lastName.trim()) { setError("Please enter your last name."); return; }
-    if (!details.email.trim() || !details.email.includes("@")) { setError("Please enter a valid email address."); return; }
+    if (!isValidEmail(details.email)) { setError(INVALID_EMAIL_ERROR); return; }
     if (!details.phone.trim()) { setError("Please enter your phone number."); return; }
     if (!isValidUkPhone(details.phone)) { setError(UK_PHONE_ERROR); return; }
     if (!details.availability) { setError("Please select a date and time slot."); return; }

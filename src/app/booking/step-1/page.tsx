@@ -128,7 +128,7 @@ function Step1Content() {
       }
       setIsLookingUp(false);
     } else {
-      if (!carDetails.make || !carDetails.model || !carDetails.year || !carDetails.postcode) {
+      if (!carDetails.make || !carDetails.model || !carDetails.year || !carDetails.postcode.trim()) {
         setError("Please fill in all required vehicle details.");
         return;
       }
