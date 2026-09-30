@@ -75,7 +75,7 @@ export default function AboutPage() {
             </p>
 
             <p className="font-[family-name:var(--font-rubik)] text-[16px] leading-[1.75] text-[#595C5B] reveal">
-              So we built Garage Gaffer around what goes wrong. You see the labour price before you book. If your job needs spare parts, we&apos;ll send a separate quotation within one working day, and nothing extra goes ahead without your say-so. And your car goes to a garage we&apos;ve checked ourselves, not one that just paid to be listed.
+              So we built Garage Gaffer around what goes wrong. You see the labour price before you book. Within 2 hours of booking, we confirm your garage and, if your job needs spare parts, send a separate quotation. Nothing extra goes ahead without your say-so. And your car goes to a garage we&apos;ve checked ourselves, not one that just paid to be listed.
             </p>
           </div>
         </section>

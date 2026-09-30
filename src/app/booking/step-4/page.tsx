@@ -17,20 +17,11 @@ const REASSURANCE_POINTS = [
     ),
   },
   {
-    title: "Mechanic Confirmed Within 2 Hours",
-    desc: "Once you confirm, we'll allocate a mechanic to your booking and let you know within 2 hours.",
+    title: "Confirmed Within 2 Hours",
+    desc: "Once you confirm, we'll allocate a garage to your booking. If your job needs spare parts, we'll send you a full quotation at the same time.",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
-      </svg>
-    ),
-  },
-  {
-    title: "Parts Quoted Within a Day",
-    desc: "The price above is the labour fee. If your job needs spare parts, we'll review it and send a full quotation within 1 working day.",
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
       </svg>
     ),
   },
@@ -106,8 +97,9 @@ export default function Step4Page() {
         <div className="s4-form-card">
           <h2 className="s4-form-title">Confirm your booking</h2>
           <p className="s4-confirm-copy">
-            We&apos;ll confirm and allocate a mechanic within 2 hours, and
-            they&apos;ll be in touch ahead of your chosen time. You&apos;ll only
+            Within 2 hours, we&apos;ll confirm your garage and send a
+            parts quotation if your job needs one. The garage will be in touch
+            ahead of your chosen time. You&apos;ll only
             be charged once the work is done.
           </p>
           <button

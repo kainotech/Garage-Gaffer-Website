@@ -36,7 +36,7 @@ const miniSteps = [
     img: "/how-it-works-pick-date.png",
     title: "Pick a date and time",
     desc: "Choose a slot that suits you. No card details needed to book.",
-    context: "You're not charged anything at this stage. Payment only happens once the work's been carried out.",
+    context: "You're not charged anything at this stage. Within 2 hours, we confirm your garage and send a parts quotation if your job needs one. Payment only happens once the work's been carried out.",
   },
   {
     img: "/how-it-works-drop-car.png",
