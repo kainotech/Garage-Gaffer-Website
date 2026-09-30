@@ -32,6 +32,8 @@ export type BookingEmailSummary = {
   bookingRef: string;
   vehicleLabel: string;
   workLabel: string;
+  /** each selected service with its own price - rendered as the breakdown table rows in the confirmation email */
+  workItems: { name: string; priceLabel: string }[];
   dateTimeLabel: string;
   locationLabel: string;
   priceLabel: string;
@@ -137,6 +139,26 @@ export async function upsertBookingContact(contact: BookingContact, summary: Boo
 }
 
 /**
+ * The itemised "Work booked / Labour price" rows for the confirmation email's
+ * breakdown table. Built here (not with a loop in the Brevo template) so it
+ * renders the same whichever way the template is edited; the table's header,
+ * total row and styling live in the template.
+ */
+function buildWorkRows(summary: BookingEmailSummary): string {
+  const cell = "padding:12px 16px; border-bottom:1px solid #ECEEED; font-size:14px; color:#1A1E1D; vertical-align:top;";
+  const items = summary.workItems.length
+    ? summary.workItems
+    : [{ name: summary.workLabel, priceLabel: "Quoted after inspection" }];
+  return items
+    .map(
+      (item) =>
+        `<tr><td style="${cell}">${escapeHtml(item.name)}</td>` +
+        `<td style="${cell} text-align:right; white-space:nowrap;">${escapeHtml(item.priceLabel)}</td></tr>`,
+    )
+    .join("");
+}
+
+/**
  * Sends the booking confirmation via the "Garage Gaffer - Booking
  * Confirmation" transactional template (BREVO_CONFIRMATION_TEMPLATE_ID).
  * Edit its wording or design any time in Brevo under Campaigns > Templates -
@@ -153,7 +175,13 @@ export async function sendBookingConfirmationEmail(contact: BookingContact, summ
       FIRSTNAME: contact.firstName,
       BOOKING_REF: summary.bookingRef,
       VEHICLE_LABEL: summary.vehicleLabel,
+      // Escaped because these are free-text fields substituted into the
+      // template's raw HTML - Brevo does not HTML-escape params itself.
+      VEHICLE_REG: escapeHtml(contact.vehicleReg || "Not provided"),
+      // WORK_LABEL is the older single-line version, kept so the live template keeps
+      // working until it's switched over to the WORK_ROWS breakdown table.
       WORK_LABEL: summary.workLabel,
+      WORK_ROWS: buildWorkRows(summary),
       DATE_TIME_LABEL: summary.dateTimeLabel,
       LOCATION_LABEL: summary.locationLabel,
       PRICE_LABEL: summary.priceLabel,

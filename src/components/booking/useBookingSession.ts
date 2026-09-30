@@ -3,6 +3,8 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import type { VehicleType } from "@/data/pricingConfig";
+import { isValidEmail } from "@/lib/validation";
+import { isValidUkPhone } from "@/lib/phone";
 
 export type SelectedItem = {
   id: string;
@@ -112,6 +114,45 @@ export function useBookingSession() {
   }
 
   return { getSession, updateSession, markStepComplete, clearSession };
+}
+
+/** The earliest booking step whose required info is still missing (4 = everything needed to confirm is present). */
+export function firstIncompleteStep(s: BookingSession): 1 | 2 | 3 | 4 {
+  const car = s.car;
+  const hasVehicle = Boolean(car?.reg?.trim() || (car?.make && car?.model && car?.year));
+  if (!car?.postcode?.trim() || !hasVehicle) return 1;
+  if (!s.selectedWork?.length) return 2;
+  const d = s.details;
+  if (
+    !d?.firstName?.trim() ||
+    !d.lastName?.trim() ||
+    !isValidEmail(d.email ?? "") ||
+    !isValidUkPhone(d.phone ?? "") ||
+    !d.availability
+  ) {
+    return 3;
+  }
+  return 4;
+}
+
+/**
+ * Sends the customer back to the first step with missing required info, so a
+ * direct link (or a lost session) can't skip ahead past steps that haven't
+ * been completed. Pass `enabled: false` on a fresh-entry path that fills the
+ * session itself.
+ */
+export function useBookingStepGuard(step: 2 | 3 | 4, enabled: boolean = true): void {
+  const router = useRouter();
+  const { getSession } = useBookingSession();
+
+  useEffect(() => {
+    if (!enabled) return;
+    const s = getSession();
+    if (s.confirmed) return; // the lock guard sends confirmed bookings to the confirmation page
+    const first = firstIncompleteStep(s);
+    if (first < step) router.replace(`/booking/step-${first}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enabled]);
 }
 
 /**

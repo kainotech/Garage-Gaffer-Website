@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useBookingSession, useBookingLockGuard, SelectedItem, BookingSession } from "@/components/booking/useBookingSession";
+import { useBookingSession, useBookingLockGuard, useBookingStepGuard, SelectedItem, BookingSession } from "@/components/booking/useBookingSession";
 import CategoryTab from "@/components/booking/step2/CategoryTab";
 import PriceSummaryPanel from "@/components/booking/step2/PriceSummaryPanel";
 import PriceSummaryStickyBar from "@/components/booking/step2/PriceSummaryStickyBar";
@@ -18,6 +18,7 @@ function Step2Content() {
   const { getSession, updateSession, markStepComplete } = useBookingSession();
   const isFreshEntry = !!(searchParams.get("reg") && searchParams.get("postcode") && searchParams.get("service"));
   useBookingLockGuard(!isFreshEntry);
+  useBookingStepGuard(2, !isFreshEntry);
 
   const [session, setSession] = useState<BookingSession>(() => getSession());
   const [activeSlug, setActiveSlug] = useState(ALL_CATEGORIES_SLUG);

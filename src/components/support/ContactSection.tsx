@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import CustomSelect from "@/components/CustomSelect";
 import { isValidUkPhone, UK_PHONE_ERROR } from "@/lib/phone";
+import { isValidEmail, INVALID_EMAIL_ERROR } from "@/lib/validation";
 
 const TOPIC_OPTIONS = [
   "Getting a quote or booking a job",
@@ -29,7 +30,7 @@ export default function ContactSection() {
     setError("");
 
     if (!name.trim()) { setError("Please enter your name."); return; }
-    if (!email.trim() || !email.includes("@")) { setError("Please enter a valid email address."); return; }
+    if (!isValidEmail(email)) { setError(INVALID_EMAIL_ERROR); return; }
     if (phone.trim() && !isValidUkPhone(phone)) { setError(UK_PHONE_ERROR); return; }
     if (!topic) { setError("Please select what it's about."); return; }
     if (!message.trim()) { setError("Please enter a message."); return; }

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useBookingSession, useBookingLockGuard } from "@/components/booking/useBookingSession";
+import { useBookingSession, useBookingLockGuard, useBookingStepGuard } from "@/components/booking/useBookingSession";
 import { generateBookingRef } from "@/components/booking/bookingRef";
 import BookingOrderSummary from "@/components/booking/BookingOrderSummary";
 
@@ -40,6 +40,7 @@ export default function Step4Page() {
   const router = useRouter();
   const { getSession, updateSession, markStepComplete } = useBookingSession();
   useBookingLockGuard();
+  useBookingStepGuard(4);
   const [session, setSession] = useState(getSession);
   const [confirming, setConfirming] = useState(false);
 
@@ -60,6 +61,13 @@ export default function Step4Page() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify(session),
       });
+      if (res.status === 400) {
+        // Our server says required booking details are missing - never
+        // confirm on a local fallback ref for that; send them to fix it.
+        setConfirming(false);
+        router.replace("/booking/step-3");
+        return;
+      }
       const data = res.ok ? await res.json() : null;
       bookingRef = data?.bookingRef || generateBookingRef();
     } catch {

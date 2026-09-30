@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { SERVICE_CATEGORIES } from "@/data/services";
 
@@ -15,24 +15,34 @@ export default function QuoteWidget({ idSuffix = "", defaultService, layout = "c
   const postcodeRef = useRef<HTMLInputElement>(null);
   const regRef = useRef<HTMLInputElement>(null);
   const serviceRef = useRef<HTMLSelectElement>(null);
+  const [error, setError] = useState("");
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const reg = regRef.current?.value?.trim() ?? "";
     const postcode = postcodeRef.current?.value?.trim() ?? "";
+    setError("");
 
     if (layout === "inline") {
-      if (reg && postcode) {
-        router.push(`/booking/step-1?reg=${encodeURIComponent(reg)}&postcode=${encodeURIComponent(postcode)}`);
+      if (!reg || !postcode) {
+        setError("Please enter your registration number and postcode.");
+        return;
       }
+      router.push(`/booking/step-1?reg=${encodeURIComponent(reg)}&postcode=${encodeURIComponent(postcode)}`);
       return;
     }
 
     const service = serviceRef.current?.value?.trim() ?? "";
-    if (reg && postcode && service) {
-      router.push(`/booking?reg=${encodeURIComponent(reg)}&postcode=${encodeURIComponent(postcode)}&service=${encodeURIComponent(service)}`);
+    if (!reg || !postcode || !service) {
+      setError("Please enter your registration number and postcode, and choose a category.");
+      return;
     }
+    router.push(`/booking?reg=${encodeURIComponent(reg)}&postcode=${encodeURIComponent(postcode)}&service=${encodeURIComponent(service)}`);
   }
+
+  const errorMessage = error ? (
+    <p role="alert" className="mt-3 text-[13px] font-medium text-[#AF0808]">{error}</p>
+  ) : null;
 
   if (layout === "inline") {
     return (
@@ -75,6 +85,7 @@ export default function QuoteWidget({ idSuffix = "", defaultService, layout = "c
           </div>
         </div>
 
+        {errorMessage}
         <div className="flex items-center justify-start gap-3 mt-4 flex-wrap">
           <button
             type="submit"
@@ -180,6 +191,7 @@ export default function QuoteWidget({ idSuffix = "", defaultService, layout = "c
         </div>
       </div>
 
+      {errorMessage}
       <button
         type="submit"
         className="w-full mt-2 flex items-center justify-center gap-2 px-7 py-[14px] bg-[#0D7A5F] text-white font-[family-name:var(--font-rubik)] font-semibold text-[15px] rounded-xl shadow-[0_2px_8px_rgba(13,122,95,0.25)] hover:bg-[#055240] hover:shadow-[0_6px_18px_rgba(13,122,95,0.3)] hover:-translate-y-px active:translate-y-px transition-all"
