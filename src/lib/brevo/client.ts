@@ -13,6 +13,18 @@ type BookingContact = {
   firstName: string;
   lastName: string;
   phone?: string;
+  address1?: string;
+  address2?: string;
+  city?: string;
+  postcode?: string;
+  drivable?: boolean;
+  instructions?: string;
+  vehicleReg?: string;
+  vehicleMake?: string;
+  vehicleModel?: string;
+  vehicleFuelType?: string;
+  vehicleEngineSize?: string;
+  vehicleYear?: string;
 };
 
 /** Plain-text labels shared with the confirmation page, so the email and the on-screen summary always agree. */
@@ -58,21 +70,6 @@ export function escapeHtml(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
-/**
- * Brevo's SMS attribute requires international format, but the booking form
- * collects UK numbers the normal local way (e.g. "07700 900123") with no
- * format enforcement - convert that to E.164 so real customer numbers don't
- * get rejected by Brevo's validator.
- */
-function normalizePhoneForBrevo(phone?: string): string | undefined {
-  if (!phone) return undefined;
-  const digits = phone.replace(/[^\d+]/g, "");
-  if (!digits) return undefined;
-  if (digits.startsWith("+")) return digits;
-  if (digits.startsWith("0")) return `+44${digits.slice(1)}`;
-  return `+44${digits}`;
-}
-
 async function brevoFetch(path: string, body: unknown): Promise<void> {
   const apiKey = process.env.BREVO_API_KEY;
   if (!apiKey) throw new BrevoError("BREVO_API_KEY is not set");
@@ -101,9 +98,11 @@ async function brevoFetch(path: string, body: unknown): Promise<void> {
 
 /**
  * Upserts the customer as a Brevo Contact (matched by email) into the
- * "Garage Gaffer Customers" list, stamping their latest booking onto custom
- * attributes (LAST_BOOKING_*) so the business can see booking history
- * against each contact without leaving Brevo.
+ * "Garage Gaffer Customers" list. Every field the booking form collects is
+ * saved as a contact attribute, with their latest booking on LAST_BOOKING_*,
+ * so the business can see it all against each contact without leaving Brevo.
+ * Brevo silently ignores attributes that don't exist yet - a new one must be
+ * created in Brevo (Contacts > Settings > Contact attributes) before it's stored.
  */
 export async function upsertBookingContact(contact: BookingContact, summary: BookingEmailSummary): Promise<void> {
   const listId = process.env.BREVO_CUSTOMERS_LIST_ID;
@@ -115,7 +114,19 @@ export async function upsertBookingContact(contact: BookingContact, summary: Boo
     attributes: {
       FIRSTNAME: contact.firstName,
       LASTNAME: contact.lastName,
-      SMS: normalizePhoneForBrevo(contact.phone),
+      PHONE: contact.phone,
+      ADDRESS_LINE_1: contact.address1,
+      ADDRESS_LINE_2: contact.address2,
+      CITY: contact.city,
+      POSTCODE: contact.postcode,
+      VEHICLE_REG: contact.vehicleReg,
+      VEHICLE_MAKE: contact.vehicleMake,
+      VEHICLE_MODEL: contact.vehicleModel,
+      VEHICLE_FUEL_TYPE: contact.vehicleFuelType,
+      VEHICLE_ENGINE_SIZE: contact.vehicleEngineSize,
+      VEHICLE_YEAR: contact.vehicleYear,
+      VEHICLE_DRIVABLE: contact.drivable === undefined ? undefined : contact.drivable ? "Yes" : "No",
+      SPECIAL_INSTRUCTIONS: contact.instructions,
       LAST_BOOKING_REF: summary.bookingRef,
       LAST_BOOKING_VEHICLE: summary.vehicleLabel,
       LAST_BOOKING_SERVICE: summary.workLabel,
@@ -166,7 +177,7 @@ export async function upsertSupportContact(contact: SupportContact, summary: Sup
     attributes: {
       FIRSTNAME: firstName,
       LASTNAME: rest.join(" "),
-      SMS: normalizePhoneForBrevo(contact.phone),
+      PHONE: contact.phone,
       LAST_ENQUIRY_TOPIC: summary.topic,
       LAST_ENQUIRY_MESSAGE: summary.message,
       LAST_ENQUIRY_BOOKING_REF: summary.bookingRef ?? "",
@@ -212,7 +223,7 @@ export async function upsertMechanicContact(contact: MechanicContact, summary: M
     attributes: {
       FIRSTNAME: contact.firstName,
       LASTNAME: contact.lastName,
-      SMS: normalizePhoneForBrevo(contact.phone),
+      PHONE: contact.phone,
       APPLICANT_ROLE: summary.role,
     },
   });
